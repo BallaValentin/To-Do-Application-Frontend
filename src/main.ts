@@ -43,11 +43,18 @@ function drawTree<T>(
   tree: GenericTree<T>,
   x: number,
   y: number,
-  levelGap: number = 50,
-  siblingGap: number = 50,
+  levelGap: number = 150,
+  siblingGap: number = 200,
+  nodeRadius: number = 40,
 ): void {
-  // eslint-disable-next-line prettier/prettier
-    ctx.fillStyle = 'black';
+  ctx.beginPath();
+  ctx.arc(x, y, nodeRadius, 0, 2 * Math.PI);
+  ctx.fillStyle = 'white';
+  ctx.fill();
+  ctx.stroke();
+  ctx.fillStyle = 'black';
+  ctx.textAlign = 'center';
+  ctx.textBaseline = 'middle';
   ctx.fillText(`${tree.value}`, x, y);
 
   const childY = y + levelGap;
@@ -55,8 +62,8 @@ function drawTree<T>(
 
   tree.children.forEach((child) => {
     ctx.beginPath();
-    ctx.moveTo(x, y);
-    ctx.lineTo(childX, childY);
+    ctx.moveTo(x, y + nodeRadius);
+    ctx.lineTo(childX, childY - nodeRadius);
     ctx.stroke();
 
     drawTree<T>(ctx, child, childX, childY, levelGap, siblingGap);
@@ -71,17 +78,25 @@ document.addEventListener('DOMContentLoaded', async () => {
     return;
   }
 
+  const dpi = window.devicePixelRatio || 1;
+  canvasElement.width = window.innerWidth * dpi;
+  canvasElement.height = window.innerHeight * dpi;
+  canvasElement.style.width = `${window.innerWidth}px`;
+  canvasElement.style.height = `${window.innerHeight * 0.9}px`;
+
   const ctx = canvasElement.getContext('2d');
   if (!ctx) {
     console.error('Canvas rendering context not found!');
     return;
   }
 
+  ctx.scale(dpi, dpi);
+
   try {
     const treeData = await fetchTreeData();
     const tree = createTreeFromData<string>(treeData);
     ctx.clearRect(0, 0, canvasElement.width, canvasElement.height);
-    drawTree(ctx, tree, canvasElement.width / 2, 50);
+    drawTree(ctx, tree, window.innerWidth / 2, 50);
   } catch (error) {
     console.error(`Error loadind tree: ${error}`);
   }
