@@ -1,99 +1,36 @@
 {
-    "value": "A1",
-    "children": [
-      {
-        "value": "B1",
-        "children": [
-          {
-            "value": "C1",
-            "children": [
-              {
-                "value": "D1",
-                "children": []
-              },
-              {
-                "value": "D2",
-                "children": []
-              }
-            ]
-          },
-          {
-            "value": "C2",
-            "children": [
-              {
-                "value": "D3",
-                "children": []
-              },
-              {
-                "value": "D4",
-                "children": []
-              }
-            ]
-          }
-        ]
-      },
-      {
-        "value": "B2",
-        "children": [
-          {
-            "value": "C3",
-            "children": [
-              {
-                "value": "D5",
-                "children": []
-              },
-              {
-                "value": "D6",
-                "children": []
-              }
-            ]
-          },
-          {
-            "value": "C4",
-            "children": [
-              {
-                "value": "D7",
-                "children": []
-              },
-              {
-                "value": "D8",
-                "children": []
-              }
-            ]
-          }
-        ]
-      },
-      {
-        "value": "B3",
-        "children": [
-          {
-            "value": "C5",
-            "children": [
-              {
-                "value": "D9",
-                "children": []
-              },
-              {
-                "value": "D10",
-                "children": []
-              }
-            ]
-          },
-          {
-            "value": "C6",
-            "children": [
-              {
-                "value": "D11",
-                "children": []
-              },
-              {
-                "value": "D12",
-                "children": []
-              }
-            ]
-          }
-        ]
-      }
-    ]
-  }
-  
+  "value": "A",
+  "children": [
+    {
+      "value": "B",
+      "children": [
+        {
+          "value": "C",
+          "children": []
+        },
+        {
+          "value": "D",
+          "children": []
+        }
+      ]
+    },
+    {
+      "value": "E",
+      "children": [
+        {
+          "value": "F",
+          "children": [
+            {
+              "value": "G",
+              "children": []
+            },
+            {
+              "value": "H",
+              "children": []
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

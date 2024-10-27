@@ -2,7 +2,7 @@
 # Edit at https://www.toptal.com/developers/gitignore?templates=node,yarn,webstorm,visualstudiocode
 
 ### Node ###
-src/main.js
+src/*.js
 # Logs
 logs
 *.log
