@@ -1,4 +1,3 @@
-"use strict";
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -35,8 +34,17 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
-Object.defineProperty(exports, "__esModule", { value: true });
-var tree_1 = require("./tree");
+var _this = this;
+var GenericTree = /** @class */ (function () {
+    function GenericTree(value) {
+        this.value = value;
+        this.children = [];
+    }
+    GenericTree.prototype.addChild = function (childNode) {
+        this.children.push(childNode);
+    };
+    return GenericTree;
+}());
 function fetchTreeData() {
     return __awaiter(this, void 0, void 0, function () {
         var response;
@@ -57,23 +65,47 @@ function fetchTreeData() {
     });
 }
 function createTreeFromData(data) {
-    var tree = new tree_1.GenericTree(data.value);
+    var tree = new GenericTree(data.value);
     if (data.children && data.children.length > 0) {
-        for (var childData in data.children) {
+        for (var _i = 0, _a = data.children; _i < _a.length; _i++) {
+            var childData = _a[_i];
             var childTree = createTreeFromData(childData);
             tree.addChild(childTree);
         }
     }
     return tree;
 }
-document.addEventListener('DOMContentLoaded', function () { return __awaiter(void 0, void 0, void 0, function () {
-    var canvasElement, treeData, tree, error_1;
+function drawTree(ctx, tree, x, y, levelGap, siblingGap) {
+    if (levelGap === void 0) { levelGap = 50; }
+    if (siblingGap === void 0) { siblingGap = 50; }
+    ctx.fillStyle = 'black';
+    ctx.fillText("".concat(tree.value), x, y);
+    var childY = y + levelGap;
+    var childX = x - ((tree.children.length - 1) * siblingGap) / 2;
+    for (var _i = 0, _a = tree.children; _i < _a.length; _i++) {
+        var child = _a[_i];
+        ctx.beginPath();
+        ctx.moveTo(x, y);
+        ctx.lineTo(childX, childY);
+        ctx.stroke();
+        drawTree(ctx, child, childX, childY, levelGap, siblingGap);
+        childX += siblingGap;
+    }
+}
+document.addEventListener('DOMContentLoaded', function () { return __awaiter(_this, void 0, void 0, function () {
+    var canvasElement, ctx, treeData, tree, error_1;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
                 canvasElement = document.getElementById('treeCanvas');
                 if (!canvasElement) {
                     console.error('Canvas element not found!');
+                    return [2 /*return*/];
+                }
+                ctx = canvasElement.getContext('2d');
+                if (!ctx) {
+                    console.error('Canvas rendering context not found!');
+                    return [2 /*return*/];
                 }
                 _a.label = 1;
             case 1:
@@ -82,6 +114,8 @@ document.addEventListener('DOMContentLoaded', function () { return __awaiter(voi
             case 2:
                 treeData = _a.sent();
                 tree = createTreeFromData(treeData);
+                ctx.clearRect(0, 0, canvasElement.width, canvasElement.height);
+                drawTree(ctx, tree, canvasElement.width / 2, 50);
                 return [3 /*break*/, 4];
             case 3:
                 error_1 = _a.sent();
