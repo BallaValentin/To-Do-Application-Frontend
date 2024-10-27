@@ -67,30 +67,29 @@ function fetchTreeData() {
 function createTreeFromData(data) {
     var tree = new GenericTree(data.value);
     if (data.children && data.children.length > 0) {
-        for (var _i = 0, _a = data.children; _i < _a.length; _i++) {
-            var childData = _a[_i];
+        data.children.forEach(function (childData) {
             var childTree = createTreeFromData(childData);
             tree.addChild(childTree);
-        }
+        });
     }
     return tree;
 }
 function drawTree(ctx, tree, x, y, levelGap, siblingGap) {
     if (levelGap === void 0) { levelGap = 50; }
     if (siblingGap === void 0) { siblingGap = 50; }
+    // eslint-disable-next-line prettier/prettier
     ctx.fillStyle = 'black';
     ctx.fillText("".concat(tree.value), x, y);
     var childY = y + levelGap;
     var childX = x - ((tree.children.length - 1) * siblingGap) / 2;
-    for (var _i = 0, _a = tree.children; _i < _a.length; _i++) {
-        var child = _a[_i];
+    tree.children.forEach(function (child) {
         ctx.beginPath();
         ctx.moveTo(x, y);
         ctx.lineTo(childX, childY);
         ctx.stroke();
         drawTree(ctx, child, childX, childY, levelGap, siblingGap);
         childX += siblingGap;
-    }
+    });
 }
 document.addEventListener('DOMContentLoaded', function () { return __awaiter(_this, void 0, void 0, function () {
     var canvasElement, ctx, treeData, tree, error_1;
