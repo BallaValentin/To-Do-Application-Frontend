@@ -19,3 +19,17 @@ function createTreeFromData<T>(data: any): GenericTree<T> {
     }
     return tree;
 }
+
+document.addEventListener('DOMContentLoaded', async () => {
+    const canvasElement = document.getElementById('treeCanvas');
+    if (!canvasElement) {
+        console.error('Canvas element not found!');
+    }
+
+    try {
+        const treeData = await fetchTreeData();
+        const tree = createTreeFromData<string>(treeData);
+    } catch (error) {
+        console.error(`Error loadind tree: ${error}`)
+    }
+})
