@@ -18,8 +18,10 @@ export async function fetchAdvicesByKeyword(keyword: string): Promise<Advice[]> 
     throw new Error('Failed to fetch advices by keyword');
   }
   const data = await response.json();
-  return data.slips.map((slip: any) => ({
-    id: slip.id,
-    advice: slip.advice,
-  }));
+  return data.slips
+    ? data.slips.map((slip: any) => ({
+        id: slip.id,
+        advice: slip.advice,
+      }))
+    : [];
 }

@@ -83,14 +83,18 @@ const AdviceProvider: React.FC = () => {
       </Box>
 
       <Box sx={{ mt: 3 }}>
-        {displayAdviceList.map((advice) => (
-          <AdviceCard
-            key={advice.id}
-            advice={advice}
-            isFavorite={!!favorites[advice.id]}
-            toggleFavorite={() => toggleFavorite(advice.id)}
-          />
-        ))}
+        {displayAdviceList.length === 0 ? (
+          <Typography>No advice available.</Typography>
+        ) : (
+          displayAdviceList.map((advice) => (
+            <AdviceCard
+              key={advice.id}
+              advice={advice}
+              isFavorite={!!favorites[advice.id]}
+              toggleFavorite={() => toggleFavorite(advice.id)}
+            />
+          ))
+        )}
       </Box>
     </Box>
   );
