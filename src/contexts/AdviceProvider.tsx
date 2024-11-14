@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import AdviceCard from '../components/AdviceCard';
-import { fetchRandomAdvice } from '../service/AdviceSlipApi';
+import { fetchRandomAdvice, fetchAdvicesByKeyword } from '../service/AdviceSlipApi';
 import { Advice } from '../types/Advice';
 import { Button, Box, Typography, Switch, FormControlLabel } from '@mui/material';
 
@@ -8,6 +8,8 @@ const AdviceProvider: React.FC = () => {
   const [adviceList, setAdviceList] = useState<Advice[]>([]);
   const [favorites, setFavorites] = useState<{ [key: number]: boolean }>({});
   const [showFavorites, setShowFavorites] = useState(false);
+  const [searchKeywords, setSearchKeyWords] = useState('');
+  const [filteredAdvicesList, setFilteredAdvicesList] = useState<Advice[]>([]);
 
   const handleGetRandomAdvice = async () => {
     try {
