@@ -2,14 +2,13 @@ import React, { useState } from 'react';
 import AdviceCard from '../components/AdviceCard';
 import { fetchRandomAdvice, fetchAdvicesByKeyword } from '../service/AdviceSlipApi';
 import { Advice } from '../types/Advice';
-import { Button, Box, Typography, Switch, FormControlLabel } from '@mui/material';
+import { Button, Box, Typography, Switch, FormControlLabel, TextField } from '@mui/material';
 
 const AdviceProvider: React.FC = () => {
   const [adviceList, setAdviceList] = useState<Advice[]>([]);
   const [favorites, setFavorites] = useState<{ [key: number]: boolean }>({});
   const [showFavorites, setShowFavorites] = useState(false);
-  const [searchKeywords, setSearchKeyWords] = useState('');
-  const [filteredAdvicesList, setFilteredAdvicesList] = useState<Advice[]>([]);
+  const [searchKeyword, setSearchKeyWord] = useState('');
 
   const handleGetRandomAdvice = async () => {
     try {
@@ -33,7 +32,18 @@ const AdviceProvider: React.FC = () => {
     });
   };
 
-  const filteredAdviceList = showFavorites ? adviceList.filter((advice) => favorites[advice.id]) : adviceList;
+  const displayAdviceList = showFavorites ? adviceList.filter((advice) => favorites[advice.id]) : adviceList;
+
+  const handleSearchByKeyword = async (event: React.FormEvent) => {
+    event.preventDefault();
+
+    try {
+      const results = await fetchAdvicesByKeyword(searchKeyword);
+      setAdviceList(results);
+    } catch (error) {
+      console.error('Failed to fetch advices by keyword: ', error);
+    }
+  };
 
   return (
     <Box sx={{ p: 4 }}>
@@ -57,7 +67,23 @@ const AdviceProvider: React.FC = () => {
       </Button>
 
       <Box sx={{ mt: 3 }}>
-        {filteredAdviceList.map((advice) => (
+        <form onSubmit={handleSearchByKeyword}>
+          <TextField
+            label="Search by Keyword"
+            variant="outlined"
+            fullWidth
+            value={searchKeyword}
+            onChange={(event) => setSearchKeyWord(event.target.value)}
+            sx={{ mb: 2 }}
+          />
+          <Button type="submit" variant="contained" color="secondary">
+            Search
+          </Button>
+        </form>
+      </Box>
+
+      <Box sx={{ mt: 3 }}>
+        {displayAdviceList.map((advice) => (
           <AdviceCard
             key={advice.id}
             advice={advice}
