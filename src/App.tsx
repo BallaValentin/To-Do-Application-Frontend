@@ -1,12 +1,11 @@
-import React from 'react';
 import AdviceProvider from './contexts/AdviceProvider';
 
-const App: React.FC = () => {
+function App() {
   return (
     <div>
       <AdviceProvider />
     </div>
   );
-};
+}
 
 export default App;

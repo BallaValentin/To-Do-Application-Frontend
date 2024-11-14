@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
+import { Button, Box, Typography, Switch, FormControlLabel, TextField } from '@mui/material';
+
 import AdviceCard from '../components/AdviceCard';
 import { fetchRandomAdvice, fetchAdvicesByKeyword } from '../service/AdviceSlipApi';
 import { Advice } from '../types/Advice';
-import { Button, Box, Typography, Switch, FormControlLabel, TextField } from '@mui/material';
 
 const AdviceProvider: React.FC = () => {
   const [adviceList, setAdviceList] = useState<Advice[]>([]);

@@ -1,6 +1,7 @@
 import React from 'react';
-import { Card, CardContent, Typography, IconButton } from '@mui/material';
 import FavoriteIcon from '@mui/icons-material/Favorite';
+
+import { Card, CardContent, Typography, IconButton } from '@mui/material';
 import { Advice } from '../types/Advice';
 
 interface AdviceCardProps {

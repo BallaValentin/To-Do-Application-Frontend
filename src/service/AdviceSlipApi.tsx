@@ -19,7 +19,7 @@ export async function fetchAdvicesByKeyword(keyword: string): Promise<Advice[]> 
   }
   const data = await response.json();
   return data.slips
-    ? data.slips.map((slip: any) => ({
+    ? data.slips.map((slip: Advice) => ({
         id: slip.id,
         advice: slip.advice,
       }))
