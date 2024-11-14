@@ -5,7 +5,7 @@ import AdviceCard from '../components/AdviceCard';
 import { fetchRandomAdvice, fetchAdvicesByKeyword } from '../service/AdviceSlipApi';
 import { Advice } from '../types/Advice';
 
-const AdviceProvider: React.FC = () => {
+function AdviceProvider() {
   const [adviceList, setAdviceList] = useState<Advice[]>([]);
   const [favorites, setFavorites] = useState<{ [key: number]: boolean }>({});
   const [showFavorites, setShowFavorites] = useState(false);
@@ -99,6 +99,6 @@ const AdviceProvider: React.FC = () => {
       </Box>
     </Box>
   );
-};
+}
 
 export default AdviceProvider;

@@ -10,7 +10,7 @@ interface AdviceCardProps {
   toggleFavorite: () => void;
 }
 
-const AdviceCard: React.FC<AdviceCardProps> = ({ advice, isFavorite, toggleFavorite }) => {
+function AdviceCard({ advice, isFavorite, toggleFavorite }: AdviceCardProps) {
   return (
     <Card sx={{ maxWidth: 300, margin: 'auto', mt: 2, boxShadow: 3 }}>
       <CardContent>
@@ -26,6 +26,6 @@ const AdviceCard: React.FC<AdviceCardProps> = ({ advice, isFavorite, toggleFavor
       </CardContent>
     </Card>
   );
-};
+}
 
 export default AdviceCard;
