@@ -8,6 +8,6 @@ export async function fetchRandomAdvice(): Promise<Advice> {
   const data = await response.json();
   return {
     id: data.slip.id,
-    advice: data.slip.adive,
+    advice: data.slip.advice,
   };
 }

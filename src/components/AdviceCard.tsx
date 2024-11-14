@@ -1,5 +1,5 @@
 import React from 'react';
-import { Card, CardContent, Typography, IconButton, Icon } from '@mui/material';
+import { Card, CardContent, Typography, IconButton } from '@mui/material';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import { Advice } from '../types/Advice';
 
@@ -20,7 +20,7 @@ const AdviceCard: React.FC<AdviceCardProps> = ({ advice, isFavorite, toggleFavor
           {advice.advice}
         </Typography>
         <IconButton onClick={toggleFavorite} color={isFavorite ? 'error' : 'default'}>
-          <FavoriteIcon></FavoriteIcon>
+          <FavoriteIcon />
         </IconButton>
       </CardContent>
     </Card>
