@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Button, Box, Typography, Switch, FormControlLabel, TextField } from '@mui/material';
+import { Button, Box, Typography, Switch, FormControlLabel, TextField, Alert } from '@mui/material';
 
 import AdviceCard from '../components/AdviceCard';
 import { fetchRandomAdvice, fetchAdvicesByKeyword } from '../service/AdviceSlipApi';
@@ -10,9 +10,13 @@ function AdviceProvider() {
   const [favorites, setFavorites] = useState<{ [key: number]: boolean }>({});
   const [showFavorites, setShowFavorites] = useState(false);
   const [searchKeyword, setSearchKeyWord] = useState('');
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const [isErrorVisible, setIsErrorVisible] = useState<boolean>(false);
 
   const handleGetRandomAdvice = async () => {
     try {
+      setErrorMessage(null);
+      setIsErrorVisible(false);
       const newAdvice = await fetchRandomAdvice();
       setAdviceList((prevList) => {
         if (prevList.some((advice) => advice.id === newAdvice.id)) {
@@ -21,6 +25,8 @@ function AdviceProvider() {
         return [...prevList, newAdvice];
       });
     } catch (error) {
+      setErrorMessage('Failed to fetch advice. Please try again.');
+      setIsErrorVisible(true);
       console.error('Failed to fetch advice: ', error);
     }
   };
@@ -39,15 +45,27 @@ function AdviceProvider() {
     event.preventDefault();
 
     try {
+      setErrorMessage(null);
+      setIsErrorVisible(false);
       const results = await fetchAdvicesByKeyword(searchKeyword);
       setAdviceList(results);
     } catch (error) {
+      setErrorMessage('Failed to fetch advices by keyword. Please try again.');
+      setIsErrorVisible(true);
       console.error('Failed to fetch advices by keyword: ', error);
     }
   };
 
   return (
     <Box sx={{ p: 4 }}>
+      {isErrorVisible && (
+        <Box sx={{ mb: 2 }}>
+          <Alert severity="error" onClose={() => setIsErrorVisible(false)}>
+            {errorMessage}
+          </Alert>
+        </Box>
+      )}
+
       <Typography variant="h4" gutterBottom>
         Advice Slip Application
       </Typography>
