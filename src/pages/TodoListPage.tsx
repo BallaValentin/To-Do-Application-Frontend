@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { Alert, Container, List, ListItem, ListItemText } from '@mui/material';
+import { Alert, Container } from '@mui/material';
 import { ToDo } from '../interface/ToDo';
 import { GetToDos } from '../service/ToDoService';
+import ToDoCard from '../component/card/ToDoCard';
 
 export function TodoListPage() {
   const [todos, setTodos] = useState<ToDo[]>([]);
@@ -25,14 +26,9 @@ export function TodoListPage() {
       {error && <Alert severity="error">{error}</Alert>}
 
       <h1>List of Todos</h1>
-
-      <List>
-        {todos.map((todo) => (
-          <ListItem key={todo.id}>
-            <ListItemText primary={todo.title} />
-          </ListItem>
-        ))}
-      </List>
+      {todos.map((todo) => (
+        <ToDoCard key={todo.id} toDo={todo} />
+      ))}
     </Container>
   );
 }
