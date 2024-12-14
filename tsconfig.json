@@ -1,14 +1,7 @@
 {
-  "compilerOptions": {
-    "target": "esnext",
-    "lib": [
-      "DOM",
-      "ESNext"
-    ],
-    "module": "commonjs",
-    "moduleResolution": "node",
-    "rootDir": "src",
-    "outDir": "dist",
-    "esModuleInterop": true
-  }
+  "files": [],
+  "references": [
+    { "path": "./tsconfig.app.json" },
+    { "path": "./tsconfig.node.json" }
+  ]
 }
