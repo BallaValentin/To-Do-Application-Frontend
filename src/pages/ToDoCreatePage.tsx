@@ -14,7 +14,7 @@ export function ToDoCreatePage() {
       const todoData = await CreateToDo(formData);
       navigate(`/todos/${todoData.id}`);
     } catch (err) {
-      console.log('Failed to create new todo');
+      console.error(`Failed to create new todo: ${err}`);
       setError('Failed to create new ToDo. Try again later');
     }
   };

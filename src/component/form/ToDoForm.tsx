@@ -65,9 +65,8 @@ function ToDoForm(toDoForm: ToDoFormProps) {
       setError(newErrors);
     } else {
       setError(null);
+      toDoForm.onSubmit(formData);
     }
-
-    toDoForm.onSubmit(formData);
   };
 
   return (
