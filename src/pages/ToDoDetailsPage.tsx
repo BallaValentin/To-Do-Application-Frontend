@@ -1,16 +1,21 @@
 import { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useLocation, useParams } from 'react-router-dom';
 import { Alert, Box, Typography } from '@mui/material';
 import { ToDo } from '../interface/ToDo';
 import { GetToDoById } from '../service/ToDoService';
 import ToDoCardDetailed from '../component/card/ToDoCardDetailed';
 
 export function ToDoDetailsPage() {
+  const location = useLocation();
   const { id } = useParams<{ id: string }>();
   const [todo, setTodo] = useState<ToDo | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const [success, setSuccess] = useState<string | null>(null);
 
   useEffect(() => {
+    if (location.state?.success) {
+      setSuccess(location.state.success);
+    }
     const fetchTodo = async () => {
       try {
         const todoData = await GetToDoById(Number(id));
@@ -29,6 +34,7 @@ export function ToDoDetailsPage() {
 
   return (
     <Box>
+      {success && <Alert severity="success">{success}</Alert>}
       <Typography variant="h4" gutterBottom>
         ToDo details
       </Typography>

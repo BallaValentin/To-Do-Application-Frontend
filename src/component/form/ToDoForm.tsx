@@ -56,7 +56,7 @@ function ToDoForm(toDoForm: ToDoFormProps) {
       isValid = false;
     }
 
-    if (!Number.isInteger(formData.levelOfImportance) || formData.levelOfImportance <= 0) {
+    if (!Number.isInteger(Number(formData.levelOfImportance)) || formData.levelOfImportance <= 0) {
       newErrors.levelOfImportance = 'Level of Importance must be a positive integer';
       isValid = false;
     }

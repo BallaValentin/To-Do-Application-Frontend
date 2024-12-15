@@ -12,7 +12,9 @@ export function ToDoCreatePage() {
   const handleCreateToDo = async (formData: ToDo) => {
     try {
       const todoData = await CreateToDo(formData);
-      navigate(`/todos/${todoData.id}`);
+      navigate(`/todos/${todoData.id}`, {
+        state: { success: `To do with id ${todoData.id} successfully created` },
+      });
     } catch (err) {
       console.error(`Failed to create new todo: ${err}`);
       setError('Failed to create new ToDo. Try again later');

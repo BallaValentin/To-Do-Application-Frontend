@@ -14,7 +14,7 @@ function ToDoCardDetailed({ toDo }: ToDoCardDetailedProps) {
 
   const handleDelete = async () => {
     try {
-      const status = await DeleteToDoById(toDo.id);
+      const status = await DeleteToDoById(Number(toDo.id));
       if (status === 204) {
         navigate('/', {
           state: { deleteAlert: { severity: 'success', message: `To do with id ${toDo.id} deleted succesfully` } },
