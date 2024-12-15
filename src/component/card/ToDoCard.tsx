@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { Button, Card, CardActions, CardContent, Typography } from '@mui/material';
 import { ToDo } from '../../interface/ToDo';
 
@@ -15,7 +16,9 @@ function ToDoCard({ toDo }: ToDoCardProps) {
         </Typography>
       </CardContent>
       <CardActions>
-        <Button>Details</Button>
+        <Button component={Link} to={`/todos/${toDo.id}`}>
+          Details
+        </Button>
       </CardActions>
     </Card>
   );
