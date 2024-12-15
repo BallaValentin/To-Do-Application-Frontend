@@ -1,5 +1,5 @@
 export interface ToDo {
-  id: number;
+  id?: number;
   title: string;
   description: string;
   dueDate: Date;
