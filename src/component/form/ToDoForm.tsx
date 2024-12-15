@@ -41,23 +41,23 @@ function ToDoForm(toDoForm: ToDoFormProps) {
       levelOfImportance: '',
     };
 
-    if (!formData?.title) {
+    if (!formData.title || formData.title.trim() === '') {
       newErrors.title = 'Title is required';
       isValid = false;
     }
 
-    if (!formData?.description) {
+    if (!formData.description || formData.description.trim() === '') {
       newErrors.description = 'Description is required';
       isValid = false;
     }
 
-    if (!formData?.dueDate) {
+    if (!formData.dueDate) {
       newErrors.dueDate = 'Due date is required';
       isValid = false;
     }
 
-    if (!formData?.levelOfImportance) {
-      newErrors.levelOfImportance = 'Level of Importance is required';
+    if (!Number.isInteger(formData.levelOfImportance) || formData.levelOfImportance <= 0) {
+      newErrors.levelOfImportance = 'Level of Importance must be a positive integer';
       isValid = false;
     }
 
@@ -72,7 +72,7 @@ function ToDoForm(toDoForm: ToDoFormProps) {
   return (
     <Box sx={{ maxWidth: 600, margin: 'auto', padding: 2 }}>
       <Typography variant="h4" gutterBottom>
-        {toDoForm.initialValues ? 'Update ToDo' : 'Create ToDo'}
+        ToDo Form
       </Typography>
       <form onSubmit={handleSubmit}>
         <Grid2 container spacing={2}>
@@ -131,7 +131,7 @@ function ToDoForm(toDoForm: ToDoFormProps) {
           </FormControl>
 
           <Button type="submit" variant="contained" color="primary" fullWidth>
-            {toDoForm.initialValues ? 'Update' : 'Create'} ToDo
+            Submit ToDo
           </Button>
         </Grid2>
       </form>
