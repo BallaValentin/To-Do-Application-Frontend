@@ -10,3 +10,8 @@ export const GetToDoById = async (id: number): Promise<ToDo> => {
   const response = await axios.get(`/api/todos/${id}`);
   return response.data;
 };
+
+export const DeleteToDoById = async (id: number): Promise<number> => {
+  const response = await axios.delete(`/api/todos/${id}`);
+  return response.status;
+};

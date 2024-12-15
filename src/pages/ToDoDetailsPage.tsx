@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
+import { Alert, Container, Typography } from '@mui/material';
 import { ToDo } from '../interface/ToDo';
 import { GetToDoById } from '../service/ToDoService';
-import { Alert, CardContent, Container, Typography } from '@mui/material';
 import ToDoCardDetailed from '../component/card/ToDoCardDetailed';
 
 export function ToDoDetailsPage() {
