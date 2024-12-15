@@ -1,6 +1,6 @@
 import { Alert, Box } from '@mui/material';
 import { useNavigate, useParams } from 'react-router-dom';
-import { useEffect, useState } from 'react';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import ToDoForm from '../component/form/ToDoForm';
 import { ToDo } from '../interface/ToDo';
 import { GetToDoById, UpdateToDoById } from '../service/ToDoService';
@@ -8,40 +8,54 @@ import { GetToDoById, UpdateToDoById } from '../service/ToDoService';
 export function ToDoUpdatePage() {
   const navigate = useNavigate();
   const { id } = useParams<{ id: string }>();
-  const [error, setError] = useState<string | null>(null);
+  const queryClient = useQueryClient();
 
-  useEffect(() => {
-    const fetchTodo = async () => {
-      try {
-        await GetToDoById(Number(id));
-      } catch (err) {
-        console.error(`Failed to fetch todo with id ${id}: ${err}`);
-        navigate('/', {
-          state: { error: `Failed to fetch todo with id ${id} from server. Try again later` },
-        });
-      }
-    };
-    fetchTodo();
-  }, [id]);
+  const {
+    data: toDo,
+    isLoading,
+    isError,
+    error,
+  } = useQuery({
+    queryKey: ['todo', id],
+    queryFn: () => GetToDoById(Number(id)),
+  });
 
-  const handleUpdateToDo = async (formData: ToDo) => {
-    try {
-      const todoData = await UpdateToDoById(Number(id), formData);
-      navigate(`/todos/${todoData.id}`, {
+  const {
+    mutate,
+    isPending,
+    isError: isUpdateError,
+    error: updateError,
+  } = useMutation({
+    mutationFn: (formData: ToDo) => UpdateToDoById(Number(id), formData),
+    onSuccess: (updatedTodo: ToDo) => {
+      queryClient.invalidateQueries({ queryKey: ['todos'] });
+      navigate(`/todos/${updatedTodo.id}`, {
         state: {
-          success: `To do with id ${todoData.id} successfully updated`,
+          success: `To do with id ${updatedTodo.id} created successfully`,
         },
       });
-    } catch (err) {
-      console.error(`Failed to update todo with id ${id}: ${err}`);
-      setError(`Failed to update todo with id ${id}. Try again later`);
-    }
+    },
+    onError: (err: unknown) => {
+      console.error(err);
+    },
+  });
+
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
+
+  if (isError) {
+    return <div className="error">{(error as Error).message}</div>;
+  }
+
+  const handleUpdateToDo = (formData: ToDo) => {
+    mutate(formData);
   };
 
   return (
     <Box>
-      {error && <Alert severity="error">{error}</Alert>}
-      <ToDoForm onSubmit={handleUpdateToDo} />
+      {isUpdateError && <Alert severity="error">{(updateError as Error).message}</Alert>}
+      <ToDoForm onSubmit={handleUpdateToDo} isLoading={isPending} initialValues={toDo} />
     </Box>
   );
 }

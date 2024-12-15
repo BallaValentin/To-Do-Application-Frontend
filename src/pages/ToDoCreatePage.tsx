@@ -1,29 +1,37 @@
 import { Alert, Box } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
-import { useState } from 'react';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import ToDoForm from '../component/form/ToDoForm';
 import { CreateToDo } from '../service/ToDoService';
 import { ToDo } from '../interface/ToDo';
 
 export function ToDoCreatePage() {
   const navigate = useNavigate();
-  const [error, setError] = useState<string | null>(null);
+  const queryClient = useQueryClient();
 
-  const handleCreateToDo = async (formData: ToDo) => {
-    try {
-      const todoData = await CreateToDo(formData);
-      navigate(`/todos/${todoData.id}`, {
-        state: { success: `To do with id ${todoData.id} successfully created` },
+  const { mutate, isPending, isError, error } = useMutation({
+    mutationFn: CreateToDo,
+    onSuccess: (createdTodo: ToDo) => {
+      queryClient.invalidateQueries({ queryKey: ['todos'] });
+      navigate(`/todos/${createdTodo.id}`, {
+        state: {
+          success: `To do with id ${createdTodo.id} created successfully`,
+        },
       });
-    } catch (err) {
-      console.error(`Failed to create new todo: ${err}`);
-      setError('Failed to create new ToDo. Try again later');
-    }
+    },
+    onError: (err: unknown) => {
+      console.error(err);
+    },
+  });
+
+  const handleCreateToDo = (formData: ToDo) => {
+    mutate(formData);
   };
+
   return (
     <Box>
-      {error && <Alert severity="error">{error}</Alert>}
-      <ToDoForm onSubmit={handleCreateToDo} />
+      {isError && <Alert severity="error">{(error as Error).message}</Alert>}
+      <ToDoForm onSubmit={handleCreateToDo} isLoading={isPending} />
     </Box>
   );
 }

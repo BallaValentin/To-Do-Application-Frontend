@@ -41,7 +41,7 @@ export function TodoListPage() {
       {deleteAlert && <Alert severity={deleteAlert.severity}>{deleteAlert.message}</Alert>}
 
       <h1>List of Todos</h1>
-      {todos && todos.map((todo) => <ToDoCard key={todo.id} toDo={todo} />)}
+      {todos?.map((todo) => <ToDoCard key={todo.id} toDo={todo} />)}
       <Fab
         color="primary"
         sx={{

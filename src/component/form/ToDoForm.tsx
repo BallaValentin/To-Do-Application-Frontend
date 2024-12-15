@@ -12,14 +12,15 @@ interface FormError {
 interface ToDoFormProps {
   initialValues?: ToDo;
   onSubmit: (formData: ToDo) => void;
+  isLoading: boolean;
 }
 
 function ToDoForm(toDoForm: ToDoFormProps) {
   const [formData, setFormData] = useState<ToDo>({
-    title: '',
-    description: '',
+    title: toDoForm.initialValues?.title || '',
+    description: toDoForm.initialValues?.description || '',
     dueDate: new Date(),
-    levelOfImportance: 0,
+    levelOfImportance: toDoForm.initialValues?.levelOfImportance || 0,
   });
 
   const [error, setError] = useState<FormError | null>(null);
@@ -130,8 +131,8 @@ function ToDoForm(toDoForm: ToDoFormProps) {
             {error?.levelOfImportance && <FormHelperText>{error?.levelOfImportance}</FormHelperText>}
           </FormControl>
 
-          <Button type="submit" variant="contained" color="primary" fullWidth>
-            Submit ToDo
+          <Button type="submit" variant="contained" color="primary" fullWidth disabled={toDoForm.isLoading}>
+            {toDoForm.isLoading ? 'Submitting...' : 'Submit'}
           </Button>
         </Grid2>
       </form>
