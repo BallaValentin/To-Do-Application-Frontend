@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Alert, AlertColor, Container, Fab } from '@mui/material';
+import { Alert, AlertColor, Box, Fab } from '@mui/material';
 import { useLocation, useNavigate } from 'react-router-dom';
 import AddIcon from '@mui/icons-material/Add';
 import { ToDo } from '../interface/ToDo';
@@ -30,7 +30,7 @@ export function TodoListPage() {
   }, []);
 
   return (
-    <Container>
+    <Box>
       {error && <Alert severity="error">{error}</Alert>}
 
       {deleteAlert && <Alert severity={deleteAlert.severity}>{deleteAlert.message}</Alert>}
@@ -54,6 +54,6 @@ export function TodoListPage() {
       >
         <AddIcon />
       </Fab>
-    </Container>
+    </Box>
   );
 }

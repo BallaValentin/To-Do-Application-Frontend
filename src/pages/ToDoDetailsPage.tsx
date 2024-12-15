@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { Alert, Container, Typography } from '@mui/material';
+import { Alert, Box, Typography } from '@mui/material';
 import { ToDo } from '../interface/ToDo';
 import { GetToDoById } from '../service/ToDoService';
 import ToDoCardDetailed from '../component/card/ToDoCardDetailed';
@@ -28,12 +28,12 @@ export function ToDoDetailsPage() {
   }
 
   return (
-    <Container>
+    <Box>
       <Typography variant="h4" gutterBottom>
         ToDo details
       </Typography>
 
       {todo ? <ToDoCardDetailed toDo={todo} /> : <Typography variant="body1">Todo not found </Typography>}
-    </Container>
+    </Box>
   );
 }
