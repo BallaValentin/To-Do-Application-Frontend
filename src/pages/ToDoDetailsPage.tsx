@@ -14,7 +14,7 @@ export function ToDoDetailsPage() {
 
   useEffect(() => {
     if (location.state?.success) {
-      setSuccess(location.state.deleteAlert);
+      setSuccess(location.state.success);
     }
   }, [location.state]);
 
@@ -29,7 +29,7 @@ export function ToDoDetailsPage() {
   });
 
   if (isLoading) {
-    return <ProgressCircle loadingMessage={`Fetching todo with id ${id}...`} />;
+    return <ProgressCircle loadingMessage={`Fetching todo with id ${id}`} />;
   }
 
   if (isError) {

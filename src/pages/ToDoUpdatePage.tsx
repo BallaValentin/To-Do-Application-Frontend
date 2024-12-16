@@ -31,7 +31,7 @@ export function ToDoUpdatePage() {
       queryClient.invalidateQueries({ queryKey: ['todo'], id });
       navigate(`/todos/${updatedTodo.id}`, {
         state: {
-          success: `To do with id ${updatedTodo.id} created successfully`,
+          success: `To do with id ${updatedTodo.id} updated successfully`,
         },
       });
     },
