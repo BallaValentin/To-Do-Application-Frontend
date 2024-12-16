@@ -1,4 +1,4 @@
-import { Alert, Box } from '@mui/material';
+import { Alert, Box, Typography } from '@mui/material';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import ToDoForm from '../component/form/ToDoForm';
@@ -28,7 +28,7 @@ export function ToDoUpdatePage() {
   } = useMutation({
     mutationFn: (formData: ToDo) => UpdateToDoById(Number(id), formData),
     onSuccess: (updatedTodo: ToDo) => {
-      queryClient.invalidateQueries({ queryKey: ['todos'] });
+      queryClient.invalidateQueries({ queryKey: ['todo'], id });
       navigate(`/todos/${updatedTodo.id}`, {
         state: {
           success: `To do with id ${updatedTodo.id} created successfully`,
@@ -55,7 +55,8 @@ export function ToDoUpdatePage() {
   return (
     <Box>
       {isUpdateError && <Alert severity="error">{(updateError as Error).message}</Alert>}
-      <ToDoForm onSubmit={handleUpdateToDo} isLoading={isPending} initialValues={toDo} />
+      <ToDoForm onSubmit={handleUpdateToDo} initialValues={toDo} />
+      {isPending && <Typography variant="body1">Updating todo...</Typography>}
     </Box>
   );
 }

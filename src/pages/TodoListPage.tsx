@@ -5,6 +5,7 @@ import AddIcon from '@mui/icons-material/Add';
 import { useQuery } from '@tanstack/react-query';
 import { GetToDos } from '../service/ToDoService';
 import ToDoCard from '../component/card/ToDoCard';
+import ProgressCircle from '../component/progress/ProgressCircle';
 
 export function TodoListPage() {
   const navigate = useNavigate();
@@ -29,18 +30,7 @@ export function TodoListPage() {
   }, [location.state]);
 
   if (isLoading) {
-    return (
-      <Box
-        sx={{
-          display: 'flex',
-          justifyContent: 'center',
-          alignItems: 'center',
-          height: '100vh',
-        }}
-      >
-        <CircularProgress />
-      </Box>
-    );
+    return <ProgressCircle loadingMessage="Fetching todos..." />;
   }
 
   if (isError) {

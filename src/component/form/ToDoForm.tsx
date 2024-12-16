@@ -12,7 +12,6 @@ interface FormError {
 interface ToDoFormProps {
   initialValues?: ToDo;
   onSubmit: (formData: ToDo) => void;
-  isLoading: boolean;
 }
 
 function ToDoForm(toDoForm: ToDoFormProps) {
@@ -132,7 +131,7 @@ function ToDoForm(toDoForm: ToDoFormProps) {
           </FormControl>
 
           <Button type="submit" variant="contained" color="primary" fullWidth disabled={toDoForm.isLoading}>
-            {toDoForm.isLoading ? 'Submitting...' : 'Submit'}
+            Submit ToDo
           </Button>
         </Grid2>
       </form>

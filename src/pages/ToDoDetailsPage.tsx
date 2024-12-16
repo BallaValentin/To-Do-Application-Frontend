@@ -4,6 +4,7 @@ import { Alert, Box, CircularProgress, Typography } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
 import { GetToDoById } from '../service/ToDoService';
 import ToDoCardDetailed from '../component/card/ToDoCardDetailed';
+import ProgressCircle from '../component/progress/ProgressCircle';
 
 export function ToDoDetailsPage() {
   console.log('Loading details page');
@@ -28,18 +29,7 @@ export function ToDoDetailsPage() {
   });
 
   if (isLoading) {
-    return (
-      <Box
-        sx={{
-          display: 'flex',
-          justifyContent: 'center',
-          alignItems: 'center',
-          height: '100vh',
-        }}
-      >
-        <CircularProgress />
-      </Box>
-    );
+    return <ProgressCircle loadingMessage={`Fetching todo with id ${id}...`} />;
   }
 
   if (isError) {

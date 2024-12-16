@@ -31,7 +31,8 @@ export function ToDoCreatePage() {
   return (
     <Box>
       {isError && <Alert severity="error">{(error as Error).message}</Alert>}
-      <ToDoForm onSubmit={handleCreateToDo} isLoading={isPending} />
+      <ToDoForm onSubmit={handleCreateToDo} />
+      {isPending && <Typography variant="body1">Creating todo...</Typography>}
     </Box>
   );
 }
