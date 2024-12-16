@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Alert, AlertColor, Box, Fab } from '@mui/material';
+import { Alert, AlertColor, Box, CircularProgress, Fab } from '@mui/material';
 import { useLocation, useNavigate } from 'react-router-dom';
 import AddIcon from '@mui/icons-material/Add';
 import { useQuery } from '@tanstack/react-query';
@@ -29,11 +29,26 @@ export function TodoListPage() {
   }, [location.state]);
 
   if (isLoading) {
-    return <div>Loading...</div>;
+    return (
+      <Box
+        sx={{
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          height: '100vh',
+        }}
+      >
+        <CircularProgress />
+      </Box>
+    );
   }
 
   if (isError) {
-    return <div className="error">{error.message}</div>;
+    return (
+      <Box>
+        <Alert severity="error">{error.message}</Alert>
+      </Box>
+    );
   }
 
   return (
