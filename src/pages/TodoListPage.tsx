@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Alert, AlertColor, Box, CircularProgress, Fab } from '@mui/material';
+import { Alert, AlertColor, Box, Fab } from '@mui/material';
 import { useLocation, useNavigate } from 'react-router-dom';
 import AddIcon from '@mui/icons-material/Add';
 import { useQuery } from '@tanstack/react-query';
