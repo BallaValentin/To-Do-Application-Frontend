@@ -130,7 +130,7 @@ function ToDoForm(toDoForm: ToDoFormProps) {
             {error?.levelOfImportance && <FormHelperText>{error?.levelOfImportance}</FormHelperText>}
           </FormControl>
 
-          <Button type="submit" variant="contained" color="primary" fullWidth disabled={toDoForm.isLoading}>
+          <Button type="submit" variant="contained" color="primary" fullWidth>
             Submit ToDo
           </Button>
         </Grid2>
