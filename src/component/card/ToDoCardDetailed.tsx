@@ -3,34 +3,14 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import { useNavigate } from 'react-router-dom';
 import { ToDo } from '../../interface/ToDo';
-import { deleteToDoById } from '../../service/ToDoService';
 
 interface ToDoCardDetailedProps {
   toDo: ToDo;
+  handleDelete: () => void;
 }
 
-function ToDoCardDetailed({ toDo }: ToDoCardDetailedProps) {
+function ToDoCardDetailed({ toDo, handleDelete }: ToDoCardDetailedProps) {
   const navigate = useNavigate();
-
-  const handleDelete = async () => {
-    try {
-      const status = await deleteToDoById(Number(toDo.id));
-      if (status === 204) {
-        navigate('/', {
-          state: { deleteAlert: { severity: 'success', message: `To do with id ${toDo.id} deleted succesfully` } },
-        });
-      } else {
-        navigate('/', {
-          state: { deleteAlert: { severity: 'error', message: `To do with id ${toDo.id} doesnt exist` } },
-        });
-      }
-    } catch (err) {
-      console.log(`Failed to delete todo with id ${toDo.id}: ${err}`);
-      navigate('/', {
-        state: { error: 'Failed to delete todo. Try again later' },
-      });
-    }
-  };
 
   const handleUpdate = () => {
     navigate(`/todos/update/${toDo.id}`);
