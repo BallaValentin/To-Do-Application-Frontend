@@ -3,7 +3,7 @@ import { Alert, AlertColor, Box, Fab } from '@mui/material';
 import { useLocation, useNavigate } from 'react-router-dom';
 import AddIcon from '@mui/icons-material/Add';
 import { useQuery } from '@tanstack/react-query';
-import { GetToDos } from '../service/ToDoService';
+import { getToDos } from '../service/ToDoService';
 import ToDoCard from '../component/card/ToDoCard';
 import ProgressCircle from '../component/progress/ProgressCircle';
 
@@ -18,7 +18,7 @@ export function TodoListPage() {
     error,
   } = useQuery({
     queryKey: ['todos'],
-    queryFn: GetToDos,
+    queryFn: getToDos,
   });
 
   const [deleteAlert, setDeleteAlert] = useState<{ severity: AlertColor; message: string } | null>(null);
