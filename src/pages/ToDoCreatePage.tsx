@@ -4,6 +4,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import ToDoForm from '../component/form/ToDoForm';
 import { createToDo } from '../service/ToDoService';
 import { ToDo } from '../interface/ToDo';
+import { ToDoResponse } from '../interface/ToDoResponse';
 
 export function ToDoCreatePage() {
   const navigate = useNavigate();
@@ -11,7 +12,7 @@ export function ToDoCreatePage() {
 
   const { mutate, isPending, isError, error } = useMutation({
     mutationFn: createToDo,
-    onSuccess: (createdTodo: ToDo) => {
+    onSuccess: (createdTodo: ToDoResponse) => {
       queryClient.invalidateQueries({ queryKey: ['todos'] });
       navigate(`/todos/${createdTodo.id}`, {
         state: {

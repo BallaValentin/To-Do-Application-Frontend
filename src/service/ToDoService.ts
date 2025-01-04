@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { ToDo } from '../interface/ToDo';
+import { ToDoResponse } from '../interface/ToDoResponse';
 
 export const toDoApi = axios.create({
   baseURL: 'http://localhost:8080/api',
@@ -23,12 +24,12 @@ export const deleteToDoById = async (id: number): Promise<number> => {
   return response.status;
 };
 
-export const createToDo = async (toDo: ToDo): Promise<ToDo> => {
-  const response = await toDoApi.post<ToDo>('/todos', toDo);
+export const createToDo = async (toDo: ToDo): Promise<ToDoResponse> => {
+  const response = await toDoApi.post<ToDoResponse>('/todos', toDo);
   return response.data;
 };
 
-export const updateToDoById = async (id: number, toDo: ToDo): Promise<ToDo> => {
-  const response = await toDoApi.put<ToDo>(`/todos/${id}`, toDo);
+export const updateToDoById = async (id: number, toDo: ToDo): Promise<ToDoResponse> => {
+  const response = await toDoApi.put<ToDoResponse>(`/todos/${id}`, toDo);
   return response.data;
 };
