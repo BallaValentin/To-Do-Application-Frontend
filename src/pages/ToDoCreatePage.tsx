@@ -2,7 +2,7 @@ import { Alert, Box, Typography } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import ToDoForm from '../component/form/ToDoForm';
-import { CreateToDo } from '../service/ToDoService';
+import { createToDo } from '../service/ToDoService';
 import { ToDo } from '../interface/ToDo';
 
 export function ToDoCreatePage() {
@@ -10,7 +10,7 @@ export function ToDoCreatePage() {
   const queryClient = useQueryClient();
 
   const { mutate, isPending, isError, error } = useMutation({
-    mutationFn: CreateToDo,
+    mutationFn: createToDo,
     onSuccess: (createdTodo: ToDo) => {
       queryClient.invalidateQueries({ queryKey: ['todos'] });
       navigate(`/todos/${createdTodo.id}`, {

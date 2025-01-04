@@ -3,7 +3,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import { useNavigate } from 'react-router-dom';
 import { ToDo } from '../../interface/ToDo';
-import { DeleteToDoById } from '../../service/ToDoService';
+import { deleteToDoById } from '../../service/ToDoService';
 
 interface ToDoCardDetailedProps {
   toDo: ToDo;
@@ -14,7 +14,7 @@ function ToDoCardDetailed({ toDo }: ToDoCardDetailedProps) {
 
   const handleDelete = async () => {
     try {
-      const status = await DeleteToDoById(Number(toDo.id));
+      const status = await deleteToDoById(Number(toDo.id));
       if (status === 204) {
         navigate('/', {
           state: { deleteAlert: { severity: 'success', message: `To do with id ${toDo.id} deleted succesfully` } },

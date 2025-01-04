@@ -3,7 +3,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import ToDoForm from '../component/form/ToDoForm';
 import { ToDo } from '../interface/ToDo';
-import { GetToDoById, UpdateToDoById } from '../service/ToDoService';
+import { getToDoById, updateToDoById } from '../service/ToDoService';
 
 export function ToDoUpdatePage() {
   const navigate = useNavigate();
@@ -17,7 +17,7 @@ export function ToDoUpdatePage() {
     error,
   } = useQuery({
     queryKey: ['todo', id],
-    queryFn: () => GetToDoById(Number(id)),
+    queryFn: () => getToDoById(Number(id)),
   });
 
   const {
@@ -26,7 +26,7 @@ export function ToDoUpdatePage() {
     isError: isUpdateError,
     error: updateError,
   } = useMutation({
-    mutationFn: (formData: ToDo) => UpdateToDoById(Number(id), formData),
+    mutationFn: (formData: ToDo) => updateToDoById(Number(id), formData),
     onSuccess: (updatedTodo: ToDo) => {
       queryClient.invalidateQueries({ queryKey: ['todo'], id });
       navigate(`/todos/${updatedTodo.id}`, {
