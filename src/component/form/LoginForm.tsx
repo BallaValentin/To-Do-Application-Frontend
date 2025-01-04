@@ -40,28 +40,21 @@ function LoginForm(loginForm: LoginFormProps) {
         <LockIcon />
       </Avatar>
       <Typography variant="h4" gutterBottom sx={{ mt: 2 }}>
-        Login
+        Sign in
       </Typography>
       <form onSubmit={handleLogin}>
         <Grid2 container spacing={2}>
           <FormControl fullWidth>
-            <TextField
-              name="username"
-              label="Username: "
-              onChange={handleChange}
-              required
-              variant="outlined"
-              fullWidth
-            />
+            <TextField name="username" label="Username" onChange={handleChange} required variant="standard" fullWidth />
           </FormControl>
 
           <FormControl fullWidth>
             <TextField
               name="password"
-              label="Password: "
+              label="Password"
               onChange={handleChange}
               required
-              variant="outlined"
+              variant="standard"
               type="password"
               fullWidth
             />
@@ -92,7 +85,7 @@ function LoginForm(loginForm: LoginFormProps) {
             <Typography variant="body2" component="span">
               Don&apos;t have an account?{' '}
             </Typography>
-            <Link href="/login" underline="hover">
+            <Link href="/register" underline="hover">
               Sign Up Here.
             </Link>
           </Box>

@@ -5,6 +5,7 @@ import { ToDoDetailsPage } from './pages/ToDoDetailsPage';
 import { ToDoUpdatePage } from './pages/ToDoUpdatePage';
 import { ToDoCreatePage } from './pages/ToDoCreatePage';
 import { LoginPage } from './pages/LoginPage';
+import { RegisterPage } from './pages/RegisterPage';
 
 export const queryClient = new QueryClient({
   defaultOptions: {
@@ -25,6 +26,7 @@ function App() {
           <Route path="/todos/update/:id" element={<ToDoUpdatePage />} />
           <Route path="/todos/create" element={<ToDoCreatePage />} />
           <Route path="/login" element={<LoginPage />} />
+          <Route path="/register" element={<RegisterPage />} />
         </Routes>
       </Router>
     </QueryClientProvider>
