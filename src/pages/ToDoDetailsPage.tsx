@@ -1,14 +1,15 @@
 import { useEffect, useState } from 'react';
-import { useLocation, useParams } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { Alert, Box, Typography } from '@mui/material';
-import { useQuery } from '@tanstack/react-query';
-import { getToDoById } from '../service/ToDoService';
+import { useMutation, useQuery } from '@tanstack/react-query';
+import { deleteToDoById, getToDoById } from '../service/ToDoService';
 import ToDoCardDetailed from '../component/card/ToDoCardDetailed';
 import ProgressCircle from '../component/progress/ProgressCircle';
+import { queryClient } from '../App';
 
 export function ToDoDetailsPage() {
-  console.log('Loading details page');
   const location = useLocation();
+  const navigate = useNavigate();
   const { id } = useParams<{ id: string }>();
   const [success, setSuccess] = useState<string | null>(null);
 
@@ -28,6 +29,31 @@ export function ToDoDetailsPage() {
     queryFn: () => getToDoById(Number(id)),
   });
 
+  const {
+    mutate,
+    isError: isDeleteError,
+    error: deleteError,
+    isPending,
+  } = useMutation({
+    mutationFn: () => deleteToDoById(Number(id)),
+    onSuccess: (status: number) => {
+      queryClient.invalidateQueries({ queryKey: ['todos'] });
+      if (status === 204) {
+        navigate('/', {
+          state: { deleteAlert: { severity: 'success', message: `To do with id ${todo?.id} deleted succesfully` } },
+        });
+      } else {
+        navigate('/', {
+          state: { deleteAlert: { severity: 'error', message: `To do with id ${todo?.id} doesnt exist` } },
+        });
+      }
+    },
+  });
+
+  const handleDelete = () => {
+    mutate();
+  };
+
   if (isLoading) {
     return <ProgressCircle loadingMessage={`Fetching todo with id ${id}`} />;
   }
@@ -40,6 +66,14 @@ export function ToDoDetailsPage() {
     );
   }
 
+  if (isDeleteError) {
+    return (
+      <Box>
+        <Alert severity="error">{deleteError.message}</Alert>
+      </Box>
+    );
+  }
+
   return (
     <Box>
       {success && <Alert severity="success">{success}</Alert>}
@@ -47,7 +81,12 @@ export function ToDoDetailsPage() {
         ToDo details
       </Typography>
 
-      {todo ? <ToDoCardDetailed toDo={todo} /> : <Typography variant="body1">Todo not found </Typography>}
+      {todo ? (
+        <ToDoCardDetailed toDo={todo} handleDelete={handleDelete} />
+      ) : (
+        <Typography variant="body1">Todo not found </Typography>
+      )}
+      {isPending && <Typography variant="body1">Deleting todo...</Typography>}
     </Box>
   );
 }
