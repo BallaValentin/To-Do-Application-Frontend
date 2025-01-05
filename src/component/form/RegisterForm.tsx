@@ -3,6 +3,7 @@ import {
   Box,
   Button,
   FormControl,
+  FormHelperText,
   Grid2,
   LinearProgress,
   Link,
@@ -17,6 +18,15 @@ import { RegisterData } from '../../interface/RegisterData';
 interface RegisterFormProps {
   handleRegister: (registerData: RegisterData) => void;
 }
+
+interface RegisterFormError {
+  usernameError: string;
+  fullnameError: string;
+  emailError: string;
+  passwordError: string;
+  confirmPasswordError: string;
+}
+
 function RegisterForm(registerForm: RegisterFormProps) {
   const [registerData, setRegisterData] = useState<RegisterData>({
     username: '',
@@ -25,11 +35,60 @@ function RegisterForm(registerForm: RegisterFormProps) {
     password: '',
   });
 
-  const [passwordStrength, setPasswordStrength] = useState<number>(0);
+  const [registerError, setRegisterError] = useState<RegisterFormError>({
+    usernameError: '',
+    fullnameError: '',
+    emailError: '',
+    passwordError: '',
+    confirmPasswordError: '',
+  });
 
-  const handleLogin = (event: React.FormEvent) => {
+  const [passwordStrength, setPasswordStrength] = useState<number>(0);
+  const [confirmPassword, setConfirmPassword] = useState<string>('');
+
+  const handleRegister = (event: React.FormEvent) => {
     event.preventDefault();
-    registerForm.handleRegister(registerData);
+
+    let isValid: boolean = true;
+
+    const newErrors: RegisterFormError = {
+      usernameError: '',
+      fullnameError: '',
+      emailError: '',
+      passwordError: '',
+      confirmPasswordError: '',
+    };
+
+    if (!/^[A-Za-z][A-Za-z_]{3,}$/.test(registerData.username)) {
+      isValid = false;
+      newErrors.usernameError = 'Invalid username format.';
+    }
+
+    if (!/^[A-Z][a-z]+ [A-Z][a-z]+$/.test(registerData.fullname)) {
+      isValid = false;
+      newErrors.fullnameError = 'Must write your real name(ex. John Smith).';
+    }
+
+    if (!/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(registerData.email)) {
+      isValid = false;
+      newErrors.emailError = 'Invalid email address.';
+    }
+
+    if (passwordStrength !== 100) {
+      isValid = false;
+      newErrors.passwordError =
+        'Password must be atleast 8 characters long and must contain uppercase, lowercase, digit and special characters.';
+    }
+
+    if (confirmPassword !== registerData.password) {
+      isValid = false;
+      newErrors.confirmPasswordError = 'Passwords must match.';
+    }
+
+    setRegisterError(newErrors);
+    if (isValid) {
+      registerForm.handleRegister(registerData);
+    }
   };
 
   const handlePasswordChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -73,13 +132,14 @@ function RegisterForm(registerForm: RegisterFormProps) {
       <Typography variant="h4" gutterBottom sx={{ mt: 2 }}>
         Sign up
       </Typography>
-      <form onSubmit={handleLogin}>
+      <form onSubmit={handleRegister}>
         <Grid2 container spacing={2}>
-          <FormControl fullWidth>
+          <FormControl fullWidth error={Boolean(registerError.usernameError)}>
             <TextField name="username" label="Username" onChange={handleChange} required variant="standard" fullWidth />
+            {registerError.usernameError && <FormHelperText>{registerError.usernameError}</FormHelperText>}
           </FormControl>
 
-          <FormControl fullWidth>
+          <FormControl fullWidth error={Boolean(registerError.fullnameError)}>
             <TextField
               name="fullname"
               label="Your Name"
@@ -88,9 +148,10 @@ function RegisterForm(registerForm: RegisterFormProps) {
               variant="standard"
               fullWidth
             />
+            {registerError.fullnameError && <FormHelperText>{registerError.fullnameError}</FormHelperText>}
           </FormControl>
 
-          <FormControl fullWidth>
+          <FormControl fullWidth error={Boolean(registerError.emailError)}>
             <TextField
               name="email"
               label="Email Address"
@@ -99,9 +160,10 @@ function RegisterForm(registerForm: RegisterFormProps) {
               variant="standard"
               fullWidth
             />
+            {registerError.emailError && <FormHelperText>{registerError.emailError}</FormHelperText>}
           </FormControl>
 
-          <FormControl fullWidth>
+          <FormControl fullWidth error={Boolean(registerError.passwordError)}>
             <TextField
               name="password"
               label="Password"
@@ -111,6 +173,7 @@ function RegisterForm(registerForm: RegisterFormProps) {
               type="password"
               fullWidth
             />
+            {registerError.passwordError && <FormHelperText>{registerError.passwordError}</FormHelperText>}
 
             <LinearProgress
               variant="determinate"
@@ -123,16 +186,19 @@ function RegisterForm(registerForm: RegisterFormProps) {
             </Typography>
           </FormControl>
 
-          <FormControl fullWidth>
+          <FormControl fullWidth error={Boolean(registerError.confirmPasswordError)}>
             <TextField
               name="confirm-password"
               label="Confirm Password"
-              onChange={handleChange}
+              onChange={(e) => setConfirmPassword(e.target.value)}
               required
               variant="standard"
               type="password"
               fullWidth
             />
+            {registerError.confirmPasswordError && (
+              <FormHelperText>{registerError.confirmPasswordError}</FormHelperText>
+            )}
           </FormControl>
 
           <Button type="submit" variant="contained" color="primary" fullWidth>
