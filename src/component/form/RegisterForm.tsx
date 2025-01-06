@@ -59,7 +59,7 @@ function RegisterForm(registerForm: RegisterFormProps) {
       confirmPasswordError: '',
     };
 
-    if (!/^[A-Za-z][A-Za-z_]{3,}$/.test(registerData.username)) {
+    if (!/^[A-Za-z][A-Za-z0-9_]{3,}$/.test(registerData.username)) {
       isValid = false;
       newErrors.usernameError = 'Invalid username format.';
     }
@@ -100,7 +100,7 @@ function RegisterForm(registerForm: RegisterFormProps) {
     if (/[A-Z]/.test(value)) strength += 25;
     if (/[a-z]/.test(value)) strength += 25;
     if (/\d/.test(value)) strength += 15;
-    if (/[!@#$%^&*]/.test(value)) strength += 10;
+    if (/[!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?]/.test(value)) strength += 10;
     setPasswordStrength(strength);
   };
 

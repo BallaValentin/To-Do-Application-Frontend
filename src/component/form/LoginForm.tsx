@@ -7,7 +7,6 @@ import {
   FormControlLabel,
   Grid2,
   Link,
-  Paper,
   TextField,
   Typography,
 } from '@mui/material';
@@ -16,7 +15,7 @@ import LockIcon from '@mui/icons-material/Lock';
 import { LoginData } from '../../interface/LoginData';
 
 interface LoginFormProps {
-  handleLogin: (loginData: LoginData) => void;
+  onLogin: (loginData: LoginData) => void;
 }
 function LoginForm(loginForm: LoginFormProps) {
   const [loginData, setLoginData] = useState<LoginData>({
@@ -24,9 +23,9 @@ function LoginForm(loginForm: LoginFormProps) {
     password: '',
   });
   const [rememberMe, setRememberMe] = useState(false);
-  const handleLogin = (event: React.FormEvent) => {
+  const handleSubmitLogin = (event: React.FormEvent) => {
     event.preventDefault();
-    loginForm.handleLogin(loginData);
+    loginForm.onLogin(loginData);
   };
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -35,14 +34,14 @@ function LoginForm(loginForm: LoginFormProps) {
   };
 
   return (
-    <Paper elevation={3} sx={{ maxWidth: 300, margin: 'auto', padding: 4, textAlign: 'center', marginTop: 10 }}>
+    <Box>
       <Avatar sx={{ margin: 'auto', bgcolor: 'lightgray', color: 'black' }}>
         <LockIcon />
       </Avatar>
       <Typography variant="h4" gutterBottom sx={{ mt: 2 }}>
         Sign in
       </Typography>
-      <form onSubmit={handleLogin}>
+      <form onSubmit={handleSubmitLogin}>
         <Grid2 container spacing={2}>
           <FormControl fullWidth>
             <TextField name="username" label="Username" onChange={handleChange} required variant="standard" fullWidth />
@@ -91,7 +90,7 @@ function LoginForm(loginForm: LoginFormProps) {
           </Box>
         </Grid2>
       </form>
-    </Paper>
+    </Box>
   );
 }
 
