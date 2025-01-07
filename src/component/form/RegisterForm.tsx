@@ -7,7 +7,6 @@ import {
   Grid2,
   LinearProgress,
   Link,
-  Paper,
   TextField,
   Typography,
 } from '@mui/material';
@@ -16,7 +15,7 @@ import LockIcon from '@mui/icons-material/Lock';
 import { RegisterData } from '../../interface/RegisterData';
 
 interface RegisterFormProps {
-  handleRegister: (registerData: RegisterData) => void;
+  onRegister: (registerData: RegisterData) => void;
 }
 
 interface RegisterFormError {
@@ -46,7 +45,7 @@ function RegisterForm(registerForm: RegisterFormProps) {
   const [passwordStrength, setPasswordStrength] = useState<number>(0);
   const [confirmPassword, setConfirmPassword] = useState<string>('');
 
-  const handleRegister = (event: React.FormEvent) => {
+  const handleSubmitRegister = (event: React.FormEvent) => {
     event.preventDefault();
 
     let isValid: boolean = true;
@@ -87,7 +86,7 @@ function RegisterForm(registerForm: RegisterFormProps) {
 
     setRegisterError(newErrors);
     if (isValid) {
-      registerForm.handleRegister(registerData);
+      registerForm.onRegister(registerData);
     }
   };
 
@@ -125,14 +124,14 @@ function RegisterForm(registerForm: RegisterFormProps) {
   };
 
   return (
-    <Paper elevation={3} sx={{ maxWidth: 300, margin: 'auto', padding: 4, textAlign: 'center', marginTop: 10 }}>
+    <Box>
       <Avatar sx={{ margin: 'auto', bgcolor: 'lightgray', color: 'black' }}>
         <LockIcon />
       </Avatar>
       <Typography variant="h4" gutterBottom sx={{ mt: 2 }}>
         Sign up
       </Typography>
-      <form onSubmit={handleRegister}>
+      <form onSubmit={handleSubmitRegister}>
         <Grid2 container spacing={2}>
           <FormControl fullWidth error={Boolean(registerError.usernameError)}>
             <TextField name="username" label="Username" onChange={handleChange} required variant="standard" fullWidth />
@@ -215,7 +214,7 @@ function RegisterForm(registerForm: RegisterFormProps) {
           </Box>
         </Grid2>
       </form>
-    </Paper>
+    </Box>
   );
 }
 
