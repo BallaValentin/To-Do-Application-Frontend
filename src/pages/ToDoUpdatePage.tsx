@@ -8,13 +8,13 @@ import { getToDoById, updateToDoById } from '../service/ToDoService';
 import { ToDoResponse } from '../interface/ToDoResponse';
 import TokenExpiredModal from '../component/modal/TokenExpiredModal';
 import { useTokenValidation } from '../hooks/UseTokenValidation';
+import CommonHeader from '../component/header/CommonHeader';
 
 export function ToDoUpdatePage() {
   const navigate = useNavigate();
   const { id } = useParams<{ id: string }>();
   const queryClient = useQueryClient();
-  const token = localStorage.getItem('jwtToken');
-  const isInvalidToken = useTokenValidation(token || '');
+  const isInvalidToken = useTokenValidation();
 
   const {
     data: toDo,
@@ -62,6 +62,7 @@ export function ToDoUpdatePage() {
 
   return (
     <Box>
+      <CommonHeader />
       {isUpdateError && <Alert severity="error">{(updateError as Error).message}</Alert>}
       <ToDoForm onSubmit={handleUpdateToDo} initialValues={toDo} />
       {isPending && <Typography variant="body1">Updating todo...</Typography>}

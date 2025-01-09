@@ -6,6 +6,7 @@ import { useQuery } from '@tanstack/react-query';
 import { getToDos } from '../service/ToDoService';
 import ToDoCard from '../component/card/ToDoCard';
 import ProgressCircle from '../component/progress/ProgressCircle';
+import CommonHeader from '../component/header/CommonHeader';
 
 export function TodoListPage() {
   const navigate = useNavigate();
@@ -43,6 +44,7 @@ export function TodoListPage() {
 
   return (
     <Box>
+      <CommonHeader />
       {deleteAlert && <Alert severity={deleteAlert.severity}>{deleteAlert.message}</Alert>}
 
       <h1>List of Todos</h1>

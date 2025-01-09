@@ -2,10 +2,11 @@ import { useEffect, useState } from 'react';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { Alert, Box, Typography } from '@mui/material';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { AxiosError } from 'axios';
 import { deleteToDoById, getToDoById } from '../service/ToDoService';
 import ToDoCardDetailed from '../component/card/ToDoCardDetailed';
 import ProgressCircle from '../component/progress/ProgressCircle';
-import { AxiosError } from 'axios';
+import CommonHeader from '../component/header/CommonHeader';
 
 export function ToDoDetailsPage() {
   const location = useLocation();
@@ -82,6 +83,7 @@ export function ToDoDetailsPage() {
 
   return (
     <Box>
+      <CommonHeader />
       {success && <Alert severity="success">{success}</Alert>}
       <Typography variant="h4" gutterBottom>
         ToDo details

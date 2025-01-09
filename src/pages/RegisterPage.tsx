@@ -1,4 +1,4 @@
-import { Alert, Paper } from '@mui/material';
+import { Alert, Box, Paper } from '@mui/material';
 import { useMutation } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
@@ -6,6 +6,7 @@ import { AxiosError } from 'axios';
 import RegisterForm from '../component/form/RegisterForm';
 import { RegisterData } from '../interface/RegisterData';
 import { registerUser } from '../service/UserService';
+import CommonHeader from '../component/header/CommonHeader';
 
 interface ErrorResponse {
   error: string;
@@ -43,13 +44,16 @@ export function RegisterPage() {
     mutate(registerData);
   };
   return (
-    <Paper elevation={3} sx={{ maxWidth: 300, margin: 'auto', padding: 4, textAlign: 'center', marginTop: 10 }}>
-      {errorMessage && (
-        <Alert severity="error" sx={{ mb: 2 }}>
-          {errorMessage}
-        </Alert>
-      )}
-      <RegisterForm onRegister={handleRegister} />
-    </Paper>
+    <Box>
+      <CommonHeader />
+      <Paper elevation={3} sx={{ maxWidth: 300, margin: 'auto', padding: 4, textAlign: 'center', marginTop: 10 }}>
+        {errorMessage && (
+          <Alert severity="error" sx={{ mb: 2 }}>
+            {errorMessage}
+          </Alert>
+        )}
+        <RegisterForm onRegister={handleRegister} />
+      </Paper>
+    </Box>
   );
 }

@@ -8,12 +8,12 @@ import { ToDo } from '../interface/ToDo';
 import { ToDoResponse } from '../interface/ToDoResponse';
 import TokenExpiredModal from '../component/modal/TokenExpiredModal';
 import { useTokenValidation } from '../hooks/UseTokenValidation';
+import CommonHeader from '../component/header/CommonHeader';
 
 export function ToDoCreatePage() {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
-  const token = localStorage.getItem('jwtToken');
-  const isInvalidToken = useTokenValidation(token || '');
+  const isInvalidToken = useTokenValidation();
 
   const { mutate, isPending, isError, error } = useMutation({
     mutationFn: createToDo,
@@ -38,6 +38,7 @@ export function ToDoCreatePage() {
 
   return (
     <Box>
+      <CommonHeader />
       {isError && <Alert severity="error">{(error as Error).message}</Alert>}
       <ToDoForm onSubmit={handleCreateToDo} />
       {isPending && <Typography variant="body1">Creating todo...</Typography>}

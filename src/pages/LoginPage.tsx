@@ -1,4 +1,4 @@
-import { Alert, Paper } from '@mui/material';
+import { Alert, Box, Paper } from '@mui/material';
 import { useMutation } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
@@ -6,6 +6,7 @@ import { AxiosError } from 'axios';
 import LoginForm from '../component/form/LoginForm';
 import { loginUser } from '../service/UserService';
 import { LoginData } from '../interface/LoginData';
+import CommonHeader from '../component/header/CommonHeader';
 
 export function LoginPage() {
   const navigate = useNavigate();
@@ -31,13 +32,16 @@ export function LoginPage() {
     mutate(loginData);
   };
   return (
-    <Paper elevation={3} sx={{ maxWidth: 300, margin: 'auto', padding: 4, textAlign: 'center', marginTop: 10 }}>
-      {errorMessage && (
-        <Alert severity="error" sx={{ mb: 2 }}>
-          {errorMessage}
-        </Alert>
-      )}
-      <LoginForm onLogin={handleLogin} />
-    </Paper>
+    <Box>
+      <CommonHeader />
+      <Paper elevation={3} sx={{ maxWidth: 300, margin: 'auto', padding: 4, textAlign: 'center', marginTop: 10 }}>
+        {errorMessage && (
+          <Alert severity="error" sx={{ mb: 2 }}>
+            {errorMessage}
+          </Alert>
+        )}
+        <LoginForm onLogin={handleLogin} />
+      </Paper>
+    </Box>
   );
 }
