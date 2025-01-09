@@ -14,7 +14,7 @@ function TokenExpiredModal({ isInvalidToken }: TokenExpiredModalProps) {
         onClose={() => {}}
         aria-labelledby="token-expired-modal"
         aria-describedby="token-expired-description"
-        sx={{ display: 'flex', alignItems: 'center', justifyContent: 'middle' }}
+        sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}
       >
         <Typography id="token-expired-modal" variant="h6" component="h2">
           Your session has expired.
