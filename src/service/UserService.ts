@@ -11,8 +11,9 @@ export const userApi = axios.create({
 });
 
 export const loginUser = async (userLogin: LoginData): Promise<UserResponse> => {
-  console.log(`Sending: ${userLogin.username} and ${userLogin.password}`);
   const response = await userApi.post<UserResponse>('/login', userLogin);
+  const { jwtToken } = response.data;
+  localStorage.setItem('jwtToken', jwtToken);
   return response.data;
 };
 
