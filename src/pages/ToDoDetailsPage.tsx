@@ -5,6 +5,7 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { deleteToDoById, getToDoById } from '../service/ToDoService';
 import ToDoCardDetailed from '../component/card/ToDoCardDetailed';
 import ProgressCircle from '../component/progress/ProgressCircle';
+import { AxiosError } from 'axios';
 
 export function ToDoDetailsPage() {
   const location = useLocation();
@@ -46,6 +47,11 @@ export function ToDoDetailsPage() {
         navigate('/', {
           state: { deleteAlert: { severity: 'error', message: `To do with id ${todo?.id} doesnt exist` } },
         });
+      }
+    },
+    onError: (err: AxiosError) => {
+      if (err.response?.status === 401) {
+        navigate('/unauthorized');
       }
     },
   });

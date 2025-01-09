@@ -8,6 +8,7 @@ import { createToDo } from '../service/ToDoService';
 import { ToDo } from '../interface/ToDo';
 import { ToDoResponse } from '../interface/ToDoResponse';
 import TokenExpiredModal from '../component/modal/TokenExpiredModal';
+import { AxiosError } from 'axios';
 
 export function ToDoCreatePage() {
   const navigate = useNavigate();
@@ -48,8 +49,10 @@ export function ToDoCreatePage() {
         },
       });
     },
-    onError: (err: unknown) => {
-      console.error(err);
+    onError: (err: AxiosError) => {
+      if (err.response?.status === 401) {
+        navigate('/unauthorized');
+      }
     },
   });
 

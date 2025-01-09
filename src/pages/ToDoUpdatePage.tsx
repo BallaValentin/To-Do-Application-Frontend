@@ -1,6 +1,7 @@
 import { Alert, Box, Typography } from '@mui/material';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { AxiosError } from 'axios';
 import ToDoForm from '../component/form/ToDoForm';
 import { ToDo } from '../interface/ToDo';
 import { getToDoById, updateToDoById } from '../service/ToDoService';
@@ -36,8 +37,10 @@ export function ToDoUpdatePage() {
         },
       });
     },
-    onError: (err: unknown) => {
-      console.error(err);
+    onError: (err: AxiosError) => {
+      if (err.response?.status === 401) {
+        navigate('/unauthorized');
+      }
     },
   });
 
