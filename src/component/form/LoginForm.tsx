@@ -21,6 +21,7 @@ function LoginForm(loginForm: LoginFormProps) {
   const [loginData, setLoginData] = useState<LoginData>({
     username: '',
     password: '',
+    rememberMe: false,
   });
   const [rememberMe, setRememberMe] = useState(false);
   const handleSubmitLogin = (event: React.FormEvent) => {
@@ -63,7 +64,10 @@ function LoginForm(loginForm: LoginFormProps) {
             control={
               <Checkbox
                 checked={rememberMe}
-                onChange={(e: React.ChangeEvent<HTMLInputElement>) => setRememberMe(e.target.checked)}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                  setRememberMe(e.target.checked);
+                  loginData.rememberMe = e.target.checked;
+                }}
                 color="primary"
               />
             }
