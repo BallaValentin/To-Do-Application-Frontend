@@ -11,6 +11,7 @@ interface FormError {
 
 interface ToDoFormProps {
   initialValues?: ToDo;
+  isPending: boolean;
   onSubmit: (formData: ToDo) => void;
 }
 
@@ -129,9 +130,8 @@ function ToDoForm(toDoForm: ToDoFormProps) {
             />
             {error?.levelOfImportance && <FormHelperText>{error?.levelOfImportance}</FormHelperText>}
           </FormControl>
-
-          <Button type="submit" variant="contained" color="primary" fullWidth>
-            Submit ToDo
+          <Button type="submit" variant="contained" color="primary" disabled={toDoForm.isPending} fullWidth>
+            {toDoForm.isPending ? 'Submitting ToDo...' : 'Submit ToDo'}
           </Button>
         </Grid2>
       </form>

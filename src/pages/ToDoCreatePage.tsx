@@ -40,9 +40,7 @@ export function ToDoCreatePage() {
     <Box>
       <CommonHeader />
       {isError && <Alert severity="error">{(error as Error).message}</Alert>}
-      <ToDoForm onSubmit={handleCreateToDo} />
-      {isPending && <Typography variant="body1">Creating todo...</Typography>}
-
+      <ToDoForm isPending={isPending} onSubmit={handleCreateToDo} />
       <TokenExpiredModal isInvalidToken={isInvalidToken} />
     </Box>
   );

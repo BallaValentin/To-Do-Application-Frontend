@@ -46,32 +46,34 @@ function CommonHeader() {
     }
   });
   return (
-    <AppBar position="fixed" sx={{ bgcolor: 'primary.main' }}>
-      <Toolbar sx={{ justifyContent: 'space-between' }}>
-        <Box sx={{ display: 'flex', alignItems: 'center' }}>
-          <Avatar sx={{ bgColor: 'grey.500', mr: 1 }}>{initials}</Avatar>
-          <Typography variant="h6">{username}</Typography>
-          <IconButton onClick={handleMenuOpen}>{anchor ? <ArrowDropUp /> : <ArrowDropDown />}</IconButton>
-          <Menu anchorEl={anchor} open={Boolean(anchor)} onClose={handleMenuClose}>
-            {hasToken ? (
-              <MenuItem onClick={handleLogout}>
-                <ListItemIcon>
-                  <Logout fontSize="small" />
-                </ListItemIcon>
-                Logout
-              </MenuItem>
-            ) : (
-              <MenuItem onClick={handleLogin}>
-                <ListItemIcon>
-                  <Logout fontSize="small" />
-                </ListItemIcon>
-                Login
-              </MenuItem>
-            )}
-          </Menu>
-        </Box>
-      </Toolbar>
-    </AppBar>
+    <Box sx={{ mb: 10 }}>
+      <AppBar position="fixed" sx={{ bgcolor: 'primary.main' }}>
+        <Toolbar sx={{ justifyContent: 'space-between' }}>
+          <Box sx={{ display: 'flex', alignItems: 'center' }}>
+            <Avatar sx={{ bgColor: 'grey.500', mr: 1 }}>{initials}</Avatar>
+            <Typography variant="h6">{username}</Typography>
+            <IconButton onClick={handleMenuOpen}>{anchor ? <ArrowDropUp /> : <ArrowDropDown />}</IconButton>
+            <Menu anchorEl={anchor} open={Boolean(anchor)} onClose={handleMenuClose}>
+              {hasToken ? (
+                <MenuItem onClick={handleLogout}>
+                  <ListItemIcon>
+                    <Logout fontSize="small" />
+                  </ListItemIcon>
+                  Logout
+                </MenuItem>
+              ) : (
+                <MenuItem onClick={handleLogin}>
+                  <ListItemIcon>
+                    <Logout fontSize="small" />
+                  </ListItemIcon>
+                  Login
+                </MenuItem>
+              )}
+            </Menu>
+          </Box>
+        </Toolbar>
+      </AppBar>
+    </Box>
   );
 }
 

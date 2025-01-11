@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
-import { Alert, Box, Typography } from '@mui/material';
+import { Alert, Box, CircularProgress, Typography } from '@mui/material';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
 import { deleteToDoById, getToDoById } from '../service/ToDoService';
@@ -94,7 +94,12 @@ export function ToDoDetailsPage() {
       ) : (
         <Typography variant="body1">Todo not found </Typography>
       )}
-      {isPending && <Typography variant="body1">Deleting todo...</Typography>}
+      {isPending && (
+        <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+          <CircularProgress />
+          Deleting ToDo...
+        </Box>
+      )}
     </Box>
   );
 }

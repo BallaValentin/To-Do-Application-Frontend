@@ -12,7 +12,7 @@ export function LoginPage() {
   const navigate = useNavigate();
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
-  const { mutate } = useMutation({
+  const { mutate, isPending } = useMutation({
     mutationFn: loginUser,
     onSuccess: () => {
       setErrorMessage(null);
@@ -40,7 +40,7 @@ export function LoginPage() {
             {errorMessage}
           </Alert>
         )}
-        <LoginForm onLogin={handleLogin} />
+        <LoginForm onLogin={handleLogin} isPending={isPending} />
       </Paper>
     </Box>
   );

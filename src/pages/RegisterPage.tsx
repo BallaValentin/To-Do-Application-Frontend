@@ -16,7 +16,7 @@ export function RegisterPage() {
   const navigate = useNavigate();
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
-  const { mutate } = useMutation({
+  const { mutate, isPending } = useMutation({
     mutationFn: registerUser,
     onSuccess: () => {
       setErrorMessage(null);
@@ -52,7 +52,7 @@ export function RegisterPage() {
             {errorMessage}
           </Alert>
         )}
-        <RegisterForm onRegister={handleRegister} />
+        <RegisterForm onRegister={handleRegister} isPending={isPending} />
       </Paper>
     </Box>
   );

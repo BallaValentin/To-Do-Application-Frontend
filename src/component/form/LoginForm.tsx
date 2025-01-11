@@ -15,6 +15,7 @@ import LockIcon from '@mui/icons-material/Lock';
 import { LoginData } from '../../interface/LoginData';
 
 interface LoginFormProps {
+  isPending: boolean;
   onLogin: (loginData: LoginData) => void;
 }
 function LoginForm(loginForm: LoginFormProps) {
@@ -74,8 +75,8 @@ function LoginForm(loginForm: LoginFormProps) {
             label="Remember Me"
           />
 
-          <Button type="submit" variant="contained" color="primary" fullWidth>
-            Login
+          <Button type="submit" variant="contained" color="primary" disabled={loginForm.isPending} fullWidth>
+            {loginForm.isPending ? 'Logging in...' : 'Login'}
           </Button>
 
           <Box>

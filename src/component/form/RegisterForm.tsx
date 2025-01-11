@@ -15,6 +15,7 @@ import LockIcon from '@mui/icons-material/Lock';
 import { RegisterData } from '../../interface/RegisterData';
 
 interface RegisterFormProps {
+  isPending: boolean;
   onRegister: (registerData: RegisterData) => void;
 }
 
@@ -200,8 +201,8 @@ function RegisterForm(registerForm: RegisterFormProps) {
             )}
           </FormControl>
 
-          <Button type="submit" variant="contained" color="primary" fullWidth>
-            Sign Up
+          <Button type="submit" variant="contained" color="primary" disabled={registerForm.isPending} fullWidth>
+            {registerForm.isPending ? 'Signing up...' : 'Sign up'}
           </Button>
 
           <Box sx={{ marginTop: 1 }}>

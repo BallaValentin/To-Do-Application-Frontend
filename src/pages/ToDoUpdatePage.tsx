@@ -64,9 +64,7 @@ export function ToDoUpdatePage() {
     <Box>
       <CommonHeader />
       {isUpdateError && <Alert severity="error">{(updateError as Error).message}</Alert>}
-      <ToDoForm onSubmit={handleUpdateToDo} initialValues={toDo} />
-      {isPending && <Typography variant="body1">Updating todo...</Typography>}
-
+      <ToDoForm onSubmit={handleUpdateToDo} isPending={isPending} initialValues={toDo} />
       <TokenExpiredModal isInvalidToken={isInvalidToken} />
     </Box>
   );
