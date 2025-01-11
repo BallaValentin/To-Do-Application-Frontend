@@ -9,6 +9,7 @@ function CommonHeader() {
   const [username, setUsername] = useState<string>('Guest');
   const [initials, setInitials] = useState<string>('G');
   const [anchor, setAnchor] = useState<HTMLElement | null>(null);
+  const [hasToken, setHasToken] = useState<boolean>(false);
 
   const handleMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
     setAnchor(event.currentTarget);
@@ -19,6 +20,10 @@ function CommonHeader() {
     navigate('/login');
   };
 
+  const handleLogin = () => {
+    navigate('/login');
+  };
+
   const handleMenuClose = () => {
     setAnchor(null);
   };
@@ -26,6 +31,7 @@ function CommonHeader() {
   useEffect(() => {
     const token = localStorage.getItem('jwtToken');
     if (token) {
+      setHasToken(true);
       const decodedToken = jwtDecode(token);
       const subject = decodedToken.sub;
       setUsername(subject?.split('-')[0] || 'Guest');
@@ -35,6 +41,8 @@ function CommonHeader() {
         .map((word) => word[0])
         .join('');
       setInitials(fullnameInitials);
+    } else {
+      setHasToken(false);
     }
   });
   return (
@@ -45,12 +53,21 @@ function CommonHeader() {
           <Typography variant="h6">{username}</Typography>
           <IconButton onClick={handleMenuOpen}>{anchor ? <ArrowDropUp /> : <ArrowDropDown />}</IconButton>
           <Menu anchorEl={anchor} open={Boolean(anchor)} onClose={handleMenuClose}>
-            <MenuItem onClick={handleLogout}>
-              <ListItemIcon>
-                <Logout fontSize="small" />
-              </ListItemIcon>
-              Logout
-            </MenuItem>
+            {hasToken ? (
+              <MenuItem onClick={handleLogout}>
+                <ListItemIcon>
+                  <Logout fontSize="small" />
+                </ListItemIcon>
+                Logout
+              </MenuItem>
+            ) : (
+              <MenuItem onClick={handleLogin}>
+                <ListItemIcon>
+                  <Logout fontSize="small" />
+                </ListItemIcon>
+                Login
+              </MenuItem>
+            )}
           </Menu>
         </Box>
       </Toolbar>
