@@ -2,15 +2,28 @@ import { Box, Card, CardContent, IconButton, Typography } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import { useNavigate } from 'react-router-dom';
-import { ToDo } from '../../interface/ToDo';
+import { useEffect, useState } from 'react';
+import { jwtDecode } from 'jwt-decode';
+import { ToDoResponse } from '../../interface/ToDoResponse';
 
 interface ToDoCardDetailedProps {
-  toDo: ToDo;
+  toDo: ToDoResponse;
   handleDelete: () => void;
 }
 
 function ToDoCardDetailed({ toDo, handleDelete }: ToDoCardDetailedProps) {
   const navigate = useNavigate();
+
+  const [isOwner, setIsOwner] = useState<boolean>(false);
+
+  useEffect(() => {
+    const token = localStorage.getItem('jwtToken');
+    if (token) {
+      const decodedToken = jwtDecode(token);
+      const username = decodedToken.sub?.split('-')[0];
+      setIsOwner(username === toDo.createdBy);
+    }
+  });
 
   const handleUpdate = () => {
     navigate(`/todos/update/${toDo.id}`);
@@ -21,6 +34,10 @@ function ToDoCardDetailed({ toDo, handleDelete }: ToDoCardDetailedProps) {
       <CardContent>
         <Typography variant="h5" component="div">
           {toDo.title}
+        </Typography>
+        <Typography variant="body1">
+          <strong>Created by: </strong>
+          {toDo.createdBy}
         </Typography>
         <Typography variant="body1">
           <strong>Description: </strong>
@@ -35,43 +52,45 @@ function ToDoCardDetailed({ toDo, handleDelete }: ToDoCardDetailedProps) {
           {toDo.levelOfImportance}
         </Typography>
       </CardContent>
-      <Box
-        sx={{
-          display: 'flex',
-          justifyContent: 'right',
-          gap: 1,
-          position: 'absolute',
-          bottom: 8,
-          left: 8,
-          right: 8,
-        }}
-      >
-        <IconButton
-          onClick={handleDelete}
+      {isOwner && (
+        <Box
           sx={{
-            backgroundColor: 'red',
-            color: 'white',
-            '&:hover': {
-              backgroundColor: 'darkred',
-            },
+            display: 'flex',
+            justifyContent: 'right',
+            gap: 1,
+            position: 'absolute',
+            bottom: 8,
+            left: 8,
+            right: 8,
           }}
         >
-          <DeleteIcon />
-        </IconButton>
+          <IconButton
+            onClick={handleDelete}
+            sx={{
+              backgroundColor: 'red',
+              color: 'white',
+              '&:hover': {
+                backgroundColor: 'darkred',
+              },
+            }}
+          >
+            <DeleteIcon />
+          </IconButton>
 
-        <IconButton
-          onClick={handleUpdate}
-          sx={{
-            backgroundColor: 'blue',
-            color: 'white',
-            '&:hover': {
-              backgroundColor: 'darkblue',
-            },
-          }}
-        >
-          <EditIcon />
-        </IconButton>
-      </Box>
+          <IconButton
+            onClick={handleUpdate}
+            sx={{
+              backgroundColor: 'blue',
+              color: 'white',
+              '&:hover': {
+                backgroundColor: 'darkblue',
+              },
+            }}
+          >
+            <EditIcon />
+          </IconButton>
+        </Box>
+      )}
     </Card>
   );
 }

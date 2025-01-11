@@ -14,8 +14,8 @@ export const getToDos = async (): Promise<ToDo[]> => {
   return response.data;
 };
 
-export const getToDoById = async (id: number): Promise<ToDo> => {
-  const response = await toDoApi.get<ToDo>(`/todos/${id}`);
+export const getToDoById = async (id: number): Promise<ToDoResponse> => {
+  const response = await toDoApi.get<ToDoResponse>(`/todos/${id}`);
   return response.data;
 };
 
