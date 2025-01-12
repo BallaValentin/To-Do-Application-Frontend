@@ -1,8 +1,8 @@
-import { ArrowDropDown, ArrowDropUp, Logout } from '@mui/icons-material';
-import { AppBar, Avatar, Box, IconButton, ListItemIcon, Menu, MenuItem, Toolbar, Typography } from '@mui/material';
+import { AppBar, Box, Toolbar } from '@mui/material';
 import { jwtDecode } from 'jwt-decode';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import UserMenu from '../menu-item/UserMenu';
 
 function CommonHeader() {
   const navigate = useNavigate();
@@ -49,28 +49,16 @@ function CommonHeader() {
     <Box sx={{ mb: 10 }}>
       <AppBar position="fixed" sx={{ bgcolor: 'primary.main' }}>
         <Toolbar sx={{ justifyContent: 'space-between' }}>
-          <Box sx={{ display: 'flex', alignItems: 'center' }}>
-            <Avatar sx={{ bgColor: 'grey.500', mr: 1 }}>{initials}</Avatar>
-            <Typography variant="h6">{username}</Typography>
-            <IconButton onClick={handleMenuOpen}>{anchor ? <ArrowDropUp /> : <ArrowDropDown />}</IconButton>
-            <Menu anchorEl={anchor} open={Boolean(anchor)} onClose={handleMenuClose}>
-              {hasToken ? (
-                <MenuItem onClick={handleLogout}>
-                  <ListItemIcon>
-                    <Logout fontSize="small" />
-                  </ListItemIcon>
-                  Logout
-                </MenuItem>
-              ) : (
-                <MenuItem onClick={handleLogin}>
-                  <ListItemIcon>
-                    <Logout fontSize="small" />
-                  </ListItemIcon>
-                  Login
-                </MenuItem>
-              )}
-            </Menu>
-          </Box>
+          <UserMenu
+            initials={initials}
+            username={username}
+            hasToken={hasToken}
+            anchor={anchor}
+            handleMenuOpen={handleMenuOpen}
+            handleMenuClose={handleMenuClose}
+            handleLogin={handleLogin}
+            handleLogout={handleLogout}
+          />
         </Toolbar>
       </AppBar>
     </Box>
