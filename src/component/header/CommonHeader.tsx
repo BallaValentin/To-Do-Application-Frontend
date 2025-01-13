@@ -3,6 +3,7 @@ import { jwtDecode } from 'jwt-decode';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import UserMenu from '../menu-item/UserMenu';
+import ThemeSelect from '../select/ThemeSelect';
 
 function CommonHeader() {
   const navigate = useNavigate();
@@ -59,6 +60,7 @@ function CommonHeader() {
             handleLogin={handleLogin}
             handleLogout={handleLogout}
           />
+          <ThemeSelect />
         </Toolbar>
       </AppBar>
     </Box>
