@@ -6,6 +6,8 @@ import { useNavigate } from 'react-router-dom';
 import { getUsers } from '../service/UserService';
 import ProgressCircle from '../component/progress/ProgressCircle';
 import { useTokenValidation } from '../hooks/UseTokenValidation';
+import UsersTable from '../component/table/UsersTable';
+import CommonHeader from '../component/header/CommonHeader';
 
 export function UserListPage() {
   const navigate = useNavigate();
@@ -20,7 +22,12 @@ export function UserListPage() {
     }
   });
 
-  const { isLoading, error, isError } = useQuery({
+  const {
+    data: users,
+    isLoading,
+    error,
+    isError,
+  } = useQuery({
     queryKey: ['users'],
     queryFn: getUsers,
   });
@@ -36,5 +43,10 @@ export function UserListPage() {
       </Box>
     );
   }
-  return <Box>Users</Box>;
+  return (
+    <Box>
+      <CommonHeader />
+      <UsersTable users={users || []} />
+    </Box>
+  );
 }
