@@ -7,6 +7,7 @@ import { ToDoCreatePage } from './pages/ToDoCreatePage';
 import { LoginPage } from './pages/LoginPage';
 import { RegisterPage } from './pages/RegisterPage';
 import { UnauthorizedPage } from './pages/UnauthorizedPage';
+import { UserListPage } from './pages/UserListPage';
 
 export const queryClient = new QueryClient({
   defaultOptions: {
@@ -28,6 +29,7 @@ function App() {
           <Route path="/todos/create" element={<ToDoCreatePage />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/register" element={<RegisterPage />} />
+          <Route path="/users" element={<UserListPage />} />
           <Route path="/unauthorized" element={<UnauthorizedPage />} />
         </Routes>
       </Router>

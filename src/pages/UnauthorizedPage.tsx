@@ -21,8 +21,8 @@ export function UnauthorizedPage() {
       <Typography variant="h4" sx={{ mb: 4 }}>
         You don&apos;t have permission to view this page
       </Typography>
-      <Button variant="contained" color="primary" onClick={() => navigate('/login')}>
-        Go To Login
+      <Button variant="contained" color="primary" onClick={() => navigate('/')}>
+        Go To Main Page
       </Button>
     </Box>
   );

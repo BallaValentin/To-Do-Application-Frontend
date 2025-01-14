@@ -35,8 +35,8 @@ function CommonHeader() {
       setHasToken(true);
       const decodedToken = jwtDecode(token);
       const subject = decodedToken.sub;
-      setUsername(subject?.split('-')[0] || 'Guest');
-      const fullname = subject?.split('-')[1] || 'Guest';
+      setUsername(subject?.split('|')[0] || 'Guest');
+      const fullname = subject?.split('|')[1] || 'Guest';
       const fullnameInitials = fullname
         .split(' ')
         .map((word) => word[0])
