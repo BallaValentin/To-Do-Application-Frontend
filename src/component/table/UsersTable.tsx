@@ -4,6 +4,7 @@ import { UserAdminResp } from '../../interface/UserAdminResp';
 
 interface UsersTableProps {
   users: UserAdminResp[];
+  adminName: string;
   onDelete: (id: number) => void;
 }
 
@@ -11,6 +12,10 @@ function UsersTable(userTableProps: UsersTableProps) {
   const handleDelete = (id: number) => {
     userTableProps.onDelete(id);
   };
+
+  const admin = userTableProps.users.filter((user) => user.username === userTableProps.adminName)[0];
+  const otherUsers = userTableProps.users.filter((user) => user.username !== userTableProps.adminName);
+
   return (
     <TableContainer component={Paper} sx={{ m: '0 16px', maxWidth: 'calc(100% - 32px)' }}>
       <Table sx={{ minWidth: 650 }}>
@@ -25,7 +30,18 @@ function UsersTable(userTableProps: UsersTableProps) {
           </TableRow>
         </TableHead>
         <TableBody>
-          {userTableProps.users.map((user) => (
+          {admin && (
+            <TableRow key={admin.id} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
+              <TableCell component="th" scope="row">
+                {admin.id}
+              </TableCell>
+              <TableCell align="right">{admin.username}(You)</TableCell>
+              <TableCell align="right">{admin.fullname}</TableCell>
+              <TableCell align="right">{admin.email}</TableCell>
+              <TableCell align="right">{admin.role}</TableCell>
+            </TableRow>
+          )}
+          {otherUsers.map((user) => (
             <TableRow key={user.id} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
               <TableCell component="th" scope="row">
                 {user.id}

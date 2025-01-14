@@ -1,6 +1,6 @@
 import { Alert, Box } from '@mui/material';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { jwtDecode } from 'jwt-decode';
 import { useNavigate } from 'react-router-dom';
 import { AxiosError } from 'axios';
@@ -13,6 +13,7 @@ import CommonHeader from '../component/header/CommonHeader';
 export function UserListPage() {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
+  const [adminName, setAdminName] = useState<string>('');
 
   useTokenValidation();
 
@@ -21,6 +22,8 @@ export function UserListPage() {
     const role = decodedToken.sub?.split('|')[2];
     if (role !== 'admin') {
       navigate('/unauthorized');
+    } else {
+      setAdminName(decodedToken.sub?.split('|')[0] || '');
     }
   });
 
@@ -64,7 +67,7 @@ export function UserListPage() {
   return (
     <Box>
       <CommonHeader />
-      <UsersTable users={users || []} onDelete={handleDelete} />
+      <UsersTable users={users || []} onDelete={handleDelete} adminName={adminName} />
     </Box>
   );
 }
