@@ -31,3 +31,12 @@ export const getUsers = async (): Promise<UserAdminResp[]> => {
   });
   return response.data;
 };
+
+export const deleteUserById = async (id: number): Promise<number> => {
+  const response = await userApi.delete<number>(`/users/${id}`, {
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem('jwtToken')}`,
+    },
+  });
+  return response.status;
+};

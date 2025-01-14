@@ -1,11 +1,16 @@
-import { Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material';
+import { IconButton, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material';
+import DeleteIcon from '@mui/icons-material/Delete';
 import { UserAdminResp } from '../../interface/UserAdminResp';
 
 interface UsersTableProps {
   users: UserAdminResp[];
+  onDelete: (id: number) => void;
 }
 
 function UsersTable(userTableProps: UsersTableProps) {
+  const handleDelete = (id: number) => {
+    userTableProps.onDelete(id);
+  };
   return (
     <TableContainer component={Paper} sx={{ m: '0 16px', maxWidth: 'calc(100% - 32px)' }}>
       <Table sx={{ minWidth: 650 }}>
@@ -16,6 +21,7 @@ function UsersTable(userTableProps: UsersTableProps) {
             <TableCell align="right">Fullname</TableCell>
             <TableCell align="right">Address</TableCell>
             <TableCell align="right">Role</TableCell>
+            <TableCell align="center">Actions</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -28,6 +34,11 @@ function UsersTable(userTableProps: UsersTableProps) {
               <TableCell align="right">{user.fullname}</TableCell>
               <TableCell align="right">{user.email}</TableCell>
               <TableCell align="right">{user.role}</TableCell>
+              <TableCell align="center">
+                <IconButton color="error" onClick={() => handleDelete(user.id)}>
+                  <DeleteIcon />
+                </IconButton>
+              </TableCell>
             </TableRow>
           ))}
         </TableBody>
