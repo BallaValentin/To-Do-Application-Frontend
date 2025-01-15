@@ -11,6 +11,7 @@ function CommonHeader() {
   const [initials, setInitials] = useState<string>('G');
   const [anchor, setAnchor] = useState<HTMLElement | null>(null);
   const [hasToken, setHasToken] = useState<boolean>(false);
+  const [isAdmin, setIsAdmin] = useState<boolean>(false);
 
   const handleMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
     setAnchor(event.currentTarget);
@@ -29,6 +30,10 @@ function CommonHeader() {
     setAnchor(null);
   };
 
+  const handleUsers = () => {
+    navigate('/users');
+  };
+
   useEffect(() => {
     const token = localStorage.getItem('jwtToken');
     if (token) {
@@ -37,6 +42,8 @@ function CommonHeader() {
       const subject = decodedToken.sub;
       setUsername(subject?.split('|')[0] || 'Guest');
       const fullname = subject?.split('|')[1] || 'Guest';
+      const role = subject?.split('|')[2] || 'guest';
+      setIsAdmin(Boolean(role === 'admin'));
       const fullnameInitials = fullname
         .split(' ')
         .map((word) => word[0])
@@ -44,8 +51,10 @@ function CommonHeader() {
       setInitials(fullnameInitials);
     } else {
       setHasToken(false);
+      setIsAdmin(false);
     }
   });
+
   return (
     <Box sx={{ mb: 10 }}>
       <AppBar position="fixed" sx={{ bgcolor: 'primary.main' }}>
@@ -54,11 +63,13 @@ function CommonHeader() {
             initials={initials}
             username={username}
             hasToken={hasToken}
+            isAdmin={isAdmin}
             anchor={anchor}
             handleMenuOpen={handleMenuOpen}
             handleMenuClose={handleMenuClose}
             handleLogin={handleLogin}
             handleLogout={handleLogout}
+            handleUsers={handleUsers}
           />
           <ThemeSelect />
         </Toolbar>

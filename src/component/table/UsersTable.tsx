@@ -33,12 +33,20 @@ function UsersTable(userTableProps: UsersTableProps) {
           {admin && (
             <TableRow key={admin.id} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
               <TableCell component="th" scope="row">
-                {admin.id}
+                <strong>{admin.id}</strong>
               </TableCell>
-              <TableCell align="right">{admin.username}(You)</TableCell>
-              <TableCell align="right">{admin.fullname}</TableCell>
-              <TableCell align="right">{admin.email}</TableCell>
-              <TableCell align="right">{admin.role}</TableCell>
+              <TableCell align="right">
+                <strong>{admin.username}</strong>
+              </TableCell>
+              <TableCell align="right">
+                <strong>{admin.fullname}</strong>
+              </TableCell>
+              <TableCell align="right">
+                <strong>{admin.email}</strong>
+              </TableCell>
+              <TableCell align="right">
+                <strong>{admin.role}</strong>
+              </TableCell>
             </TableRow>
           )}
           {otherUsers.map((user) => (

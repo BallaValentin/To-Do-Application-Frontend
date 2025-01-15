@@ -1,13 +1,16 @@
 import { ArrowDropDown, ArrowDropUp, Logout } from '@mui/icons-material';
 import { Avatar, Box, IconButton, ListItemIcon, Menu, MenuItem, Typography } from '@mui/material';
+import PeopleIcon from '@mui/icons-material/People';
 
 interface UserMenuProps {
   initials: string;
   username: string;
   hasToken: boolean;
+  isAdmin: boolean;
   anchor: HTMLElement | null;
   handleMenuOpen: (event: React.MouseEvent<HTMLElement>) => void;
   handleMenuClose: () => void;
+  handleUsers: () => void;
   handleLogin: () => void;
   handleLogout: () => void;
 }
@@ -26,12 +29,22 @@ function UserMenu(userMenuProps: UserMenuProps) {
         onClose={userMenuProps.handleMenuClose}
       >
         {userMenuProps.hasToken ? (
-          <MenuItem onClick={userMenuProps.handleLogout}>
-            <ListItemIcon>
-              <Logout fontSize="small" />
-            </ListItemIcon>
-            Logout
-          </MenuItem>
+          <>
+            <MenuItem onClick={userMenuProps.handleLogout}>
+              <ListItemIcon>
+                <Logout fontSize="small" />
+              </ListItemIcon>
+              Logout
+            </MenuItem>
+            {userMenuProps.isAdmin && (
+              <MenuItem onClick={userMenuProps.handleUsers}>
+                <ListItemIcon>
+                  <PeopleIcon fontSize="small" />
+                </ListItemIcon>
+                Users
+              </MenuItem>
+            )}
+          </>
         ) : (
           <MenuItem onClick={userMenuProps.handleLogin}>
             <ListItemIcon>
