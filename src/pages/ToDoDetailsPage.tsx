@@ -10,8 +10,9 @@ import ProgressCircle from '../component/progress/ProgressCircle';
 import CommonHeader from '../component/header/CommonHeader';
 import CreateFab from '../component/fab/CreateFab';
 import ToDoDetailModal from '../component/modal/ToDoDetailModal';
-import { getToDoDetails } from '../service/ToDoDetailService';
+import { createToDoDetail, getToDoDetails } from '../service/ToDoDetailService';
 import ToDoDetailCard from '../component/card/ToDoDetailCard';
+import { ToDoDetail } from '../interface/ToDoDetail';
 
 export function ToDoDetailsPage() {
   const location = useLocation();
@@ -64,6 +65,10 @@ export function ToDoDetailsPage() {
     },
   });
 
+  const handleDelete = () => {
+    mutate();
+  };
+
   useEffect(() => {
     const token = localStorage.getItem('jwtToken');
     if (token) {
@@ -73,18 +78,21 @@ export function ToDoDetailsPage() {
     }
   });
 
-  const {
-    isLoading: isLoadingDetails,
-    data: details,
-    isError: isDetailError,
-    error: detailError,
-  } = useQuery({
+  const { isLoading: isLoadingDetails, data: details } = useQuery({
     queryKey: ['details'],
-    queryFn: () => getToDoDetails(todo?.id || 0),
+    queryFn: () => getToDoDetails(Number(id)),
   });
 
-  const handleDelete = () => {
-    mutate();
+  const { mutate: addDetail } = useMutation({
+    mutationFn: (toDoDetail: ToDoDetail) => createToDoDetail(toDoDetail, Number(id)),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['details'] });
+    },
+  });
+
+  const handleDetailSubmit = (toDoDetail: ToDoDetail) => {
+    setOpenModal(false);
+    addDetail(toDoDetail);
   };
 
   if (isLoading) {
@@ -139,13 +147,7 @@ export function ToDoDetailsPage() {
         {details?.map((detail) => <ToDoDetailCard key={detail.id} toDoDetail={detail} />)}
       </Box>
 
-      <ToDoDetailModal
-        open={openModal}
-        onClose={() => setOpenModal(false)}
-        onSubmit={() => {
-          setOpenModal(false);
-        }}
-      />
+      <ToDoDetailModal open={openModal} onClose={() => setOpenModal(false)} onSubmit={handleDetailSubmit} />
 
       {isOwner && <CreateFab onClick={() => setOpenModal(true)} />}
     </Box>

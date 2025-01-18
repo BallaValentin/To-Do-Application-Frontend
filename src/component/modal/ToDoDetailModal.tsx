@@ -1,15 +1,24 @@
 import { Box, Button, IconButton, Modal, TextField, Typography } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 import { useState } from 'react';
+import { ToDoDetail } from '../../interface/ToDoDetail';
 
 interface ToDoDetailModalProps {
   open: boolean;
   onClose: () => void;
-  onSubmit: () => void;
+  onSubmit: (toDoDetail: ToDoDetail) => void;
 }
 
 function ToDoDetailModal(toDoDetailModelProps: ToDoDetailModalProps) {
   const [text, setText] = useState<string>('');
+  const toDoDetail = {
+    text: '',
+  };
+
+  const handleSubmit = () => {
+    toDoDetail.text = text;
+    toDoDetailModelProps.onSubmit(toDoDetail);
+  };
 
   return (
     <Box>
@@ -29,7 +38,7 @@ function ToDoDetailModal(toDoDetailModelProps: ToDoDetailModalProps) {
             width: 400,
           }}
         >
-          <form onSubmit={toDoDetailModelProps.onSubmit}>
+          <form onSubmit={handleSubmit}>
             <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
               <Typography variant="h6" sx={{ mt: 0.5, ml: 1 }}>
                 Add Detail

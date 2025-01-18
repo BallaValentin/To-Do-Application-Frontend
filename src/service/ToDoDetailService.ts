@@ -18,7 +18,7 @@ export const getToDoDetails = async (todoId: number): Promise<ToDoDetailResponse
   return response.data;
 };
 
-export const addToDoDetail = async (toDoDetail: ToDoDetail, todoId: number): Promise<ToDoDetailResponse> => {
+export const createToDoDetail = async (toDoDetail: ToDoDetail, todoId: number): Promise<ToDoDetailResponse> => {
   const response = await toDoDetailApi.post<ToDoDetailResponse>(`/todos/${todoId}/details`, toDoDetail, {
     headers: {
       Authorization: `Bearer ${localStorage.getItem('jwtToken')}`,
