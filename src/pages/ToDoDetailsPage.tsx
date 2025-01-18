@@ -29,6 +29,11 @@ export function ToDoDetailsPage() {
     }
   }, [location.state]);
 
+  useEffect(() => {
+    queryClient.removeQueries({ queryKey: ['details'] });
+    queryClient.invalidateQueries({ queryKey: ['details'] });
+  }, [id]);
+
   const {
     data: todo,
     isLoading,
