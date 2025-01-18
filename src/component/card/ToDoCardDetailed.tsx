@@ -2,28 +2,16 @@ import { Box, Card, CardContent, IconButton, Typography } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import { useNavigate } from 'react-router-dom';
-import { useEffect, useState } from 'react';
-import { jwtDecode } from 'jwt-decode';
 import { ToDoResponse } from '../../interface/ToDoResponse';
 
 interface ToDoCardDetailedProps {
   toDo: ToDoResponse;
+  isOwner: boolean;
   handleDelete: () => void;
 }
 
-function ToDoCardDetailed({ toDo, handleDelete }: ToDoCardDetailedProps) {
+function ToDoCardDetailed({ toDo, isOwner, handleDelete }: ToDoCardDetailedProps) {
   const navigate = useNavigate();
-
-  const [isOwner, setIsOwner] = useState<boolean>(false);
-
-  useEffect(() => {
-    const token = localStorage.getItem('jwtToken');
-    if (token) {
-      const decodedToken = jwtDecode(token);
-      const username = decodedToken.sub?.split('-')[0];
-      setIsOwner(username === toDo.createdBy);
-    }
-  });
 
   const handleUpdate = () => {
     navigate(`/todos/update/${toDo.id}`);
