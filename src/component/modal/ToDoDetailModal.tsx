@@ -1,4 +1,4 @@
-import { Box, Button, IconButton, Modal, TextField } from '@mui/material';
+import { Box, Button, IconButton, Modal, TextField, Typography } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 import { useState } from 'react';
 
@@ -29,25 +29,31 @@ function ToDoDetailModal(toDoDetailModelProps: ToDoDetailModalProps) {
             width: 400,
           }}
         >
-          <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
-            <IconButton onClick={toDoDetailModelProps.onClose}>
-              <CloseIcon />
-            </IconButton>
-          </Box>
+          <form onSubmit={toDoDetailModelProps.onSubmit}>
+            <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
+              <Typography variant="h6" sx={{ mt: 0.5, ml: 1 }}>
+                Add Detail
+              </Typography>
+              <IconButton onClick={toDoDetailModelProps.onClose}>
+                <CloseIcon />
+              </IconButton>
+            </Box>
 
-          <Box sx={{ pl: 1, pr: 1 }}>
-            <TextField
-              fullWidth
-              label="Enter Text"
-              variant="standard"
-              value={text}
-              onChange={(e) => setText(e.target.value)}
-            />
-          </Box>
+            <Box sx={{ pl: 1, pr: 1 }}>
+              <TextField
+                fullWidth
+                label="Enter Text"
+                variant="standard"
+                required
+                value={text}
+                onChange={(e) => setText(e.target.value)}
+              />
+            </Box>
 
-          <Button variant="contained" color="primary" onClick={toDoDetailModelProps.onSubmit} sx={{ mt: 3 }}>
-            Submit Detail
-          </Button>
+            <Button variant="contained" type="submit" color="primary" sx={{ mt: 3 }}>
+              Submit Detail
+            </Button>
+          </form>
         </Box>
       </Modal>
     </Box>
