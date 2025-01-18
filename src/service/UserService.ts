@@ -12,19 +12,19 @@ export const userApi = axios.create({
 });
 
 export const loginUser = async (userLogin: LoginData): Promise<UserResponse> => {
-  const response = await userApi.post<UserResponse>('/users/login', userLogin);
+  const response = await userApi.post<UserResponse>('/auth/login', userLogin);
   const { jwtToken } = response.data;
   localStorage.setItem('jwtToken', jwtToken);
   return response.data;
 };
 
 export const registerUser = async (userRegister: RegisterData): Promise<number> => {
-  const response = await userApi.post<UserResponse>('/users/register', userRegister);
+  const response = await userApi.post<UserResponse>('/auth/register', userRegister);
   return response.status;
 };
 
 export const getUsers = async (): Promise<UserAdminResp[]> => {
-  const response = await userApi.get<UserAdminResp[]>('/users', {
+  const response = await userApi.get<UserAdminResp[]>('/admin/users', {
     headers: {
       Authorization: `Bearer ${localStorage.getItem('jwtToken')}`,
     },
@@ -33,7 +33,7 @@ export const getUsers = async (): Promise<UserAdminResp[]> => {
 };
 
 export const deleteUserById = async (id: number): Promise<number> => {
-  const response = await userApi.delete<number>(`/users/${id}`, {
+  const response = await userApi.delete<number>(`/admin/users/${id}`, {
     headers: {
       Authorization: `Bearer ${localStorage.getItem('jwtToken')}`,
     },
