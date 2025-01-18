@@ -10,6 +10,8 @@ import ProgressCircle from '../component/progress/ProgressCircle';
 import CommonHeader from '../component/header/CommonHeader';
 import CreateFab from '../component/fab/CreateFab';
 import ToDoDetailModal from '../component/modal/ToDoDetailModal';
+import { getToDoDetails } from '../service/ToDoDetailService';
+import ToDoDetailCard from '../component/card/ToDoDetailCard';
 
 export function ToDoDetailsPage() {
   const location = useLocation();
@@ -71,6 +73,16 @@ export function ToDoDetailsPage() {
     }
   });
 
+  const {
+    isLoading: isLoadingDetails,
+    data: details,
+    isError: isDetailError,
+    error: detailError,
+  } = useQuery({
+    queryKey: ['details'],
+    queryFn: () => getToDoDetails(todo?.id || 0),
+  });
+
   const handleDelete = () => {
     mutate();
   };
@@ -115,6 +127,17 @@ export function ToDoDetailsPage() {
           Deleting ToDo...
         </Box>
       )}
+
+      {isLoadingDetails && (
+        <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+          <CircularProgress />
+          Loading details...
+        </Box>
+      )}
+
+      <Box sx={{ m: 10, display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))', gap: 2 }}>
+        {details?.map((detail) => <ToDoDetailCard key={detail.id} toDoDetail={detail} />)}
+      </Box>
 
       <ToDoDetailModal
         open={openModal}
