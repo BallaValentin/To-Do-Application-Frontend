@@ -10,7 +10,7 @@ import ProgressCircle from '../component/progress/ProgressCircle';
 import CommonHeader from '../component/header/CommonHeader';
 import CreateFab from '../component/fab/CreateFab';
 import ToDoDetailModal from '../component/modal/ToDoDetailModal';
-import { createToDoDetail, getToDoDetails } from '../service/ToDoDetailService';
+import { createToDoDetail, deleteToDoDetail, getToDoDetails } from '../service/ToDoDetailService';
 import ToDoDetailCard from '../component/card/ToDoDetailCard';
 import { ToDoDetail } from '../interface/ToDoDetail';
 
@@ -95,6 +95,17 @@ export function ToDoDetailsPage() {
     addDetail(toDoDetail);
   };
 
+  const { mutate: deleteDetail } = useMutation({
+    mutationFn: (toDoDetailId: number) => deleteToDoDetail(Number(id), toDoDetailId),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['details'] });
+    },
+  });
+
+  const handleDeleteDetail = (toDoDetailId: number) => {
+    deleteDetail(toDoDetailId);
+  };
+
   if (isLoading) {
     return <ProgressCircle loadingMessage={`Fetching todo with id ${id}`} />;
   }
@@ -144,7 +155,9 @@ export function ToDoDetailsPage() {
       )}
 
       <Box sx={{ m: 10, display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))', gap: 2 }}>
-        {details?.map((detail) => <ToDoDetailCard key={detail.id} toDoDetail={detail} />)}
+        {details?.map((detail) => (
+          <ToDoDetailCard key={detail.id} toDoDetail={detail} onClick={() => handleDeleteDetail(detail.id)} />
+        ))}
       </Box>
 
       <ToDoDetailModal open={openModal} onClose={() => setOpenModal(false)} onSubmit={handleDetailSubmit} />

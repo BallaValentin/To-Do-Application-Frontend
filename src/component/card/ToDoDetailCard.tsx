@@ -1,14 +1,17 @@
-import { Card, CardContent, Typography } from '@mui/material';
+import { Card, CardContent, IconButton, Typography } from '@mui/material';
+import DeleteIcon from '@mui/icons-material/Delete';
 import { ToDoDetailResponse } from '../../interface/ToDoDetailResponse';
 
 interface ToDoDetailCardProps {
   toDoDetail: ToDoDetailResponse;
+  onClick: () => void;
 }
 
-function ToDoDetailCard({ toDoDetail }: ToDoDetailCardProps) {
+function ToDoDetailCard({ toDoDetail, onClick }: ToDoDetailCardProps) {
   return (
     <Card
       sx={{
+        position: 'relative',
         width: 300,
         minHeight: 100,
         backgroundColor: '#f5f5f5',
@@ -24,6 +27,17 @@ function ToDoDetailCard({ toDoDetail }: ToDoDetailCardProps) {
           {toDoDetail.text}
         </Typography>
       </CardContent>
+
+      <IconButton
+        sx={{
+          position: 'absolute',
+          bottom: 8,
+          right: 8,
+        }}
+        onClick={onClick}
+      >
+        <DeleteIcon color="error" />
+      </IconButton>
     </Card>
   );
 }
