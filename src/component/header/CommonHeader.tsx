@@ -1,7 +1,8 @@
-import { AppBar, Box, Toolbar } from '@mui/material';
+import { AppBar, Box, IconButton, Toolbar } from '@mui/material';
 import { jwtDecode } from 'jwt-decode';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import HomeIcon from '@mui/icons-material/Home';
 import UserMenu from '../menu-item/UserMenu';
 import ThemeSelect from '../select/ThemeSelect';
 
@@ -59,19 +60,26 @@ function CommonHeader() {
     <Box sx={{ mb: 10 }}>
       <AppBar position="fixed" sx={{ bgcolor: 'primary.main' }}>
         <Toolbar sx={{ justifyContent: 'space-between' }}>
-          <UserMenu
-            initials={initials}
-            username={username}
-            hasToken={hasToken}
-            isAdmin={isAdmin}
-            anchor={anchor}
-            handleMenuOpen={handleMenuOpen}
-            handleMenuClose={handleMenuClose}
-            handleLogin={handleLogin}
-            handleLogout={handleLogout}
-            handleUsers={handleUsers}
-          />
-          <ThemeSelect />
+          <Box sx={{ display: 'flex', alignItems: 'center', gap: 5 }}>
+            <IconButton onClick={() => navigate('/')}>
+              <HomeIcon />
+            </IconButton>
+            <UserMenu
+              initials={initials}
+              username={username}
+              hasToken={hasToken}
+              isAdmin={isAdmin}
+              anchor={anchor}
+              handleMenuOpen={handleMenuOpen}
+              handleMenuClose={handleMenuClose}
+              handleLogin={handleLogin}
+              handleLogout={handleLogout}
+              handleUsers={handleUsers}
+            />
+          </Box>
+          <Box sx={{ display: 'flex', alignItems: 'center', gap: 5 }}>
+            <ThemeSelect />
+          </Box>
         </Toolbar>
       </AppBar>
     </Box>
