@@ -6,10 +6,12 @@ import { useState } from 'react';
 import themes from '../../theme/themes';
 
 function ThemeSelect() {
-  const [themeName, setThemeName] = useState<'light' | 'dark' | 'winter'>('light');
+  const [themeName, setThemeName] = useState<'light' | 'dark' | 'winter'>(
+    localStorage.getItem('preferredTheme') as 'light' | 'dark' | 'winter',
+  );
 
   const handleChange = (event: SelectChangeEvent<string>) => {
-    const selectedTheme = event.target.value as 'light';
+    const selectedTheme = event.target.value as 'light' | 'dark' | 'winter';
     setThemeName(selectedTheme);
     localStorage.setItem('preferredTheme', selectedTheme);
   };
