@@ -58,7 +58,7 @@ function CommonHeader() {
 
   return (
     <Box sx={{ mb: 10 }}>
-      <AppBar position="fixed" sx={{ bgcolor: 'primary.main' }}>
+      <AppBar position="fixed">
         <Toolbar sx={{ justifyContent: 'space-between' }}>
           <Box sx={{ display: 'flex', alignItems: 'center', gap: 5 }}>
             <IconButton onClick={() => navigate('/')}>

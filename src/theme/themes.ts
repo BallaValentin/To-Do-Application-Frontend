@@ -1,6 +1,6 @@
-import { createTheme } from '@mui/material';
+import { createTheme, Theme } from '@mui/material';
 
-const themes : {light: Theme; dark: Theme; winter: Theme} = {
+const themes: { light: Theme; dark: Theme; winter: Theme } = {
   light: createTheme({
     palette: {
       mode: 'light',
@@ -14,6 +14,22 @@ const themes : {light: Theme; dark: Theme; winter: Theme} = {
       mode: 'dark',
       primary: {
         main: '#90caf9',
+      },
+    },
+    components: {
+      MuiCard: {
+        styleOverrides: {
+          root: {
+            backgroundColor: '##90caf9',
+          },
+        },
+      },
+      MuiAppBar: {
+        styleOverrides: {
+          root: {
+            backgroundColor: '#1a1a1a',
+          },
+        },
       },
     },
   }),

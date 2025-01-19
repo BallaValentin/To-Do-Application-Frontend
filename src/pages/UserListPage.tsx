@@ -8,7 +8,6 @@ import { getUsers, deleteUserById } from '../service/UserService';
 import ProgressCircle from '../component/progress/ProgressCircle';
 import { useTokenValidation } from '../hooks/UseTokenValidation';
 import UsersTable from '../component/table/UsersTable';
-import CommonHeader from '../component/header/CommonHeader';
 
 export function UserListPage() {
   const navigate = useNavigate();
@@ -66,7 +65,6 @@ export function UserListPage() {
   }
   return (
     <Box>
-      <CommonHeader />
       <UsersTable users={users || []} onDelete={handleDelete} adminName={adminName} />
     </Box>
   );

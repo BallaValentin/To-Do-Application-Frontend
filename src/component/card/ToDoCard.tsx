@@ -9,7 +9,7 @@ interface ToDoCardProps {
 
 function ToDoCard({ toDo }: ToDoCardProps) {
   return (
-    <Card sx={{ m: 10, backgroundColor: '#f5f5f5' }}>
+    <Card sx={{ m: 10 }}>
       <CardContent>
         <Typography variant="h5" component="div">
           {toDo.title}

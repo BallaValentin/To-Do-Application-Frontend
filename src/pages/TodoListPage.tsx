@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { Alert, AlertColor, Box } from '@mui/material';
+import { Alert, AlertColor, Box, Typography } from '@mui/material';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import { getToDos } from '../service/ToDoService';
 import ToDoCard from '../component/card/ToDoCard';
 import ProgressCircle from '../component/progress/ProgressCircle';
-import CommonHeader from '../component/header/CommonHeader';
 import CreateFab from '../component/fab/CreateFab';
+import NavigationBar from '../component/navigation/NavigationBar';
 
 export function TodoListPage() {
   const navigate = useNavigate();
@@ -44,10 +44,12 @@ export function TodoListPage() {
 
   return (
     <Box>
-      <CommonHeader />
+      <NavigationBar />
       {deleteAlert && <Alert severity={deleteAlert.severity}>{deleteAlert.message}</Alert>}
 
-      <h1>List of Todos</h1>
+      <Typography variant="h3" gutterBottom sx={{ textAlign: 'center' }}>
+        List of Todos
+      </Typography>
       {todos?.map((todo) => <ToDoCard key={todo.id} toDo={todo} />)}
       <CreateFab onClick={() => navigate('/todos/create')} />
     </Box>

@@ -14,7 +14,6 @@ function ToDoDetailCard({ toDoDetail, onClick }: ToDoDetailCardProps) {
         position: 'relative',
         width: 300,
         minHeight: 100,
-        backgroundColor: '#f5f5f5',
         textAlign: 'center',
         transition: 'transform 0.3s ease-in-out',
         '&:hover': {

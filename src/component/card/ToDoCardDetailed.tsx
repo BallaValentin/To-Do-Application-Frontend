@@ -18,7 +18,7 @@ function ToDoCardDetailed({ toDo, isOwner, handleDelete }: ToDoCardDetailedProps
   };
 
   return (
-    <Card sx={{ m: 10, backgroundColor: '#f5f5f5', position: 'relative' }}>
+    <Card sx={{ m: 10, position: 'relative' }}>
       <CardContent>
         <Typography variant="h5" component="div">
           {toDo.title}

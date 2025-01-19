@@ -7,7 +7,6 @@ import { jwtDecode } from 'jwt-decode';
 import { deleteToDoById, getToDoById } from '../service/ToDoService';
 import ToDoCardDetailed from '../component/card/ToDoCardDetailed';
 import ProgressCircle from '../component/progress/ProgressCircle';
-import CommonHeader from '../component/header/CommonHeader';
 import CreateFab from '../component/fab/CreateFab';
 import ToDoDetailModal from '../component/modal/ToDoDetailModal';
 import { createToDoDetail, deleteToDoDetail, getToDoDetails } from '../service/ToDoDetailService';
@@ -133,9 +132,9 @@ export function ToDoDetailsPage() {
 
   return (
     <Box>
-      <CommonHeader />
+      <NavigationBar />
       {success && <Alert severity="success">{success}</Alert>}
-      <Typography variant="h4" gutterBottom>
+      <Typography variant="h4" gutterBottom sx={{ textAlign: 'center' }}>
         ToDo details
       </Typography>
 
