@@ -11,6 +11,7 @@ import { RegisterPage } from './pages/RegisterPage';
 import { UnauthorizedPage } from './pages/UnauthorizedPage';
 import { UserListPage } from './pages/UserListPage';
 import themes from './theme/themes';
+import { MainThemeProvider, useTheme } from './context/MainThemeProvider';
 
 export const queryClient = new QueryClient({
   defaultOptions: {
@@ -21,24 +22,34 @@ export const queryClient = new QueryClient({
   },
 });
 
+function ThemedApp() {
+  const { themeName } = useTheme(); // Hozzáférés a dinamikus themeName-hez
+
+  return (
+    <ThemeProvider theme={themes[themeName]}>
+      <CssBaseline />
+      <Router>
+        <Routes>
+          <Route path="/" element={<TodoListPage />} />
+          <Route path="/todos/:id" element={<ToDoDetailsPage />} />
+          <Route path="/todos/update/:id" element={<ToDoUpdatePage />} />
+          <Route path="/todos/create" element={<ToDoCreatePage />} />
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="/register" element={<RegisterPage />} />
+          <Route path="/users" element={<UserListPage />} />
+          <Route path="/unauthorized" element={<UnauthorizedPage />} />
+        </Routes>
+      </Router>
+    </ThemeProvider>
+  );
+}
+
 function App() {
   return (
     <QueryClientProvider client={queryClient}>
-      <ThemeProvider theme={themes[localStorage.getItem('preferredTheme') as 'light' | 'dark' | 'winter']}>
-        <CssBaseline />
-        <Router>
-          <Routes>
-            <Route path="/" element={<TodoListPage />} />
-            <Route path="/todos/:id" element={<ToDoDetailsPage />} />
-            <Route path="/todos/update/:id" element={<ToDoUpdatePage />} />
-            <Route path="/todos/create" element={<ToDoCreatePage />} />
-            <Route path="/login" element={<LoginPage />} />
-            <Route path="/register" element={<RegisterPage />} />
-            <Route path="/users" element={<UserListPage />} />
-            <Route path="/unauthorized" element={<UnauthorizedPage />} />
-          </Routes>
-        </Router>
-      </ThemeProvider>
+      <MainThemeProvider>
+        <ThemedApp />
+      </MainThemeProvider>
     </QueryClientProvider>
   );
 }

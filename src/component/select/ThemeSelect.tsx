@@ -2,16 +2,16 @@ import { Box, MenuItem, Select, SelectChangeEvent } from '@mui/material';
 import LightModeIcon from '@mui/icons-material/LightMode';
 import DarkModeIcon from '@mui/icons-material/DarkMode';
 import AcUnitIcon from '@mui/icons-material/AcUnit';
-import { useState } from 'react';
+import { useTheme } from '../../context/MainThemeProvider';
+
+type Theme = 'light' | 'dark' | 'winter';
 
 function ThemeSelect() {
-  const [themeName, setThemeName] = useState<'light' | 'dark' | 'winter'>(
-    localStorage.getItem('preferredTheme') as 'light' | 'dark' | 'winter',
-  );
+  const { themeName, setTheme } = useTheme();
 
   const handleChange = (event: SelectChangeEvent<string>) => {
-    const selectedTheme = event.target.value as 'light' | 'dark' | 'winter';
-    setThemeName(selectedTheme);
+    const selectedTheme = event.target.value as Theme;
+    setTheme(selectedTheme);
     localStorage.setItem('preferredTheme', selectedTheme);
   };
 
