@@ -3,8 +3,7 @@ import LightModeIcon from '@mui/icons-material/LightMode';
 import DarkModeIcon from '@mui/icons-material/DarkMode';
 import AcUnitIcon from '@mui/icons-material/AcUnit';
 import { useTheme } from '../../context/MainThemeProvider';
-
-type Theme = 'light' | 'dark' | 'winter';
+import { Theme } from '../../interface/ThemeMode';
 
 function ToggleThemeButton() {
   const { themeName, setTheme } = useTheme();

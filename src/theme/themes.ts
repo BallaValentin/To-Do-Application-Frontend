@@ -10,7 +10,6 @@ const themes: { light: Theme; dark: Theme; winter: Theme } = {
     },
   }),
   dark: createTheme({
-    modalBackgroundColor: 'white',
     palette: {
       mode: 'dark',
       primary: {

@@ -1,17 +1,17 @@
 import { createContext, ReactNode, useContext, useEffect, useMemo, useState } from 'react';
-import { Theme } from '../interface/Theme';
+import { ThemeMode } from '../interface/ThemeMode';
 
 interface ThemeContextType {
-  themeName: Theme;
-  setTheme: (themeName: Theme) => void;
+  themeName: ThemeMode;
+  setTheme: (themeName: ThemeMode) => void;
 }
 
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 
 export function MainThemeProvider({ children }: { children: ReactNode }) {
-  const initialTheme = (localStorage.getItem('preferredTheme') as Theme) || 'light';
+  const initialTheme = (localStorage.getItem('preferredTheme') as ThemeMode) || 'light';
 
-  const [themeName, setThemeName] = useState<Theme>(initialTheme);
+  const [themeName, setThemeName] = useState<ThemeMode>(initialTheme);
 
   useEffect(() => {
     localStorage.setItem('preferredTheme', themeName);

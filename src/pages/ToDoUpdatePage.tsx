@@ -8,6 +8,7 @@ import { getToDoById, updateToDoById } from '../service/ToDoService';
 import { ToDoResponse } from '../interface/ToDoResponse';
 import TokenExpiredModal from '../component/modal/TokenExpiredModal';
 import { useTokenValidation } from '../hooks/UseTokenValidation';
+import NavigationBar from '../component/navigation/NavigationBar';
 
 export function ToDoUpdatePage() {
   const navigate = useNavigate();
@@ -62,6 +63,7 @@ export function ToDoUpdatePage() {
   return (
     <Box>
       {isUpdateError && <Alert severity="error">{(updateError as Error).message}</Alert>}
+      <NavigationBar />
       <ToDoForm onSubmit={handleUpdateToDo} isPending={isPending} initialValues={toDo} />
       <TokenExpiredModal isInvalidToken={isInvalidToken} />
     </Box>

@@ -35,7 +35,7 @@ function ToDoDetailCard({ toDoDetail, onClick }: ToDoDetailCardProps) {
         }}
         onClick={onClick}
       >
-        <DeleteIcon color="error" />
+        <DeleteIcon color="action" />
       </IconButton>
     </Card>
   );
