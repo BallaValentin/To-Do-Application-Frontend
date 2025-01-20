@@ -3,11 +3,13 @@ import { jwtDecode } from 'jwt-decode';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import HomeIcon from '@mui/icons-material/Home';
+import { useTranslation } from 'react-i18next';
 import UserMenu from '../menu-item/UserMenu';
 import ToggleThemeButton from '../button/ToggleThemeButton';
 import LanguageSelect from '../select/LanguageSelect';
 
 function CommonHeader() {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const [username, setUsername] = useState<string>('Guest');
   const [initials, setInitials] = useState<string>('G');
@@ -64,7 +66,7 @@ function CommonHeader() {
           <Box sx={{ display: 'flex', alignItems: 'center', gap: 5 }}>
             <Tooltip
               arrow
-              title="Go to Main Page"
+              title={t('tooltipHome')}
               slotProps={{
                 popper: {
                   sx: {

@@ -1,6 +1,6 @@
-import React from 'react';
 import { Link } from 'react-router-dom';
 import { Button, Card, CardActions, CardContent, Typography } from '@mui/material';
+import { useTranslation } from 'react-i18next';
 import { ToDo } from '../../interface/ToDo';
 
 interface ToDoCardProps {
@@ -8,6 +8,8 @@ interface ToDoCardProps {
 }
 
 function ToDoCard({ toDo }: ToDoCardProps) {
+  const { t } = useTranslation();
+
   return (
     <Card sx={{ m: 10 }}>
       <CardContent>
@@ -17,7 +19,7 @@ function ToDoCard({ toDo }: ToDoCardProps) {
       </CardContent>
       <CardActions>
         <Button component={Link} to={`/todos/${toDo.id}`}>
-          Details
+          {t('todoCardBtn')}
         </Button>
       </CardActions>
     </Card>

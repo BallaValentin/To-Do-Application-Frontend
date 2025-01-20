@@ -1,6 +1,7 @@
 import { ArrowDropDown, ArrowDropUp, Logout } from '@mui/icons-material';
 import { Avatar, Box, IconButton, ListItemIcon, Menu, MenuItem, Typography } from '@mui/material';
 import PeopleIcon from '@mui/icons-material/People';
+import { useTranslation } from 'react-i18next';
 
 interface UserMenuProps {
   initials: string;
@@ -16,6 +17,8 @@ interface UserMenuProps {
 }
 
 function UserMenu(userMenuProps: UserMenuProps) {
+  const { t } = useTranslation();
+
   return (
     <Box sx={{ display: 'flex', alignItems: 'center' }}>
       <Avatar sx={{ bgColor: 'grey.500', mr: 1 }}>{userMenuProps.initials}</Avatar>
@@ -34,14 +37,14 @@ function UserMenu(userMenuProps: UserMenuProps) {
               <ListItemIcon>
                 <Logout fontSize="small" />
               </ListItemIcon>
-              Logout
+              {t('userMenuLogout')}
             </MenuItem>
             {userMenuProps.isAdmin && (
               <MenuItem onClick={userMenuProps.handleUsers}>
                 <ListItemIcon>
                   <PeopleIcon fontSize="small" />
                 </ListItemIcon>
-                Users
+                {t('userMenuUsers')}
               </MenuItem>
             )}
           </>
@@ -50,7 +53,7 @@ function UserMenu(userMenuProps: UserMenuProps) {
             <ListItemIcon>
               <Logout fontSize="small" />
             </ListItemIcon>
-            Login
+            {t('userMenuLogin')}
           </MenuItem>
         )}
       </Menu>

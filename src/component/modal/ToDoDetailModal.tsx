@@ -1,6 +1,7 @@
 import { Box, Button, IconButton, Modal, TextField, Typography, useTheme } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { ToDoDetail } from '../../interface/ToDoDetail';
 
 interface ToDoDetailModalProps {
@@ -10,6 +11,7 @@ interface ToDoDetailModalProps {
 }
 
 function ToDoDetailModal(toDoDetailModelProps: ToDoDetailModalProps) {
+  const { t } = useTranslation();
   const currentTheme = useTheme();
   const [text, setText] = useState<string>('');
   const toDoDetail = {
@@ -42,7 +44,7 @@ function ToDoDetailModal(toDoDetailModelProps: ToDoDetailModalProps) {
           <form onSubmit={handleSubmit}>
             <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
               <Typography variant="h6" sx={{ mt: 0.5, ml: 1 }}>
-                Add Detail
+                {t('todoDetailModalTitle')}
               </Typography>
               <IconButton onClick={toDoDetailModelProps.onClose}>
                 <CloseIcon />
@@ -52,7 +54,7 @@ function ToDoDetailModal(toDoDetailModelProps: ToDoDetailModalProps) {
             <Box sx={{ pl: 1, pr: 1 }}>
               <TextField
                 fullWidth
-                label="Enter Text"
+                label={t('todoDetailModalText')}
                 variant="standard"
                 required
                 value={text}
@@ -61,7 +63,7 @@ function ToDoDetailModal(toDoDetailModelProps: ToDoDetailModalProps) {
             </Box>
 
             <Button variant="contained" type="submit" color="primary" sx={{ mt: 3 }}>
-              Submit Detail
+              {t('todoDetailModalSubmitBtn')}
             </Button>
           </form>
         </Box>

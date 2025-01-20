@@ -2,6 +2,7 @@ import { Box, Card, CardContent, IconButton, Typography } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { ToDoResponse } from '../../interface/ToDoResponse';
 
 interface ToDoCardDetailedProps {
@@ -12,6 +13,8 @@ interface ToDoCardDetailedProps {
 
 function ToDoCardDetailed({ toDo, isOwner, handleDelete }: ToDoCardDetailedProps) {
   const navigate = useNavigate();
+
+  const { t } = useTranslation();
 
   const handleUpdate = () => {
     navigate(`/todos/update/${toDo.id}`);
@@ -24,19 +27,19 @@ function ToDoCardDetailed({ toDo, isOwner, handleDelete }: ToDoCardDetailedProps
           {toDo.title}
         </Typography>
         <Typography variant="body1">
-          <strong>Created by: </strong>
+          <strong>{t('todoDetailedCardBy')}</strong>
           {toDo.createdBy}
         </Typography>
         <Typography variant="body1">
-          <strong>Description: </strong>
+          <strong>{t('todoDetailedCardDesc')}</strong>
           {toDo.description}
         </Typography>
         <Typography variant="body1">
-          <strong>Due date: </strong>
+          <strong>{t('todoDetailedCardDueDate')}</strong>
           {new Date(toDo.dueDate).toLocaleDateString()}
         </Typography>
         <Typography variant="body1">
-          <strong>Level of Importance: </strong>
+          <strong>{t('todoDetailedCardPriority')}</strong>
           {toDo.levelOfImportance}
         </Typography>
       </CardContent>

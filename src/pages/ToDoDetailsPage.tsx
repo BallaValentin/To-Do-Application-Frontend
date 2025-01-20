@@ -13,8 +13,10 @@ import { createToDoDetail, deleteToDoDetail, getToDoDetails } from '../service/T
 import ToDoDetailCard from '../component/card/ToDoDetailCard';
 import { ToDoDetail } from '../interface/ToDoDetail';
 import NavigationBar from '../component/navigation/NavigationBar';
+import { useTranslation } from 'react-i18next';
 
 export function ToDoDetailsPage() {
+  const { t } = useTranslation();
   const location = useLocation();
   const navigate = useNavigate();
   const queryClient = useQueryClient();
@@ -135,7 +137,7 @@ export function ToDoDetailsPage() {
     <Box sx={{ mt: 10 }}>
       {success && <Alert severity="success">{success}</Alert>}
       <Typography variant="h4" gutterBottom sx={{ textAlign: 'center' }}>
-        ToDo details
+        {t('detailPageTitle')}
       </Typography>
 
       {todo ? (

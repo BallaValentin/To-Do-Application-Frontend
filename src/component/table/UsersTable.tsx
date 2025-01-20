@@ -1,5 +1,6 @@
 import { IconButton, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
+import { useTranslation } from 'react-i18next';
 import { UserAdminResp } from '../../interface/UserAdminResp';
 
 interface UsersTableProps {
@@ -9,6 +10,7 @@ interface UsersTableProps {
 }
 
 function UsersTable(userTableProps: UsersTableProps) {
+  const { t } = useTranslation();
   const handleDelete = (id: number) => {
     userTableProps.onDelete(id);
   };
@@ -22,11 +24,11 @@ function UsersTable(userTableProps: UsersTableProps) {
         <TableHead>
           <TableRow>
             <TableCell>Id</TableCell>
-            <TableCell align="right">Username</TableCell>
-            <TableCell align="right">Fullname</TableCell>
-            <TableCell align="right">Address</TableCell>
-            <TableCell align="right">Role</TableCell>
-            <TableCell align="center">Actions</TableCell>
+            <TableCell align="right">{t('usersTableUsername')}</TableCell>
+            <TableCell align="right">{t('usersTableFullname')}</TableCell>
+            <TableCell align="right">{t('usersTableAddress')}</TableCell>
+            <TableCell align="right">{t('usersTableRole')}</TableCell>
+            <TableCell align="center">{t('usersTableActions')}</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>

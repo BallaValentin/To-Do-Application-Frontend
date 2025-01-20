@@ -2,13 +2,15 @@ import { Box, IconButton, Tooltip, tooltipClasses } from '@mui/material';
 import LightModeIcon from '@mui/icons-material/LightMode';
 import DarkModeIcon from '@mui/icons-material/DarkMode';
 import AcUnitIcon from '@mui/icons-material/AcUnit';
+import { useTranslation } from 'react-i18next';
 import { useTheme } from '../../context/MainThemeProvider';
-import { Theme } from '../../interface/ThemeMode';
+import { ThemeMode } from '../../interface/ThemeMode';
 
 function ToggleThemeButton() {
+  const { t } = useTranslation();
   const { themeName, setTheme } = useTheme();
 
-  const themes = ['light' as Theme, 'dark' as Theme, 'winter' as Theme];
+  const themes = ['light' as ThemeMode, 'dark' as ThemeMode, 'winter' as ThemeMode];
 
   const themeIcons = {
     light: <LightModeIcon />,
@@ -17,9 +19,9 @@ function ToggleThemeButton() {
   };
 
   const toggleTexts = {
-    light: 'Toggle dark mode',
-    dark: 'Toggle winter mode',
-    winter: 'Toggle light mode',
+    light: t('tooltipThemeLight'),
+    dark: t('tooltipThemeDark'),
+    winter: t('tooltipThemeWinter'),
   };
 
   const handleToggleTheme = () => {
