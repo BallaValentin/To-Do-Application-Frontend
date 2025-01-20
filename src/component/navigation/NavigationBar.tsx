@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import HomeIcon from '@mui/icons-material/Home';
 import UserMenu from '../menu-item/UserMenu';
-import ThemeSelect from '../select/ThemeSelect';
+import ToggleThemeButton from '../button/ToggleThemeButton';
 
 function CommonHeader() {
   const navigate = useNavigate();
@@ -78,7 +78,7 @@ function CommonHeader() {
             />
           </Box>
           <Box sx={{ display: 'flex', alignItems: 'center', gap: 5 }}>
-            <ThemeSelect />
+            <ToggleThemeButton />
           </Box>
         </Toolbar>
       </AppBar>
