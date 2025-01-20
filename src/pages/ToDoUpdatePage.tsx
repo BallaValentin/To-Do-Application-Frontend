@@ -61,7 +61,7 @@ export function ToDoUpdatePage() {
   };
 
   return (
-    <Box>
+    <Box sx={{ mt: 10 }}>
       {isUpdateError && <Alert severity="error">{(updateError as Error).message}</Alert>}
       <ToDoForm onSubmit={handleUpdateToDo} isPending={isPending} initialValues={toDo} />
       <TokenExpiredModal isInvalidToken={isInvalidToken} />

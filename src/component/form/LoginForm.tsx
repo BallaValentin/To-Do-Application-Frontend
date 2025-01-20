@@ -12,6 +12,7 @@ import {
 } from '@mui/material';
 import React, { useState } from 'react';
 import LockIcon from '@mui/icons-material/Lock';
+import { useTranslation } from 'react-i18next';
 import { LoginData } from '../../interface/LoginData';
 
 interface LoginFormProps {
@@ -19,6 +20,8 @@ interface LoginFormProps {
   onLogin: (loginData: LoginData) => void;
 }
 function LoginForm(loginForm: LoginFormProps) {
+  const { t } = useTranslation();
+
   const [loginData, setLoginData] = useState<LoginData>({
     username: '',
     password: '',
@@ -41,18 +44,25 @@ function LoginForm(loginForm: LoginFormProps) {
         <LockIcon />
       </Avatar>
       <Typography variant="h4" gutterBottom sx={{ mt: 2 }}>
-        Sign in
+        {t('loginFormTitle')}
       </Typography>
       <form onSubmit={handleSubmitLogin}>
         <Grid2 container spacing={2}>
           <FormControl fullWidth>
-            <TextField name="username" label="Username" onChange={handleChange} required variant="standard" fullWidth />
+            <TextField
+              name="username"
+              label={t('loginFormUsername')}
+              onChange={handleChange}
+              required
+              variant="standard"
+              fullWidth
+            />
           </FormControl>
 
           <FormControl fullWidth>
             <TextField
               name="password"
-              label="Password"
+              label={t('loginFormPassword')}
               onChange={handleChange}
               required
               variant="standard"
@@ -72,25 +82,25 @@ function LoginForm(loginForm: LoginFormProps) {
                 color="primary"
               />
             }
-            label="Remember Me"
+            label={t('loginFormRememberMe')}
           />
 
           <Button type="submit" variant="contained" color="primary" disabled={loginForm.isPending} fullWidth>
-            {loginForm.isPending ? 'Logging in...' : 'Login'}
+            {loginForm.isPending ? t('loginFormPendingLoginBtn') : t('loginFormLoginBtn')}
           </Button>
 
           <Box>
             <Link href="/login" underline="hover">
-              Forgot Password ?
+              {t('loginFormPwdForgot')}
             </Link>
           </Box>
 
           <Box sx={{ marginTop: 1 }}>
             <Typography variant="body2" component="span">
-              Don&apos;t have an account?{' '}
+              {t('loginFormNoAccount')}
             </Typography>
             <Link href="/register" underline="hover">
-              Sign Up Here.
+              {t('loginFormSignUp')}
             </Link>
           </Box>
         </Grid2>

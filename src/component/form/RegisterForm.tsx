@@ -12,6 +12,7 @@ import {
 } from '@mui/material';
 import React, { useState } from 'react';
 import LockIcon from '@mui/icons-material/Lock';
+import { useTranslation } from 'react-i18next';
 import { RegisterData } from '../../interface/RegisterData';
 
 interface RegisterFormProps {
@@ -28,6 +29,8 @@ interface RegisterFormError {
 }
 
 function RegisterForm(registerForm: RegisterFormProps) {
+  const { t } = useTranslation();
+
   const [registerData, setRegisterData] = useState<RegisterData>({
     username: '',
     fullname: '',
@@ -61,28 +64,27 @@ function RegisterForm(registerForm: RegisterFormProps) {
 
     if (!/^[A-Za-z][A-Za-z0-9_]{3,}$/.test(registerData.username)) {
       isValid = false;
-      newErrors.usernameError = 'Invalid username format.';
+      newErrors.usernameError = t('registerFormUsernameErr');
     }
 
     if (!/^[A-Z][a-z]+ [A-Z][a-z]+$/.test(registerData.fullname)) {
       isValid = false;
-      newErrors.fullnameError = 'Must write your real name(ex. John Smith).';
+      newErrors.fullnameError = t('registerFormFullnameErr');
     }
 
     if (!/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(registerData.email)) {
       isValid = false;
-      newErrors.emailError = 'Invalid email address.';
+      newErrors.emailError = t('registerFormEmailErr');
     }
 
     if (passwordStrength !== 100) {
       isValid = false;
-      newErrors.passwordError =
-        'Password must be atleast 8 characters long and must contain uppercase, lowercase, digit and special characters.';
+      newErrors.passwordError = t('registerFormPasswordError');
     }
 
     if (confirmPassword !== registerData.password) {
       isValid = false;
-      newErrors.confirmPasswordError = 'Passwords must match.';
+      newErrors.confirmPasswordError = t('registerFormConfirmPwdError');
     }
 
     setRegisterError(newErrors);
@@ -112,11 +114,11 @@ function RegisterForm(registerForm: RegisterFormProps) {
   };
 
   const getPasswordStrengthLabel = () => {
-    if (passwordStrength < 25) return 'Very Weak';
-    if (passwordStrength < 50) return 'Weak';
-    if (passwordStrength < 75) return 'Leak';
-    if (passwordStrength < 100) return 'Almost Peak';
-    return 'Peak';
+    if (passwordStrength < 25) return t('registerFormVeryWeakPwd');
+    if (passwordStrength < 50) return t('registerFormWeakPwd');
+    if (passwordStrength < 75) return t('registerFormBitWeakPwd');
+    if (passwordStrength < 100) return t('registerFormAlmostPwd');
+    return t('registerFormGoodPwd');
   };
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -130,19 +132,26 @@ function RegisterForm(registerForm: RegisterFormProps) {
         <LockIcon />
       </Avatar>
       <Typography variant="h4" gutterBottom sx={{ mt: 2 }}>
-        Sign up
+        {t('registerFormTitle')}
       </Typography>
       <form onSubmit={handleSubmitRegister}>
         <Grid2 container spacing={2}>
           <FormControl fullWidth error={Boolean(registerError.usernameError)}>
-            <TextField name="username" label="Username" onChange={handleChange} required variant="standard" fullWidth />
+            <TextField
+              name="username"
+              label={t('registerFormUsername')}
+              onChange={handleChange}
+              required
+              variant="standard"
+              fullWidth
+            />
             {registerError.usernameError && <FormHelperText>{registerError.usernameError}</FormHelperText>}
           </FormControl>
 
           <FormControl fullWidth error={Boolean(registerError.fullnameError)}>
             <TextField
               name="fullname"
-              label="Your Name"
+              label={t('registerFormFullname')}
               onChange={handleChange}
               required
               variant="standard"
@@ -154,7 +163,7 @@ function RegisterForm(registerForm: RegisterFormProps) {
           <FormControl fullWidth error={Boolean(registerError.emailError)}>
             <TextField
               name="email"
-              label="Email Address"
+              label={t('registerFormEmail')}
               onChange={handleChange}
               required
               variant="standard"
@@ -166,7 +175,7 @@ function RegisterForm(registerForm: RegisterFormProps) {
           <FormControl fullWidth error={Boolean(registerError.passwordError)}>
             <TextField
               name="password"
-              label="Password"
+              label={t('registerFormPassword')}
               onChange={handlePasswordChange}
               required
               variant="standard"
@@ -189,7 +198,7 @@ function RegisterForm(registerForm: RegisterFormProps) {
           <FormControl fullWidth error={Boolean(registerError.confirmPasswordError)}>
             <TextField
               name="confirm-password"
-              label="Confirm Password"
+              label={t('registerFormConfirmPwd')}
               onChange={(e) => setConfirmPassword(e.target.value)}
               required
               variant="standard"
@@ -202,15 +211,15 @@ function RegisterForm(registerForm: RegisterFormProps) {
           </FormControl>
 
           <Button type="submit" variant="contained" color="primary" disabled={registerForm.isPending} fullWidth>
-            {registerForm.isPending ? 'Signing up...' : 'Sign up'}
+            {registerForm.isPending ? t('registerFormPendingRegisterBtn') : t('registerFormRegisterBtn')}
           </Button>
 
           <Box sx={{ marginTop: 1 }}>
             <Typography variant="body2" component="span">
-              Already have an account?{' '}
+              {t('registerFormYesAccount')}
             </Typography>
             <Link href="/login" underline="hover">
-              Sign In.
+              {t('registerFormSignIn')}
             </Link>
           </Box>
         </Grid2>
