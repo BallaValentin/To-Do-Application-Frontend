@@ -6,6 +6,7 @@ import { AxiosError } from 'axios';
 import RegisterForm from '../component/form/RegisterForm';
 import { RegisterData } from '../interface/RegisterData';
 import { registerUser } from '../service/UserService';
+import NavigationBar from '../component/navigation/NavigationBar';
 
 interface ErrorResponse {
   error: string;
@@ -52,6 +53,7 @@ export function RegisterPage() {
         )}
         <RegisterForm onRegister={handleRegister} isPending={isPending} />
       </Paper>
+      <NavigationBar />
     </Box>
   );
 }

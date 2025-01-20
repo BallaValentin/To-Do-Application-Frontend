@@ -6,6 +6,7 @@ import { AxiosError } from 'axios';
 import LoginForm from '../component/form/LoginForm';
 import { loginUser } from '../service/UserService';
 import { LoginData } from '../interface/LoginData';
+import NavigationBar from '../component/navigation/NavigationBar';
 
 export function LoginPage() {
   const navigate = useNavigate();
@@ -32,7 +33,6 @@ export function LoginPage() {
   };
   return (
     <Box>
-      <NavigationBar />
       <Paper elevation={3} sx={{ maxWidth: 300, margin: 'auto', padding: 4, textAlign: 'center', marginTop: 10 }}>
         {errorMessage && (
           <Alert severity="error" sx={{ mb: 2 }}>
@@ -41,6 +41,7 @@ export function LoginPage() {
         )}
         <LoginForm onLogin={handleLogin} isPending={isPending} />
       </Paper>
+      <NavigationBar />
     </Box>
   );
 }

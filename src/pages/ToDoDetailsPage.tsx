@@ -158,7 +158,6 @@ export function ToDoDetailsPage() {
         </Box>
       )}
 
-      <NavigationBar />
       <Box sx={{ m: 10, display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))', gap: 2 }}>
         {details?.map((detail) => (
           <ToDoDetailCard key={detail.id} toDoDetail={detail} onClick={() => handleDeleteDetail(detail.id)} />
@@ -168,6 +167,8 @@ export function ToDoDetailsPage() {
       <ToDoDetailModal open={openModal} onClose={() => setOpenModal(false)} onSubmit={handleDetailSubmit} />
 
       {isOwner && <CreateFab onClick={() => setOpenModal(true)} />}
+
+      <NavigationBar />
     </Box>
   );
 }

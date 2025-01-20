@@ -47,6 +47,7 @@ function UsersTable(userTableProps: UsersTableProps) {
               <TableCell align="right">
                 <strong>{admin.role}</strong>
               </TableCell>
+              <TableCell align="center">{}</TableCell>
             </TableRow>
           )}
           {otherUsers.map((user) => (

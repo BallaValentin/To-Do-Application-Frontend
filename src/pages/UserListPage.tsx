@@ -8,6 +8,7 @@ import { getUsers, deleteUserById } from '../service/UserService';
 import ProgressCircle from '../component/progress/ProgressCircle';
 import { useTokenValidation } from '../hooks/UseTokenValidation';
 import UsersTable from '../component/table/UsersTable';
+import NavigationBar from '../component/navigation/NavigationBar';
 
 export function UserListPage() {
   const navigate = useNavigate();
@@ -64,8 +65,9 @@ export function UserListPage() {
     );
   }
   return (
-    <Box>
+    <Box sx={{ mt: 10 }}>
       <UsersTable users={users || []} onDelete={handleDelete} adminName={adminName} />
+      <NavigationBar />
     </Box>
   );
 }

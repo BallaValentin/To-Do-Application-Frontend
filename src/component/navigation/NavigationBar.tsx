@@ -57,7 +57,7 @@ function CommonHeader() {
   });
 
   return (
-    <Box sx={{ mb: 10 }}>
+    <Box>
       <AppBar position="fixed">
         <Toolbar sx={{ justifyContent: 'space-between' }}>
           <Box sx={{ display: 'flex', alignItems: 'center', gap: 5 }}>

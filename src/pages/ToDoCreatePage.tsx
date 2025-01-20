@@ -39,9 +39,9 @@ export function ToDoCreatePage() {
   return (
     <Box>
       {isError && <Alert severity="error">{(error as Error).message}</Alert>}
-      <NavigationBar />
       <ToDoForm isPending={isPending} onSubmit={handleCreateToDo} />
       <TokenExpiredModal isInvalidToken={isInvalidToken} />
+      <NavigationBar />
     </Box>
   );
 }
