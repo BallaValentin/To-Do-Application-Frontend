@@ -1,4 +1,4 @@
-import { Box, Button, Divider, Modal, Typography } from '@mui/material';
+import { Box, Button, Divider, Modal, Typography, useTheme } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 
 interface TokenExpiredModalProps {
@@ -6,6 +6,7 @@ interface TokenExpiredModalProps {
 }
 
 function TokenExpiredModal({ isInvalidToken }: TokenExpiredModalProps) {
+  const currentTheme = useTheme();
   const navigate = useNavigate();
   return (
     <Box>
@@ -18,7 +19,7 @@ function TokenExpiredModal({ isInvalidToken }: TokenExpiredModalProps) {
       >
         <Box
           sx={{
-            bgcolor: 'white',
+            backgroundColor: currentTheme.palette.background.paper,
             textAlign: 'center',
             boxShadow: 24,
             position: 'relative',

@@ -12,6 +12,7 @@ import ToDoDetailModal from '../component/modal/ToDoDetailModal';
 import { createToDoDetail, deleteToDoDetail, getToDoDetails } from '../service/ToDoDetailService';
 import ToDoDetailCard from '../component/card/ToDoDetailCard';
 import { ToDoDetail } from '../interface/ToDoDetail';
+import NavigationBar from '../component/navigation/NavigationBar';
 
 export function ToDoDetailsPage() {
   const location = useLocation();
@@ -132,7 +133,6 @@ export function ToDoDetailsPage() {
 
   return (
     <Box>
-      <NavigationBar />
       {success && <Alert severity="success">{success}</Alert>}
       <Typography variant="h4" gutterBottom sx={{ textAlign: 'center' }}>
         ToDo details
@@ -158,6 +158,7 @@ export function ToDoDetailsPage() {
         </Box>
       )}
 
+      <NavigationBar />
       <Box sx={{ m: 10, display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))', gap: 2 }}>
         {details?.map((detail) => (
           <ToDoDetailCard key={detail.id} toDoDetail={detail} onClick={() => handleDeleteDetail(detail.id)} />

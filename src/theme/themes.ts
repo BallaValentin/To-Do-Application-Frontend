@@ -10,6 +10,7 @@ const themes: { light: Theme; dark: Theme; winter: Theme } = {
     },
   }),
   dark: createTheme({
+    modalBackgroundColor: 'white',
     palette: {
       mode: 'dark',
       primary: {
@@ -28,6 +29,13 @@ const themes: { light: Theme; dark: Theme; winter: Theme } = {
         styleOverrides: {
           root: {
             backgroundColor: '#1a1a1a',
+          },
+        },
+      },
+      MuiModal: {
+        styleOverrides: {
+          root: {
+            backgroundColor: '##90caf9',
           },
         },
       },

@@ -1,4 +1,4 @@
-import { Box, Button, IconButton, Modal, TextField, Typography } from '@mui/material';
+import { Box, Button, IconButton, Modal, TextField, Typography, useTheme } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 import { useState } from 'react';
 import { ToDoDetail } from '../../interface/ToDoDetail';
@@ -10,6 +10,7 @@ interface ToDoDetailModalProps {
 }
 
 function ToDoDetailModal(toDoDetailModelProps: ToDoDetailModalProps) {
+  const currentTheme = useTheme();
   const [text, setText] = useState<string>('');
   const toDoDetail = {
     text: '',
@@ -30,7 +31,7 @@ function ToDoDetailModal(toDoDetailModelProps: ToDoDetailModalProps) {
       >
         <Box
           sx={{
-            bgcolor: 'white',
+            backgroundColor: currentTheme.palette.background.paper,
             textAlign: 'center',
             boxShadow: 24,
             position: 'relative',
