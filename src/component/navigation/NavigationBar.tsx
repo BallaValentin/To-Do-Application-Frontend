@@ -1,4 +1,4 @@
-import { AppBar, Box, IconButton, Toolbar } from '@mui/material';
+import { AppBar, Box, IconButton, Toolbar, Tooltip, tooltipClasses } from '@mui/material';
 import { jwtDecode } from 'jwt-decode';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -61,9 +61,32 @@ function CommonHeader() {
       <AppBar position="fixed">
         <Toolbar sx={{ justifyContent: 'space-between' }}>
           <Box sx={{ display: 'flex', alignItems: 'center', gap: 5 }}>
-            <IconButton onClick={() => navigate('/')}>
-              <HomeIcon />
-            </IconButton>
+            <Tooltip
+              arrow
+              title="Go to Main Page"
+              slotProps={{
+                popper: {
+                  sx: {
+                    [`&.${tooltipClasses.popper}[data-popper-placement*="bottom"] .${tooltipClasses.tooltip}`]: {
+                      marginTop: '0px',
+                    },
+                    [`&.${tooltipClasses.popper}[data-popper-placement*="top"] .${tooltipClasses.tooltip}`]: {
+                      marginBottom: '0px',
+                    },
+                    [`&.${tooltipClasses.popper}[data-popper-placement*="right"] .${tooltipClasses.tooltip}`]: {
+                      marginLeft: '0px',
+                    },
+                    [`&.${tooltipClasses.popper}[data-popper-placement*="left"] .${tooltipClasses.tooltip}`]: {
+                      marginRight: '0px',
+                    },
+                  },
+                },
+              }}
+            >
+              <IconButton onClick={() => navigate('/')}>
+                <HomeIcon />
+              </IconButton>
+            </Tooltip>
             <UserMenu
               initials={initials}
               username={username}
