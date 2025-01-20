@@ -2,6 +2,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ThemeProvider } from '@emotion/react';
 import { CssBaseline } from '@mui/material';
+import { I18nextProvider } from 'react-i18next';
 import { TodoListPage } from './pages/TodoListPage';
 import { ToDoDetailsPage } from './pages/ToDoDetailsPage';
 import { ToDoUpdatePage } from './pages/ToDoUpdatePage';
@@ -12,6 +13,7 @@ import { UnauthorizedPage } from './pages/UnauthorizedPage';
 import { UserListPage } from './pages/UserListPage';
 import themes from './theme/themes';
 import { MainThemeProvider, useTheme } from './context/MainThemeProvider';
+import i18n from './i18/i18n';
 
 export const queryClient = new QueryClient({
   defaultOptions: {
@@ -47,9 +49,11 @@ function ThemedApp() {
 function App() {
   return (
     <QueryClientProvider client={queryClient}>
-      <MainThemeProvider>
-        <ThemedApp />
-      </MainThemeProvider>
+      <I18nextProvider i18n={i18n}>
+        <MainThemeProvider>
+          <ThemedApp />
+        </MainThemeProvider>
+      </I18nextProvider>
     </QueryClientProvider>
   );
 }

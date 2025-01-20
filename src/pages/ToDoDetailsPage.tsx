@@ -132,7 +132,7 @@ export function ToDoDetailsPage() {
   }
 
   return (
-    <Box>
+    <Box sx={{ mt: 10 }}>
       {success && <Alert severity="success">{success}</Alert>}
       <Typography variant="h4" gutterBottom sx={{ textAlign: 'center' }}>
         ToDo details

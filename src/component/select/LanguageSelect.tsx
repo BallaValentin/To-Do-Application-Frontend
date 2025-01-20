@@ -1,12 +1,18 @@
 import { Avatar, Box, ListItemIcon, MenuItem, Select, SelectChangeEvent } from '@mui/material';
 import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import Flag from 'react-world-flags';
 
 function LanguageSelect() {
-  const [language, setLanguage] = useState<string>('en');
+  const [language, setLanguage] = useState<string>(localStorage.getItem('language') || 'en');
+
+  const { i18n } = useTranslation();
 
   const handleChange = (event: SelectChangeEvent<string>) => {
-    setLanguage(event.target.value);
+    const selectedLanguage = event.target.value;
+    setLanguage(selectedLanguage);
+    i18n.changeLanguage(selectedLanguage);
+    localStorage.setItem('language', selectedLanguage);
   };
 
   return (

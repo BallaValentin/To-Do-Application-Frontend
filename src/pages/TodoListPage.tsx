@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Alert, AlertColor, Box, Typography } from '@mui/material';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
+import { useTranslation } from 'react-i18next';
 import { getToDos } from '../service/ToDoService';
 import ToDoCard from '../component/card/ToDoCard';
 import ProgressCircle from '../component/progress/ProgressCircle';
@@ -11,6 +12,8 @@ import NavigationBar from '../component/navigation/NavigationBar';
 export function TodoListPage() {
   const navigate = useNavigate();
   const location = useLocation();
+
+  const { t } = useTranslation();
 
   const {
     data: todos,
@@ -43,12 +46,12 @@ export function TodoListPage() {
   }
 
   return (
-    <Box>
+    <Box sx={{ mt: 10 }}>
       <NavigationBar />
       {deleteAlert && <Alert severity={deleteAlert.severity}>{deleteAlert.message}</Alert>}
 
       <Typography variant="h3" gutterBottom sx={{ textAlign: 'center' }}>
-        List of Todos
+        {t('mainPageTitle')}
       </Typography>
       {todos?.map((todo) => <ToDoCard key={todo.id} toDo={todo} />)}
       <CreateFab onClick={() => navigate('/todos/create')} />
