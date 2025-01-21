@@ -48,7 +48,7 @@ export function TodoListPage() {
     <Box sx={{ mt: 10 }}>
       <NavigationBar />
       {deleteAlert && (
-        <CustomSnackbar message="Todo deleted successfully." open={deleteAlert} onClose={() => setDeleteAlert(false)} />
+        <CustomSnackbar message={t('todoDeletedAlert')} open={deleteAlert} onClose={() => setDeleteAlert(false)} />
       )}
 
       <Typography variant="h3" gutterBottom sx={{ textAlign: 'center' }}>

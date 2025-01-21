@@ -3,6 +3,7 @@ import { useMutation } from '@tanstack/react-query';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { AxiosError } from 'axios';
+import { useTranslation } from 'react-i18next';
 import LoginForm from '../component/form/LoginForm';
 import { loginUser } from '../service/UserService';
 import { LoginData } from '../interface/LoginData';
@@ -10,13 +11,14 @@ import NavigationBar from '../component/navigation/NavigationBar';
 import CustomSnackbar from '../component/snackbar/CustomSnackbar';
 
 export function LoginPage() {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const location = useLocation();
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [registerSuccess, setRegisterSucces] = useState<boolean>(false);
 
   useEffect(() => {
-    if (location.state?.registerSuccess) {
+    if (location.state?.success) {
       setRegisterSucces(true);
     }
   }, [location.state]);
@@ -44,7 +46,7 @@ export function LoginPage() {
     <Box sx={{ mt: 10 }}>
       {registerSuccess && (
         <CustomSnackbar
-          message="Successfully signed up."
+          message={t('userCreatedAlert')}
           open={registerSuccess}
           onClose={() => setRegisterSucces(false)}
         />

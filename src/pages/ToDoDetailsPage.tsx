@@ -89,7 +89,7 @@ export function ToDoDetailsPage() {
     mutationFn: (toDoDetail: ToDoDetail) => createToDoDetail(toDoDetail, Number(id)),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['details'] });
-      setSuccess('Detail created successfully.');
+      setSuccess(t('detailAddedAlert'));
     },
   });
 
@@ -102,7 +102,7 @@ export function ToDoDetailsPage() {
     mutationFn: (toDoDetailId: number) => deleteToDoDetail(Number(id), toDoDetailId),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['details'] });
-      setSuccess('Detail deleted successfully.');
+      setSuccess(t('detailDeletedAlert'));
     },
   });
 
@@ -140,7 +140,7 @@ export function ToDoDetailsPage() {
       {todo ? (
         <ToDoCardDetailed toDo={todo} handleDelete={handleDelete} isOwner={isOwner} />
       ) : (
-        <Typography variant="body1">Todo not found </Typography>
+        <Typography variant="body1">Todo not found</Typography>
       )}
 
       {isPending && (

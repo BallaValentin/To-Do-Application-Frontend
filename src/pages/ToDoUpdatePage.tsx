@@ -9,8 +9,10 @@ import { ToDoResponse } from '../interface/ToDoResponse';
 import TokenExpiredModal from '../component/modal/TokenExpiredModal';
 import { useTokenValidation } from '../hooks/UseTokenValidation';
 import NavigationBar from '../component/navigation/NavigationBar';
+import { useTranslation } from 'react-i18next';
 
 export function ToDoUpdatePage() {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const { id } = useParams<{ id: string }>();
   const queryClient = useQueryClient();
@@ -37,7 +39,7 @@ export function ToDoUpdatePage() {
       queryClient.invalidateQueries({ queryKey: ['todo'], id });
       navigate(`/todos/${updatedTodo.id}`, {
         state: {
-          success: 'To do with updated successfully',
+          success: t('todoUpdatedAlert'),
         },
       });
     },

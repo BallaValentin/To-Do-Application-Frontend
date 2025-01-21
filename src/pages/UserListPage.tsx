@@ -10,8 +10,10 @@ import { useTokenValidation } from '../hooks/UseTokenValidation';
 import UsersTable from '../component/table/UsersTable';
 import NavigationBar from '../component/navigation/NavigationBar';
 import CustomSnackbar from '../component/snackbar/CustomSnackbar';
+import { useTranslation } from 'react-i18next';
 
 export function UserListPage() {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const queryClient = useQueryClient();
   const [adminName, setAdminName] = useState<string>('');
@@ -69,9 +71,7 @@ export function UserListPage() {
   }
   return (
     <Box sx={{ mt: 10 }}>
-      {success && (
-        <CustomSnackbar open={success} onClose={() => setSuccess(false)} message="User deleted successfully." />
-      )}
+      {success && <CustomSnackbar open={success} onClose={() => setSuccess(false)} message={t('userDeletedAlert')} />}
       <UsersTable users={users || []} onDelete={handleDelete} adminName={adminName} />
       <NavigationBar />
     </Box>
