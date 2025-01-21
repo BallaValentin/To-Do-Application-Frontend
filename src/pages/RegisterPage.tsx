@@ -3,11 +3,11 @@ import { useMutation } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import { AxiosError } from 'axios';
+import { useTranslation } from 'react-i18next';
 import RegisterForm from '../component/form/RegisterForm';
 import { RegisterData } from '../interface/RegisterData';
 import { registerUser } from '../service/UserService';
 import NavigationBar from '../component/navigation/NavigationBar';
-import { useTranslation } from 'react-i18next';
 
 interface ErrorResponse {
   error: string;

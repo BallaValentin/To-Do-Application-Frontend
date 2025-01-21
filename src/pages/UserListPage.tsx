@@ -4,13 +4,13 @@ import { useEffect, useState } from 'react';
 import { jwtDecode } from 'jwt-decode';
 import { useNavigate } from 'react-router-dom';
 import { AxiosError } from 'axios';
+import { useTranslation } from 'react-i18next';
 import { getUsers, deleteUserById } from '../service/UserService';
 import ProgressCircle from '../component/progress/ProgressCircle';
 import { useTokenValidation } from '../hooks/UseTokenValidation';
 import UsersTable from '../component/table/UsersTable';
 import NavigationBar from '../component/navigation/NavigationBar';
 import CustomSnackbar from '../component/snackbar/CustomSnackbar';
-import { useTranslation } from 'react-i18next';
 
 export function UserListPage() {
   const { t } = useTranslation();
