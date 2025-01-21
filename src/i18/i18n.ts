@@ -161,7 +161,7 @@ i18n
           userDeletedAlert: 'Utilizatorul a fost șters cu succes.',
           badCredentialsErr: 'Nume de utilizator sau parolă invalidă.',
           usernameTakenErr: 'Numele de utilizator este deja luat.',
-          emailTakenErr: 'Adresa de email este deja utilizată.'
+          emailTakenErr: 'Adresa de email este deja utilizată.',
         },
       },
       hu: {
