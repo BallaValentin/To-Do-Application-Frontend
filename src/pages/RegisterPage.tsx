@@ -7,12 +7,14 @@ import RegisterForm from '../component/form/RegisterForm';
 import { RegisterData } from '../interface/RegisterData';
 import { registerUser } from '../service/UserService';
 import NavigationBar from '../component/navigation/NavigationBar';
+import { useTranslation } from 'react-i18next';
 
 interface ErrorResponse {
   error: string;
 }
 
 export function RegisterPage() {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
@@ -30,9 +32,9 @@ export function RegisterPage() {
       console.log(err.response);
       if (err.response?.status === 401) {
         if (err.response.data.error === 'Username is already taken') {
-          setErrorMessage('Username is already taken.');
+          setErrorMessage(t('usernameTakenErr'));
         } else if (err.response.data.error === 'Email is already taken') {
-          setErrorMessage('Email is already taken.');
+          setErrorMessage(t('emailTakenErr'));
         } else {
           setErrorMessage('An unexpected error has occured.');
         }

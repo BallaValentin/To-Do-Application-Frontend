@@ -31,7 +31,7 @@ export function LoginPage() {
     },
     onError: (err: AxiosError) => {
       if (err.response?.status === 401) {
-        setErrorMessage('Invalid username or password.');
+        setErrorMessage(t('badCredentialsErr'));
       } else {
         setErrorMessage('An unexpected error occured.');
       }
