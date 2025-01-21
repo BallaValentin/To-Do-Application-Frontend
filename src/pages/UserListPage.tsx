@@ -9,11 +9,13 @@ import ProgressCircle from '../component/progress/ProgressCircle';
 import { useTokenValidation } from '../hooks/UseTokenValidation';
 import UsersTable from '../component/table/UsersTable';
 import NavigationBar from '../component/navigation/NavigationBar';
+import CustomSnackbar from '../component/snackbar/CustomSnackbar';
 
 export function UserListPage() {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
   const [adminName, setAdminName] = useState<string>('');
+  const [success, setSuccess] = useState<boolean>(false);
 
   useTokenValidation();
 
@@ -41,6 +43,7 @@ export function UserListPage() {
     mutationFn: (id: number) => deleteUserById(id),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['users'] });
+      setSuccess(true);
     },
     onError: (err: AxiosError) => {
       if (err.response?.status === 401) {
@@ -66,6 +69,9 @@ export function UserListPage() {
   }
   return (
     <Box sx={{ mt: 10 }}>
+      {success && (
+        <CustomSnackbar open={success} onClose={() => setSuccess(false)} message="User deleted successfully." />
+      )}
       <UsersTable users={users || []} onDelete={handleDelete} adminName={adminName} />
       <NavigationBar />
     </Box>

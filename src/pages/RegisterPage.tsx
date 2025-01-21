@@ -20,7 +20,11 @@ export function RegisterPage() {
     mutationFn: registerUser,
     onSuccess: () => {
       setErrorMessage(null);
-      navigate('/login');
+      navigate('/login', {
+        state: {
+          success: true,
+        },
+      });
     },
     onError: (err: AxiosError<ErrorResponse>) => {
       console.log(err.response);
@@ -44,7 +48,7 @@ export function RegisterPage() {
     mutate(registerData);
   };
   return (
-    <Box>
+    <Box sx={{ mt: 10 }}>
       <Paper elevation={3} sx={{ maxWidth: 300, margin: 'auto', padding: 4, textAlign: 'center', marginTop: 10 }}>
         {errorMessage && (
           <Alert severity="error" sx={{ mb: 2 }}>

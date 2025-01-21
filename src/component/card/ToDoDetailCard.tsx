@@ -4,10 +4,11 @@ import { ToDoDetailResponse } from '../../interface/ToDoDetailResponse';
 
 interface ToDoDetailCardProps {
   toDoDetail: ToDoDetailResponse;
+  isOwner: boolean;
   onClick: () => void;
 }
 
-function ToDoDetailCard({ toDoDetail, onClick }: ToDoDetailCardProps) {
+function ToDoDetailCard({ toDoDetail, onClick, isOwner }: ToDoDetailCardProps) {
   return (
     <Card
       sx={{
@@ -35,7 +36,7 @@ function ToDoDetailCard({ toDoDetail, onClick }: ToDoDetailCardProps) {
         }}
         onClick={onClick}
       >
-        <DeleteIcon color="action" />
+        {isOwner && <DeleteIcon color="action" />}
       </IconButton>
     </Card>
   );

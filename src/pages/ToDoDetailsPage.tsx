@@ -14,6 +14,7 @@ import { createToDoDetail, deleteToDoDetail, getToDoDetails } from '../service/T
 import ToDoDetailCard from '../component/card/ToDoDetailCard';
 import { ToDoDetail } from '../interface/ToDoDetail';
 import NavigationBar from '../component/navigation/NavigationBar';
+import CustomSnackbar from '../component/snackbar/CustomSnackbar';
 
 export function ToDoDetailsPage() {
   const { t } = useTranslation();
@@ -88,6 +89,7 @@ export function ToDoDetailsPage() {
     mutationFn: (toDoDetail: ToDoDetail) => createToDoDetail(toDoDetail, Number(id)),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['details'] });
+      setSuccess('Detail created successfully.');
     },
   });
 
@@ -100,6 +102,7 @@ export function ToDoDetailsPage() {
     mutationFn: (toDoDetailId: number) => deleteToDoDetail(Number(id), toDoDetailId),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['details'] });
+      setSuccess('Detail deleted successfully.');
     },
   });
 
@@ -129,7 +132,7 @@ export function ToDoDetailsPage() {
 
   return (
     <Box sx={{ mt: 10 }}>
-      {success && <Alert severity="success">{success}</Alert>}
+      {success && <CustomSnackbar message={success} open={Boolean(success)} onClose={() => setSuccess(null)} />}
       <Typography variant="h4" gutterBottom sx={{ textAlign: 'center' }}>
         {t('detailPageTitle')}
       </Typography>
@@ -156,7 +159,12 @@ export function ToDoDetailsPage() {
 
       <Box sx={{ m: 10, display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))', gap: 2 }}>
         {details?.map((detail) => (
-          <ToDoDetailCard key={detail.id} toDoDetail={detail} onClick={() => handleDeleteDetail(detail.id)} />
+          <ToDoDetailCard
+            key={detail.id}
+            toDoDetail={detail}
+            isOwner={isOwner}
+            onClick={() => handleDeleteDetail(detail.id)}
+          />
         ))}
       </Box>
 
