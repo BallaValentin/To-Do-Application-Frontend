@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Alert, AlertColor, Box, Typography } from '@mui/material';
+import { Alert, Box, Typography } from '@mui/material';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
@@ -8,12 +8,13 @@ import ToDoCard from '../component/card/ToDoCard';
 import ProgressCircle from '../component/progress/ProgressCircle';
 import CreateFab from '../component/fab/CreateFab';
 import NavigationBar from '../component/navigation/NavigationBar';
+import CustomSnackbar from '../component/snackbar/CustomSnackbar';
 
 export function TodoListPage() {
   const navigate = useNavigate();
   const location = useLocation();
-
   const { t } = useTranslation();
+  const [deleteAlert, setDeleteAlert] = useState<boolean>(false);
 
   const {
     data: todos,
@@ -24,8 +25,6 @@ export function TodoListPage() {
     queryKey: ['todos'],
     queryFn: getToDos,
   });
-
-  const [deleteAlert, setDeleteAlert] = useState<{ severity: AlertColor; message: string } | null>(null);
 
   useEffect(() => {
     if (location.state?.deleteAlert) {
@@ -48,7 +47,9 @@ export function TodoListPage() {
   return (
     <Box sx={{ mt: 10 }}>
       <NavigationBar />
-      {deleteAlert && <Alert severity={deleteAlert.severity}>{deleteAlert.message}</Alert>}
+      {deleteAlert && (
+        <CustomSnackbar message="Todo deleted successfully." open={deleteAlert} onClose={() => setDeleteAlert(false)} />
+      )}
 
       <Typography variant="h3" gutterBottom sx={{ textAlign: 'center' }}>
         {t('mainPageTitle')}

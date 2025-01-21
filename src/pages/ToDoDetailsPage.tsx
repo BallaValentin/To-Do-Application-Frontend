@@ -4,6 +4,7 @@ import { Alert, Box, CircularProgress, Typography } from '@mui/material';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
 import { jwtDecode } from 'jwt-decode';
+import { useTranslation } from 'react-i18next';
 import { deleteToDoById, getToDoById } from '../service/ToDoService';
 import ToDoCardDetailed from '../component/card/ToDoCardDetailed';
 import ProgressCircle from '../component/progress/ProgressCircle';
@@ -13,7 +14,6 @@ import { createToDoDetail, deleteToDoDetail, getToDoDetails } from '../service/T
 import ToDoDetailCard from '../component/card/ToDoDetailCard';
 import { ToDoDetail } from '../interface/ToDoDetail';
 import NavigationBar from '../component/navigation/NavigationBar';
-import { useTranslation } from 'react-i18next';
 
 export function ToDoDetailsPage() {
   const { t } = useTranslation();
@@ -53,17 +53,11 @@ export function ToDoDetailsPage() {
     isPending,
   } = useMutation({
     mutationFn: () => deleteToDoById(Number(id)),
-    onSuccess: (status: number) => {
+    onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['todos'] });
-      if (status === 204) {
-        navigate('/', {
-          state: { deleteAlert: { severity: 'success', message: `To do with id ${todo?.id} deleted succesfully` } },
-        });
-      } else {
-        navigate('/', {
-          state: { deleteAlert: { severity: 'error', message: `To do with id ${todo?.id} doesnt exist` } },
-        });
-      }
+      navigate('/', {
+        state: { deleteAlert: true },
+      });
     },
     onError: (err: AxiosError) => {
       if (err.response?.status === 401) {

@@ -13,7 +13,7 @@ i18n
       en: {
         translation: {
           mainPageTitle: 'List of Todos',
-          toDoCardBtn: 'Details',
+          todoCardBtn: 'Details',
           detailPageTitle: 'Todo Details',
           todoDetailedCardBy: 'Created by: ',
           todoDetailedCardDesc: 'Description: ',
@@ -48,7 +48,7 @@ i18n
           registerFormEmailErr: 'Invalid email address.',
           registerFormPasswordErr:
             'Password must be at least 8 characters long and must contain uppercase, lowercase. digit and special characters.',
-          registerFormConfirmPwdError: 'Passwords must match.',
+          registerFormConfirmPwdErr: 'Passwords must match.',
           registerFormVeryWeakPwd: 'Very weak',
           registerFormWeakPwd: 'Weak',
           registerFormBitWeakPwd: 'Bit weak',
@@ -80,7 +80,7 @@ i18n
       ro: {
         translation: {
           mainPageTitle: 'List of Todos',
-          toDoCardBtn: 'Details',
+          todoCardBtn: 'Details',
           detailPageTitle: 'Todo Details ',
           todoDetailedCardBy: 'Created by: ',
           todoDetailedCardDesc: 'Description: ',
@@ -115,7 +115,7 @@ i18n
           registerFormEmailErr: 'Invalid email address.',
           registerFormPasswordErr:
             'Password must be at least 8 characters long and must contain uppercase, lowercase. digit and special characters.',
-          registerFormConfirmPwdError: 'Passwords must match.',
+          registerFormConfirmPwdErr: 'Passwords must match.',
           registerFormVeryWeakPwd: 'Very weak',
           registerFormWeakPwd: 'Weak',
           registerFormBitWeakPwd: 'Bit weak',
@@ -182,7 +182,7 @@ i18n
           registerFormEmailErr: 'Hibás email formátum.',
           registerFormPasswordErr:
             'A jelszónak legalább 8 karakterből kell állnia és tartalmaznia kell nagy- és kisbetűket, egy számjegyet és speciális karaktert.',
-          registerFormConfirmPwdError: 'A jelszavak meg kell egyezzenek.',
+          registerFormConfirmPwdErr: 'A jelszavak meg kell egyezzenek.',
           registerFormVeryWeakPwd: 'Nagyon gyenge',
           registerFormWeakPwd: 'Gyenge',
           registerFormBitWeakPwd: 'Kissé gyenge',

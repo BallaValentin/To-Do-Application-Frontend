@@ -79,12 +79,12 @@ function RegisterForm(registerForm: RegisterFormProps) {
 
     if (passwordStrength !== 100) {
       isValid = false;
-      newErrors.passwordError = t('registerFormPasswordError');
+      newErrors.passwordError = t('registerFormPasswordErr');
     }
 
     if (confirmPassword !== registerData.password) {
       isValid = false;
-      newErrors.confirmPasswordError = t('registerFormConfirmPwdError');
+      newErrors.confirmPasswordError = t('registerFormConfirmPwdErr');
     }
 
     setRegisterError(newErrors);

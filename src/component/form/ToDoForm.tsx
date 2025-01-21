@@ -60,7 +60,7 @@ function ToDoForm(toDoForm: ToDoFormProps) {
     }
 
     if (!Number.isInteger(Number(formData.levelOfImportance)) || formData.levelOfImportance <= 0) {
-      newErrors.levelOfImportance = t('todoFormPriorityError');
+      newErrors.levelOfImportance = t('todoFormPriorityErr');
       isValid = false;
     }
 
