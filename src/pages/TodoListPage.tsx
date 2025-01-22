@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Alert, Box, Typography } from '@mui/material';
+import { Alert, Box, Paper, Typography } from '@mui/material';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
@@ -9,6 +9,7 @@ import ProgressCircle from '../component/progress/ProgressCircle';
 import CreateFab from '../component/fab/CreateFab';
 import NavigationBar from '../component/navigation/NavigationBar';
 import CustomSnackbar from '../component/snackbar/CustomSnackbar';
+import SearchForm from '../component/form/SearchForm';
 
 export function TodoListPage() {
   const navigate = useNavigate();
@@ -32,6 +33,8 @@ export function TodoListPage() {
     }
   }, [location.state]);
 
+  const handleSearchSubmit = () => {};
+
   if (isLoading) {
     return <ProgressCircle loadingMessage="Fetching todos..." />;
   }
@@ -47,6 +50,7 @@ export function TodoListPage() {
   return (
     <Box sx={{ mt: 10 }}>
       <NavigationBar />
+
       {deleteAlert && (
         <CustomSnackbar message={t('todoDeletedAlert')} open={deleteAlert} onClose={() => setDeleteAlert(false)} />
       )}
@@ -54,6 +58,11 @@ export function TodoListPage() {
       <Typography variant="h3" gutterBottom sx={{ textAlign: 'center' }}>
         {t('mainPageTitle')}
       </Typography>
+
+      <Paper elevation={3} sx={{ m: 4, p: 2 }}>
+        <SearchForm onSearch={handleSearchSubmit} />
+      </Paper>
+
       {todos?.map((todo) => <ToDoCard key={todo.id} toDo={todo} />)}
       <CreateFab onClick={() => navigate('/todos/create')} />
     </Box>
