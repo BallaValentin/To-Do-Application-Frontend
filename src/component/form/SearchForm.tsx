@@ -2,9 +2,10 @@ import { Box, Button, FormHelperText, Grid2, TextField, Typography } from '@mui/
 import SearchIcon from '@mui/icons-material/Search';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { ToDoSearchParams } from '../../interface/ToDoSearchParams';
 
 interface SearchFormProps {
-  onSearch: () => void;
+  onSearch: (searchParams: ToDoSearchParams) => void;
 }
 
 function SearchForm(props: SearchFormProps) {
@@ -22,6 +23,15 @@ function SearchForm(props: SearchFormProps) {
       ...prevFilters,
       [name]: value,
     }));
+  };
+
+  const handleClick = () => {
+    const searchParams: ToDoSearchParams = {
+      levelOfImportance: filters.levelOfImportance,
+      beforeDate: filters.beforeDate,
+      afterDate: filters.afterDate,
+    };
+    props.onSearch(searchParams);
   };
 
   return (
@@ -65,7 +75,7 @@ function SearchForm(props: SearchFormProps) {
           <FormHelperText>{t('searchFormBeforeDate')}</FormHelperText>
         </Grid2>
         <Grid2 size={3}>
-          <Button onClick={props.onSearch}>
+          <Button onClick={handleClick}>
             <SearchIcon />
             <Typography variant="body1">{t('searchFormSubmitBtn')}</Typography>
           </Button>

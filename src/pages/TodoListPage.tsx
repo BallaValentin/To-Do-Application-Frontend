@@ -10,6 +10,7 @@ import CreateFab from '../component/fab/CreateFab';
 import NavigationBar from '../component/navigation/NavigationBar';
 import CustomSnackbar from '../component/snackbar/CustomSnackbar';
 import SearchForm from '../component/form/SearchForm';
+import { ToDoSearchParams } from '../interface/ToDoSearchParams';
 
 export function TodoListPage() {
   const navigate = useNavigate();
@@ -33,7 +34,9 @@ export function TodoListPage() {
     }
   }, [location.state]);
 
-  const handleSearchSubmit = () => {};
+  const handleSearchSubmit = (searchParams: ToDoSearchParams) => {
+    console.log(searchParams);
+  };
 
   if (isLoading) {
     return <ProgressCircle loadingMessage="Fetching todos..." />;
