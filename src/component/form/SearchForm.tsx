@@ -1,12 +1,15 @@
 import { Box, Button, FormHelperText, Grid2, TextField, Typography } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 
 interface SearchFormProps {
   onSearch: () => void;
 }
 
 function SearchForm(props: SearchFormProps) {
+  const { t } = useTranslation();
+
   const [filters, setFilters] = useState({
     levelOfImportance: null,
     beforeDate: null,
@@ -37,7 +40,7 @@ function SearchForm(props: SearchFormProps) {
             variant="standard"
             fullWidth
           />
-          <FormHelperText>Priority</FormHelperText>
+          <FormHelperText>{t('searchFormPriority')}</FormHelperText>
         </Grid2>
         <Grid2 size={3}>
           <TextField
@@ -48,7 +51,7 @@ function SearchForm(props: SearchFormProps) {
             variant="standard"
             fullWidth
           />
-          <FormHelperText>After date</FormHelperText>
+          <FormHelperText>{t('searchFormAfterDate')}</FormHelperText>
         </Grid2>
         <Grid2 size={3}>
           <TextField
@@ -59,12 +62,12 @@ function SearchForm(props: SearchFormProps) {
             variant="standard"
             fullWidth
           />
-          <FormHelperText>Before date</FormHelperText>
+          <FormHelperText>{t('searchFormBeforeDate')}</FormHelperText>
         </Grid2>
         <Grid2 size={3}>
           <Button onClick={props.onSearch}>
             <SearchIcon />
-            <Typography variant="body1">Search Todos</Typography>
+            <Typography variant="body1">{t('searchFormSubmitBtn')}</Typography>
           </Button>
         </Grid2>
       </Grid2>

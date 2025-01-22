@@ -72,7 +72,11 @@
       "userDeletedAlert": "User deleted successfully.",
       "badCredentialsErr": "Invalid username or password.",
       "usernameTakenErr": "Username is already taken.",
-      "emailTakenErr": "Email address is already taken."
+      "emailTakenErr": "Email address is already taken.",
+      "searchFormPriority": "Importance",
+      "searchFormAfterDate": "After date",
+      "searchFormBeforeDate": "Before date",
+      "searchFormSubmitBtn": "Search Todos"
     }
   },
     "ro": {
@@ -149,7 +153,11 @@
         "userDeletedAlert": "Utilizatorul a fost șters cu succes.",
         "badCredentialsErr": "Nume de utilizator sau parolă invalidă.",
         "usernameTakenErr": "Numele de utilizator este deja luat.",
-        "emailTakenErr": "Adresa de email este deja utilizată."
+        "emailTakenErr": "Adresa de email este deja utilizată.",
+        "searchFormPriority": "Importanță",
+        "searchFormAfterDate": "După data",
+        "searchFormBeforeDate": "Înainte de data",
+        "searchFormSubmitBtn": "Caută Sarcinele"
       }
     },
     "hu": {
@@ -226,7 +234,11 @@
         "userDeletedAlert": "Felhasználó sikeresen törölve.",
         "badCredentialsErr": "Hibás felhasználónév vagy jelszó.",
         "usernameTakenErr": "A felhasználónév már foglalt.",
-        "emailTakenErr": "Az email cim már foglalt."
+        "emailTakenErr": "Az email cim már foglalt.",
+        "searchFormPriority": "Fontosság",
+        "searchFormAfterDate": "Dátum után",
+        "searchFormBeforeDate": "Dátum előtt",
+        "searchFormSubmitBtn": "Tennivalók Keresése"
       }
     }
   }
