@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { Alert, Box, Paper, Typography } from '@mui/material';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
-import { getToDos } from '../service/ToDoService';
+import { filterToDos, getToDos } from '../service/ToDoService';
 import ToDoCard from '../component/card/ToDoCard';
 import ProgressCircle from '../component/progress/ProgressCircle';
 import CreateFab from '../component/fab/CreateFab';
@@ -11,6 +11,7 @@ import NavigationBar from '../component/navigation/NavigationBar';
 import CustomSnackbar from '../component/snackbar/CustomSnackbar';
 import SearchForm from '../component/form/SearchForm';
 import { ToDoSearchParams } from '../interface/ToDoSearchParams';
+import { queryClient } from '../App';
 
 export function TodoListPage() {
   const navigate = useNavigate();
@@ -34,8 +35,15 @@ export function TodoListPage() {
     }
   }, [location.state]);
 
+  const { mutate } = useMutation({
+    mutationFn: (filters: ToDoSearchParams) => filterToDos(filters),
+    onSuccess: (data) => {
+      queryClient.setQueryData(['todos'], data);
+    },
+  });
+
   const handleSearchSubmit = (searchParams: ToDoSearchParams) => {
-    console.log(searchParams);
+    mutate(searchParams);
   };
 
   if (isLoading) {
