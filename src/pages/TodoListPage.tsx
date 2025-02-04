@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Alert, Box, Paper, Typography } from '@mui/material';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { useMutation, useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
 import { filterToDos, getToDos } from '../service/ToDoService';
 import ToDoCard from '../component/card/ToDoCard';
@@ -11,13 +11,14 @@ import NavigationBar from '../component/navigation/NavigationBar';
 import CustomSnackbar from '../component/snackbar/CustomSnackbar';
 import SearchForm from '../component/form/SearchForm';
 import { ToDoSearchParams } from '../interface/ToDoSearchParams';
-import { queryClient } from '../App';
 
 export function TodoListPage() {
   const navigate = useNavigate();
   const location = useLocation();
   const { t } = useTranslation();
   const [deleteAlert, setDeleteAlert] = useState<boolean>(false);
+
+  const queryClient = useQueryClient();
 
   const {
     data: todos,
@@ -36,7 +37,7 @@ export function TodoListPage() {
   }, [location.state]);
 
   const { mutate } = useMutation({
-    mutationFn: (filters: ToDoSearchParams) => filterToDos(filters),
+    mutationFn: (searchFilters: ToDoSearchParams) => filterToDos(searchFilters),
     onSuccess: (data) => {
       queryClient.setQueryData(['todos'], data);
     },
