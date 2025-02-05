@@ -18,8 +18,8 @@ import i18n from './i18/i18n';
 export const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
-      staleTime: 100000,
-      refetchInterval: 300000,
+      staleTime: 1000 * 60 * 60,
+      refetchInterval: 1000 * 60 * 60,
     },
   },
 });
