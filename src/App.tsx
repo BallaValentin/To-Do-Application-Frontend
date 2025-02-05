@@ -3,6 +3,7 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ThemeProvider } from '@emotion/react';
 import { CssBaseline } from '@mui/material';
 import { I18nextProvider } from 'react-i18next';
+import { useEffect } from 'react';
 import { TodoListPage } from './pages/TodoListPage';
 import { ToDoDetailsPage } from './pages/ToDoDetailsPage';
 import { ToDoUpdatePage } from './pages/ToDoUpdatePage';
@@ -14,6 +15,7 @@ import { UserListPage } from './pages/UserListPage';
 import themes from './theme/themes';
 import { MainThemeProvider, useTheme } from './context/MainThemeProvider';
 import i18n from './i18/i18n';
+import { requestNotificationPermission } from './util/notifications';
 
 export const queryClient = new QueryClient({
   defaultOptions: {
@@ -25,7 +27,11 @@ export const queryClient = new QueryClient({
 });
 
 function ThemedApp() {
-  const { themeName } = useTheme(); // Hozzáférés a dinamikus themeName-hez
+  const { themeName } = useTheme();
+
+  useEffect(() => {
+    requestNotificationPermission();
+  }, []);
 
   return (
     <ThemeProvider theme={themes[themeName]}>

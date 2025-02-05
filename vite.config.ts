@@ -27,7 +27,19 @@ export default defineConfig({
       ],
       },
       workbox: {
-        maximumFileSizeToCacheInBytes: 5 * 1024 * 1024
+        maximumFileSizeToCacheInBytes: 5 * 1024 * 1024,
+        runtimeCaching: [{
+            urlPattern: /^\/.*\.(png|jpg|jpeg|svg|gif|css|js|woff2|json)$/,
+            handler: 'CacheFirst',
+            options: {
+              cacheName: 'static-files',
+              expiration: {
+                maxEntries: 50,
+                maxAgeSeconds: 60 * 60 * 24
+              }
+            }
+          }
+        ]
       }
   })],
 })
