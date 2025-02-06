@@ -23,16 +23,12 @@ export function UserListPage() {
 
   useEffect(() => {
     const jwtToken = localStorage.getItem('jwtToken');
-    if (jwtToken == null) {
-      navigate('/login');
+    const decodedToken = jwtDecode(jwtToken || '');
+    const role = decodedToken.sub?.split('|')[2];
+    if (role !== 'admin') {
+      navigate('/unauthorized');
     } else {
-      const decodedToken = jwtDecode(jwtToken);
-      const role = decodedToken.sub?.split('|')[2];
-      if (role !== 'admin') {
-        navigate('/unauthorized');
-      } else {
-        setAdminName(decodedToken.sub?.split('|')[0] || '');
-      }
+      setAdminName(decodedToken.sub?.split('|')[0] || '');
     }
   });
 

@@ -13,7 +13,6 @@ import SearchForm from '../component/form/SearchForm';
 import { ToDoSearchParams } from '../interface/ToDoSearchParams';
 import useTokenChecker from '../hooks/UseTokenChecker';
 import TokenExpiredModal from '../component/modal/TokenExpiredModal';
-import useNullTokenChecker from '../hooks/UseNullTokenChecker';
 
 export function TodoListPage() {
   const navigate = useNavigate();
@@ -21,7 +20,6 @@ export function TodoListPage() {
   const { t } = useTranslation();
   const queryClient = useQueryClient();
   const [deleteAlert, setDeleteAlert] = useState<boolean>(false);
-  useNullTokenChecker();
   const isTokenExpired = useTokenChecker();
 
   const {

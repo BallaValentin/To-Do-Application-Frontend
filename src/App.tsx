@@ -16,6 +16,7 @@ import themes from './theme/themes';
 import { MainThemeProvider, useTheme } from './context/MainThemeProvider';
 import i18n from './i18/i18n';
 import { requestNotificationPermission } from './util/notifications';
+import ProtectedRoute from './routes/ProtectedRoute';
 
 export const queryClient = new QueryClient({
   defaultOptions: {
@@ -38,13 +39,15 @@ function ThemedApp() {
       <CssBaseline />
       <Router>
         <Routes>
-          <Route path="/" element={<TodoListPage />} />
-          <Route path="/todos/:id" element={<ToDoDetailsPage />} />
-          <Route path="/todos/update/:id" element={<ToDoUpdatePage />} />
-          <Route path="/todos/create" element={<ToDoCreatePage />} />
+          <Route element={<ProtectedRoute />}>
+            <Route path="/" element={<TodoListPage />} />
+            <Route path="/todos/:id" element={<ToDoDetailsPage />} />
+            <Route path="/todos/update/:id" element={<ToDoUpdatePage />} />
+            <Route path="/todos/create" element={<ToDoCreatePage />} />
+            <Route path="/users" element={<UserListPage />} />
+          </Route>
           <Route path="/login" element={<LoginPage />} />
           <Route path="/register" element={<RegisterPage />} />
-          <Route path="/users" element={<UserListPage />} />
           <Route path="/unauthorized" element={<UnauthorizedPage />} />
         </Routes>
       </Router>

@@ -10,14 +10,12 @@ import { ToDoResponse } from '../interface/ToDoResponse';
 import TokenExpiredModal from '../component/modal/TokenExpiredModal';
 import NavigationBar from '../component/navigation/NavigationBar';
 import useTokenChecker from '../hooks/UseTokenChecker';
-import useNullTokenChecker from '../hooks/UseNullTokenChecker';
 
 export function ToDoUpdatePage() {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const { id } = useParams<{ id: string }>();
   const queryClient = useQueryClient();
-  useNullTokenChecker();
   const isTokenExpired = useTokenChecker();
 
   const {
