@@ -4,14 +4,12 @@ import useNullTokenChecker from '../hooks/UseNullTokenChecker';
 
 function ProtectedRoute() {
   const isTokenNull = useNullTokenChecker();
-  if (isTokenNull == null) {
+
+  if (isTokenNull === null) {
     return <ProgressCircle loadingMessage="Loading..." />;
   }
-  if (isTokenNull) {
-    return <Navigate to="/login" />;
-  }
 
-  return <Outlet />;
+  return isTokenNull ? <Navigate to="/login" /> : <Outlet />;
 }
 
 export default ProtectedRoute;

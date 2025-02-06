@@ -1,9 +1,29 @@
+import { useEffect, useState } from 'react';
+import { getNewAccessToken } from '../service/UserService';
+
 const useNullTokenChecker = () => {
-  const accessToken = sessionStorage.getItem('accessToken');
-  if (accessToken == null) {
-    return true;
-  }
-  return false;
+  const [isTokenNull, setIsTokenNull] = useState<boolean | null>(null);
+
+  useEffect(() => {
+    const checkToken = async () => {
+      const accessToken = sessionStorage.getItem('accessToken');
+      if (accessToken == null) {
+        const refreshToken = localStorage.getItem('refreshToken');
+        if (refreshToken != null) {
+          try {
+            await getNewAccessToken();
+            setIsTokenNull(false);
+          } catch (error) {
+            setIsTokenNull(true);
+          }
+        }
+        setIsTokenNull(true);
+      }
+      setIsTokenNull(false);
+    };
+    checkToken();
+  }, []);
+  return isTokenNull;
 };
 
 export default useNullTokenChecker;
