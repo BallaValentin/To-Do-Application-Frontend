@@ -42,6 +42,7 @@ export function LoginPage() {
     setErrorMessage(null);
     mutate(loginData);
   };
+
   return (
     <Box sx={{ mt: 10 }}>
       {registerSuccess && (

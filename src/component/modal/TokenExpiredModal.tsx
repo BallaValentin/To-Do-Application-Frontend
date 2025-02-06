@@ -39,7 +39,7 @@ function TokenExpiredModal({ isInvalidToken }: TokenExpiredModalProps) {
               variant="contained"
               color="primary"
               onClick={() => {
-                localStorage.removeItem('jwtToken');
+                sessionStorage.removeItem('accessToken');
                 navigate('/login');
               }}
               sx={{ mt: 3 }}

@@ -34,7 +34,7 @@ export const getToDoById = async (id: number): Promise<ToDoResponse> => {
 export const deleteToDoById = async (id: number): Promise<number> => {
   const response = await toDoApi.delete<number>(`/todos/${id}`, {
     headers: {
-      Authorization: `Bearer ${localStorage.getItem('jwtToken')}`,
+      Authorization: `Bearer ${sessionStorage.getItem('accessToken')}`,
     },
   });
 
@@ -44,7 +44,7 @@ export const deleteToDoById = async (id: number): Promise<number> => {
 export const createToDo = async (toDo: ToDo): Promise<ToDoResponse> => {
   const response = await toDoApi.post<ToDoResponse>('/todos', toDo, {
     headers: {
-      Authorization: `Bearer ${localStorage.getItem('jwtToken')}`,
+      Authorization: `Bearer ${sessionStorage.getItem('accessToken')}`,
     },
   });
   return response.data;
@@ -53,7 +53,7 @@ export const createToDo = async (toDo: ToDo): Promise<ToDoResponse> => {
 export const updateToDoById = async (id: number, toDo: ToDo): Promise<ToDoResponse> => {
   const response = await toDoApi.put<ToDoResponse>(`/todos/${id}`, toDo, {
     headers: {
-      Authorization: `Bearer ${localStorage.getItem('jwtToken')}`,
+      Authorization: `Bearer ${sessionStorage.getItem('accessToken')}`,
     },
   });
   return response.data;

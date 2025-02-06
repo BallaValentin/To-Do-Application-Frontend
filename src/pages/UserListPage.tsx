@@ -22,7 +22,7 @@ export function UserListPage() {
   const isTokenExpired = useTokenChecker();
 
   useEffect(() => {
-    const jwtToken = localStorage.getItem('jwtToken');
+    const jwtToken = sessionStorage.getItem('accessToken');
     const decodedToken = jwtDecode(jwtToken || '');
     const role = decodedToken.sub?.split('|')[2];
     if (role !== 'admin') {

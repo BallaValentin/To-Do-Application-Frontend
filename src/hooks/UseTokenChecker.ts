@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import checkTokenValidity from '../util/checkTokenValidity';
+import checkTokenValidity from '../util/CheckToken';
 
 const useTokenChecker = () => {
   const [isTokenExpired, setIsTokenExpired] = useState<boolean>(false);

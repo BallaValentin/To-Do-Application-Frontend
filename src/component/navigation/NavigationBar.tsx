@@ -22,7 +22,8 @@ function CommonHeader() {
   };
 
   const handleLogout = () => {
-    localStorage.removeItem('jwtToken');
+    sessionStorage.removeItem('accessToken');
+    localStorage.removeItem('refreshToken');
     navigate('/login');
   };
 
@@ -39,7 +40,7 @@ function CommonHeader() {
   };
 
   useEffect(() => {
-    const token = localStorage.getItem('jwtToken');
+    const token = sessionStorage.getItem('accessToken');
     if (token) {
       setHasToken(true);
       const decodedToken = jwtDecode(token);

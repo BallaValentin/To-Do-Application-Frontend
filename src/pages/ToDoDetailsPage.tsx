@@ -75,7 +75,7 @@ export function ToDoDetailsPage() {
   };
 
   useEffect(() => {
-    const token = localStorage.getItem('jwtToken');
+    const token = sessionStorage.getItem('accessToken');
     if (token) {
       const decodedToken = jwtDecode(token);
       const username = decodedToken.sub?.split('|')[0];
