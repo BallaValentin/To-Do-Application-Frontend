@@ -11,12 +11,15 @@ import NavigationBar from '../component/navigation/NavigationBar';
 import CustomSnackbar from '../component/snackbar/CustomSnackbar';
 import SearchForm from '../component/form/SearchForm';
 import { ToDoSearchParams } from '../interface/ToDoSearchParams';
+import useTokenChecker from '../hooks/UseTokenChecker';
+import TokenExpiredModal from '../component/modal/TokenExpiredModal';
 
 export function TodoListPage() {
   const navigate = useNavigate();
   const location = useLocation();
   const { t } = useTranslation();
   const [deleteAlert, setDeleteAlert] = useState<boolean>(false);
+  const isTokenExpired = useTokenChecker();
 
   const queryClient = useQueryClient();
 
@@ -77,6 +80,8 @@ export function TodoListPage() {
 
       {todos?.map((todo) => <ToDoCard key={todo.id} toDo={todo} />)}
       <CreateFab onClick={() => navigate('/todos/create')} />
+
+      {isTokenExpired && <TokenExpiredModal isInvalidToken={isTokenExpired} />}
     </Box>
   );
 }

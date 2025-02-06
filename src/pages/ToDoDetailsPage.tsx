@@ -15,6 +15,8 @@ import ToDoDetailCard from '../component/card/ToDoDetailCard';
 import { ToDoDetail } from '../interface/ToDoDetail';
 import NavigationBar from '../component/navigation/NavigationBar';
 import CustomSnackbar from '../component/snackbar/CustomSnackbar';
+import useTokenChecker from '../hooks/UseTokenChecker';
+import TokenExpiredModal from '../component/modal/TokenExpiredModal';
 
 export function ToDoDetailsPage() {
   const { t } = useTranslation();
@@ -25,6 +27,7 @@ export function ToDoDetailsPage() {
   const [success, setSuccess] = useState<string | null>(null);
   const [isOwner, setIsOwner] = useState<boolean>(false);
   const [openModal, setOpenModal] = useState<boolean>(false);
+  const isTokenExpired = useTokenChecker();
 
   useEffect(() => {
     if (location.state?.success) {
@@ -171,6 +174,8 @@ export function ToDoDetailsPage() {
       <ToDoDetailModal open={openModal} onClose={() => setOpenModal(false)} onSubmit={handleDetailSubmit} />
 
       {isOwner && <CreateFab onClick={() => setOpenModal(true)} />}
+
+      {isTokenExpired && <TokenExpiredModal isInvalidToken={isTokenExpired} />}
 
       <NavigationBar />
     </Box>

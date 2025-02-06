@@ -8,15 +8,15 @@ import { createToDo } from '../service/ToDoService';
 import { ToDo } from '../interface/ToDo';
 import { ToDoResponse } from '../interface/ToDoResponse';
 import TokenExpiredModal from '../component/modal/TokenExpiredModal';
-import { useTokenValidation } from '../hooks/UseTokenValidation';
 import NavigationBar from '../component/navigation/NavigationBar';
+import useTokenChecker from '../hooks/UseTokenChecker';
 
 export function ToDoCreatePage() {
   const { t } = useTranslation();
   const navigate = useNavigate();
 
   const queryClient = useQueryClient();
-  const isInvalidToken = useTokenValidation();
+  const isTokenExpired = useTokenChecker();
 
   const { mutate, isPending, isError, error } = useMutation({
     mutationFn: createToDo,
@@ -43,7 +43,7 @@ export function ToDoCreatePage() {
     <Box sx={{ mt: 10 }}>
       {isError && <Alert severity="error">{(error as Error).message}</Alert>}
       <ToDoForm isPending={isPending} onSubmit={handleCreateToDo} />
-      <TokenExpiredModal isInvalidToken={isInvalidToken} />
+      <TokenExpiredModal isInvalidToken={isTokenExpired} />
       <NavigationBar />
     </Box>
   );

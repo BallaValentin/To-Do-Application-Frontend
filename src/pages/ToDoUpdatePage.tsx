@@ -8,15 +8,15 @@ import { ToDo } from '../interface/ToDo';
 import { getToDoById, updateToDoById } from '../service/ToDoService';
 import { ToDoResponse } from '../interface/ToDoResponse';
 import TokenExpiredModal from '../component/modal/TokenExpiredModal';
-import { useTokenValidation } from '../hooks/UseTokenValidation';
 import NavigationBar from '../component/navigation/NavigationBar';
+import useTokenChecker from '../hooks/UseTokenChecker';
 
 export function ToDoUpdatePage() {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const { id } = useParams<{ id: string }>();
   const queryClient = useQueryClient();
-  const isInvalidToken = useTokenValidation();
+  const isTokenExpired = useTokenChecker();
 
   const {
     data: toDo,
@@ -66,7 +66,7 @@ export function ToDoUpdatePage() {
     <Box sx={{ mt: 10 }}>
       {isUpdateError && <Alert severity="error">{(updateError as Error).message}</Alert>}
       <ToDoForm onSubmit={handleUpdateToDo} isPending={isPending} initialValues={toDo} />
-      <TokenExpiredModal isInvalidToken={isInvalidToken} />
+      <TokenExpiredModal isInvalidToken={isTokenExpired} />
       <NavigationBar />
     </Box>
   );

@@ -7,10 +7,11 @@ import { AxiosError } from 'axios';
 import { useTranslation } from 'react-i18next';
 import { getUsers, deleteUserById } from '../service/UserService';
 import ProgressCircle from '../component/progress/ProgressCircle';
-import { useTokenValidation } from '../hooks/UseTokenValidation';
 import UsersTable from '../component/table/UsersTable';
 import NavigationBar from '../component/navigation/NavigationBar';
 import CustomSnackbar from '../component/snackbar/CustomSnackbar';
+import useTokenChecker from '../hooks/UseTokenChecker';
+import TokenExpiredModal from '../component/modal/TokenExpiredModal';
 
 export function UserListPage() {
   const { t } = useTranslation();
@@ -19,7 +20,7 @@ export function UserListPage() {
   const [adminName, setAdminName] = useState<string>('');
   const [success, setSuccess] = useState<boolean>(false);
 
-  useTokenValidation();
+  const isTokenExpired = useTokenChecker();
 
   useEffect(() => {
     const decodedToken = jwtDecode(localStorage.getItem('jwtToken') || '');
@@ -73,6 +74,8 @@ export function UserListPage() {
     <Box sx={{ mt: 10 }}>
       {success && <CustomSnackbar open={success} onClose={() => setSuccess(false)} message={t('userDeletedAlert')} />}
       <UsersTable users={users || []} onDelete={handleDelete} adminName={adminName} />
+
+      {isTokenExpired && <TokenExpiredModal isInvalidToken={isTokenExpired} />}
       <NavigationBar />
     </Box>
   );
