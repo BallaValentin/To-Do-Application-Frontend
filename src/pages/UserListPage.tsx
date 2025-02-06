@@ -19,16 +19,20 @@ export function UserListPage() {
   const queryClient = useQueryClient();
   const [adminName, setAdminName] = useState<string>('');
   const [success, setSuccess] = useState<boolean>(false);
-
   const isTokenExpired = useTokenChecker();
 
   useEffect(() => {
-    const decodedToken = jwtDecode(localStorage.getItem('jwtToken') || '');
-    const role = decodedToken.sub?.split('|')[2];
-    if (role !== 'admin') {
-      navigate('/unauthorized');
+    const jwtToken = localStorage.getItem('jwtToken');
+    if (jwtToken == null) {
+      navigate('/login');
     } else {
-      setAdminName(decodedToken.sub?.split('|')[0] || '');
+      const decodedToken = jwtDecode(jwtToken);
+      const role = decodedToken.sub?.split('|')[2];
+      if (role !== 'admin') {
+        navigate('/unauthorized');
+      } else {
+        setAdminName(decodedToken.sub?.split('|')[0] || '');
+      }
     }
   });
 

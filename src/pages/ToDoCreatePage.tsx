@@ -10,12 +10,14 @@ import { ToDoResponse } from '../interface/ToDoResponse';
 import TokenExpiredModal from '../component/modal/TokenExpiredModal';
 import NavigationBar from '../component/navigation/NavigationBar';
 import useTokenChecker from '../hooks/UseTokenChecker';
+import useNullTokenChecker from '../hooks/UseNullTokenChecker';
 
 export function ToDoCreatePage() {
   const { t } = useTranslation();
   const navigate = useNavigate();
 
   const queryClient = useQueryClient();
+  useNullTokenChecker();
   const isTokenExpired = useTokenChecker();
 
   const { mutate, isPending, isError, error } = useMutation({

@@ -17,6 +17,7 @@ import NavigationBar from '../component/navigation/NavigationBar';
 import CustomSnackbar from '../component/snackbar/CustomSnackbar';
 import useTokenChecker from '../hooks/UseTokenChecker';
 import TokenExpiredModal from '../component/modal/TokenExpiredModal';
+import useNullTokenChecker from '../hooks/UseNullTokenChecker';
 
 export function ToDoDetailsPage() {
   const { t } = useTranslation();
@@ -27,6 +28,7 @@ export function ToDoDetailsPage() {
   const [success, setSuccess] = useState<string | null>(null);
   const [isOwner, setIsOwner] = useState<boolean>(false);
   const [openModal, setOpenModal] = useState<boolean>(false);
+  useNullTokenChecker();
   const isTokenExpired = useTokenChecker();
 
   useEffect(() => {

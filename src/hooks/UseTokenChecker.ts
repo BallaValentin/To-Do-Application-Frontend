@@ -5,7 +5,6 @@ const useTokenChecker = () => {
   const [isTokenExpired, setIsTokenExpired] = useState<boolean>(false);
   useEffect(() => {
     const checkToken = async () => {
-      console.log('Checking token...');
       const expired = await checkTokenValidity();
       setIsTokenExpired(expired);
     };
