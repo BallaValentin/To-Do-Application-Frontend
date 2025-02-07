@@ -11,13 +11,13 @@ export const userApi = axios.create({
   headers: {
     Accept: 'application/json',
   },
+  withCredentials: true,
 });
 
 export const loginUser = async (userLogin: LoginData): Promise<LoginResponse> => {
   const response = await userApi.post<LoginResponse>('/auth/login', userLogin);
-  const { accessToken, refreshToken } = response.data;
+  const { accessToken } = response.data;
   sessionStorage.setItem('accessToken', accessToken);
-  localStorage.setItem('refreshToken', refreshToken || '');
   return response.data;
 };
 
@@ -45,12 +45,7 @@ export const deleteUserById = async (id: number): Promise<number> => {
 };
 
 export const getNewAccessToken = async (): Promise<void> => {
-  const refreshToken = localStorage.getItem('refreshToken');
-  const response = await userApi.get<RefreshToken>('/auth/refreshToken', {
-    headers: {
-      Authorization: `Bearer ${refreshToken}`,
-    },
-  });
+  const response = await userApi.get<RefreshToken>('/auth/refreshToken');
   const { accessToken } = response.data;
   sessionStorage.setItem('accessToken', accessToken);
 };

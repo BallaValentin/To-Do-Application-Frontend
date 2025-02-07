@@ -11,7 +11,6 @@ export const toDoApi = axios.create({
 });
 
 export const getToDos = async (): Promise<ToDo[]> => {
-  console.log(`The access token is: ${sessionStorage.getItem('accessToken')}`);
   const response = await toDoApi.get<ToDo[]>('/todos', {
     headers: {
       Authorization: `Bearer ${sessionStorage.getItem('accessToken')}`,

@@ -8,18 +8,14 @@ const useNullTokenChecker = () => {
     const checkToken = async () => {
       const accessToken = sessionStorage.getItem('accessToken');
       if (accessToken === null) {
-        const refreshToken = localStorage.getItem('refreshToken');
-        if (refreshToken !== null) {
           try {
             await getNewAccessToken();
             setIsTokenNull(false);
           } catch (error) {
             setIsTokenNull(true);
           }
-        } else {
-          setIsTokenNull(true);
         }
-      } else {
+       else {
         setIsTokenNull(false);
       }
     };
