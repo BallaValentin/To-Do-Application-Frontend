@@ -10,7 +10,11 @@ export const toDoDetailApi = axios.create({
 });
 
 export const getToDoDetails = async (todoId: number): Promise<ToDoDetailResponse[]> => {
-  const response = await toDoDetailApi.get<ToDoDetailResponse[]>(`/todos/${todoId}/details`);
+  const response = await toDoDetailApi.get<ToDoDetailResponse[]>(`/todos/${todoId}/details`, {
+    headers: {
+      Authorization: `Bearer ${sessionStorage.getItem('accessToken')}`,
+    },
+  });
   return response.data;
 };
 

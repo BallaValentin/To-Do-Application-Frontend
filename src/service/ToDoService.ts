@@ -35,7 +35,11 @@ export const filterToDos = async (toDoFilters: ToDoSearchParams): Promise<ToDo[]
 };
 
 export const getToDoById = async (id: number): Promise<ToDoResponse> => {
-  const response = await toDoApi.get<ToDoResponse>(`/todos/${id}`);
+  const response = await toDoApi.get<ToDoResponse>(`/todos/${id}`, {
+    headers: {
+      Authorization: `Bearer ${sessionStorage.getItem('accessToken')}`,
+    },
+  });
   return response.data;
 };
 
