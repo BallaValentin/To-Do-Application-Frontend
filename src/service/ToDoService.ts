@@ -11,7 +11,12 @@ export const toDoApi = axios.create({
 });
 
 export const getToDos = async (): Promise<ToDo[]> => {
-  const response = await toDoApi.get<ToDo[]>('/todos');
+  console.log(`The access token is: ${sessionStorage.getItem('accessToken')}`);
+  const response = await toDoApi.get<ToDo[]>('/todos', {
+    headers: {
+      Authorization: `Bearer ${sessionStorage.getItem('accessToken')}`,
+    },
+  });
   return response.data;
 };
 
@@ -22,6 +27,9 @@ const cleanFilters = (filters: Record<string, unknown>) => {
 export const filterToDos = async (toDoFilters: ToDoSearchParams): Promise<ToDo[]> => {
   const response = await toDoApi.get<ToDo[]>('/todos', {
     params: cleanFilters(toDoFilters as unknown as Record<string, unknown>),
+    headers: {
+      Authorization: `Bearer ${sessionStorage.getItem('accessToken')}`,
+    },
   });
   return response.data;
 };

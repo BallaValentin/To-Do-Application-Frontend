@@ -7,19 +7,21 @@ const useNullTokenChecker = () => {
   useEffect(() => {
     const checkToken = async () => {
       const accessToken = sessionStorage.getItem('accessToken');
-      if (accessToken == null) {
+      if (accessToken === null) {
         const refreshToken = localStorage.getItem('refreshToken');
-        if (refreshToken != null) {
+        if (refreshToken !== null) {
           try {
             await getNewAccessToken();
             setIsTokenNull(false);
           } catch (error) {
             setIsTokenNull(true);
           }
+        } else {
+          setIsTokenNull(true);
         }
-        setIsTokenNull(true);
+      } else {
+        setIsTokenNull(false);
       }
-      setIsTokenNull(false);
     };
     checkToken();
   }, []);
