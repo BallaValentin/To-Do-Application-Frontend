@@ -21,6 +21,12 @@ export const loginUser = async (userLogin: LoginData): Promise<LoginResponse> =>
   return response.data;
 };
 
+export const logoutUser = async (): Promise<void> => {
+  console.log("Logging out user...");
+  sessionStorage.removeItem('accessToken');
+  await userApi.get<void>('/auth/logout');
+};
+
 export const registerUser = async (userRegister: RegisterData): Promise<number> => {
   const response = await userApi.post<UserResponse>('/auth/register', userRegister);
   return response.status;

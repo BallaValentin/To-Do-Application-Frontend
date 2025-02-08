@@ -7,6 +7,7 @@ import { useTranslation } from 'react-i18next';
 import UserMenu from '../menu-item/UserMenu';
 import ToggleThemeButton from '../button/ToggleThemeButton';
 import LanguageSelect from '../select/LanguageSelect';
+import { logoutUser } from '../../service/UserService';
 
 function CommonHeader() {
   const { t } = useTranslation();
@@ -22,8 +23,8 @@ function CommonHeader() {
   };
 
   const handleLogout = () => {
-    sessionStorage.removeItem('accessToken');
-    localStorage.removeItem('refreshToken');
+    console.log('Handling logout...');
+    logoutUser();
     navigate('/login');
   };
 
