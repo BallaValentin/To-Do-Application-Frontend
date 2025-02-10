@@ -18,6 +18,7 @@ import i18n from './i18/i18n';
 import { requestNotificationPermission } from './util/notifications';
 import ProtectedRoute from './routes/ProtectedRoute';
 import { ForgotPasswordPage } from './pages/ForgotPasswordPage';
+import { NewPasswordPage } from './pages/NewPasswordPage';
 
 export const queryClient = new QueryClient({
   defaultOptions: {
@@ -50,6 +51,7 @@ function ThemedApp() {
           <Route path="/login" element={<LoginPage />} />
           <Route path="/register" element={<RegisterPage />} />
           <Route path="/forgot-password" element={<ForgotPasswordPage />} />
+          <Route path="/change-password" element={<NewPasswordPage />} />
           <Route path="/unauthorized" element={<UnauthorizedPage />} />
         </Routes>
       </Router>

@@ -82,7 +82,10 @@
       "forgotPasswordFormBtn": "Send Email",
       "forgotPasswordBtnPending": "Sending Email...",
       "emailSentSuccess": "Password change email has been sent.",
-      "tooManyEmailSent": "You can only request a password change once per day."
+      "tooManyEmailSent": "You can only request a password change once per day.",
+      "newPasswordFormTitle": "Change Password",
+      "newPasswordFormBtnPending": "Changing Password...",
+      "newPasswordFormBtn": "Change Password"
     }
   },
     "ro": {
@@ -169,8 +172,10 @@
         "forgotPasswordFormBtn": "Trimitire Email",
         "forgotPasswordBtnPending": "Trimitire Email...",
         "emailSentSuccess": "Emailul pentru schimbarea parolei a fost trimis.",
-        "tooManyEmailSent": "Puteți solicita schimbarea parolei doar o dată pe zi."
-
+        "tooManyEmailSent": "Puteți solicita schimbarea parolei doar o dată pe zi.",
+        "newPasswordFormTitle": "Schimbare Parolă",
+        "newPasswordFormBtnPending": "Se schimbă parola...",
+        "newPasswordFormBtn": "Schimbă parola"
     }
   },
     "hu": {
@@ -257,7 +262,10 @@
         "forgotPasswordFormBtn": "Email Küldése",
         "forgotPasswordBtnPending": "Email Küldése...",
         "emailSentSuccess": "A jelszóváltoztatási e-mail elküldve.",
-        "tooManyEmailSent": "Naponta csak egyszer kérhet jelszóváltoztatást."
+        "tooManyEmailSent": "Naponta csak egyszer kérhet jelszóváltoztatást.",
+        "newPasswordFormTitle": "Jelszócsere",
+        "newPasswordFormBtnPending": "Jelszó változtatása...",
+        "newPasswordFormBtn": "Jelszó megváltoztatása"
     }
   }
 }

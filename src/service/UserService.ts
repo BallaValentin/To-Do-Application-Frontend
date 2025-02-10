@@ -6,6 +6,7 @@ import { UserAdminResp } from '../interface/UserAdminResp';
 import { LoginResponse } from '../interface/LoginResponse';
 import { RefreshToken } from '../interface/RefreshToken';
 import { ForgotPasswordData } from '../interface/ForgotPasswordData';
+import { NewPasswordData } from '../interface/NewPasswordData';
 
 export const userApi = axios.create({
   baseURL: 'http://localhost:8080/api',
@@ -60,4 +61,13 @@ export const getNewAccessToken = async (): Promise<void> => {
 export const sendForgotPasswordEmail = async (address: ForgotPasswordData): Promise<string> => {
   const response = await userApi.post<string>('/auth/forgot-password', address);
   return response.data;
+};
+
+export const changePassword = async (newPassword: NewPasswordData, token: string): Promise<number> => {
+  const response = await userApi.post<void>('/auth/change-password', newPassword, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+  return response.status;
 };
