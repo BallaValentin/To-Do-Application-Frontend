@@ -76,7 +76,11 @@
       "searchFormPriority": "Importance",
       "searchFormAfterDate": "After date",
       "searchFormBeforeDate": "Before date",
-      "searchFormSubmitBtn": "Search Todos"
+      "searchFormSubmitBtn": "Search Todos",
+      "forgotPasswordFormTitle": "Change Password",
+      "forgotPasswordFormEmail": "Email Address",
+      "forgotPasswordFormBtn": "Send Email",
+      "forgotPasswordBtnPending": "Sending Email..."
     }
   },
     "ro": {
@@ -157,8 +161,11 @@
         "searchFormPriority": "Importanță",
         "searchFormAfterDate": "După data",
         "searchFormBeforeDate": "Înainte de data",
-        "searchFormSubmitBtn": "Caută Sarcinele"
-      }
+        "searchFormSubmitBtn": "Caută Sarcinele",
+        "forgotPasswordFormTitle": "Schimbare Parolță",
+        "forgotPasswordFormEmail": "Adresă Email",
+        "forgotPasswordFormBtn": "Trimitire Email",
+        "forgotPasswordBtnPending": "Trimitire Email..."
     },
     "hu": {
       "translation": {
@@ -238,7 +245,12 @@
         "searchFormPriority": "Fontosság",
         "searchFormAfterDate": "Dátum után",
         "searchFormBeforeDate": "Dátum előtt",
-        "searchFormSubmitBtn": "Tennivalók Keresése"
+        "searchFormSubmitBtn": "Tennivalók Keresése",
+        "forgotPasswordFormTitle": "Jelszó Cserélése",
+        "forgotPasswordFormEmail": "Email Cim",
+        "forgotPasswordFormBtn": "Email Küldése",
+        "forgotPasswordBtnPending": "Email Küldése..."
       }
     }
   }
+}

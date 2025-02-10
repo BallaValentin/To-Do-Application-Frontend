@@ -5,6 +5,7 @@ import { RegisterData } from '../interface/RegisterData';
 import { UserAdminResp } from '../interface/UserAdminResp';
 import { LoginResponse } from '../interface/LoginResponse';
 import { RefreshToken } from '../interface/RefreshToken';
+import { ForgotPasswordData } from '../interface/ForgotPasswordData';
 
 export const userApi = axios.create({
   baseURL: 'http://localhost:8080/api',
@@ -22,7 +23,7 @@ export const loginUser = async (userLogin: LoginData): Promise<LoginResponse> =>
 };
 
 export const logoutUser = async (): Promise<void> => {
-  console.log("Logging out user...");
+  console.log('Logging out user...');
   sessionStorage.removeItem('accessToken');
   await userApi.get<void>('/auth/logout');
 };
@@ -51,7 +52,12 @@ export const deleteUserById = async (id: number): Promise<number> => {
 };
 
 export const getNewAccessToken = async (): Promise<void> => {
-  const response = await userApi.get<RefreshToken>('/auth/refreshToken');
+  const response = await userApi.get<RefreshToken>('/auth/refresh-token');
   const { accessToken } = response.data;
   sessionStorage.setItem('accessToken', accessToken);
+};
+
+export const sendForgotPasswordEmail = async (address: ForgotPasswordData): Promise<string> => {
+  const response = await userApi.post<string>('/auth/forgot-password', address);
+  return response.data;
 };

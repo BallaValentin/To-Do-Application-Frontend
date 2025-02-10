@@ -90,7 +90,7 @@ function LoginForm(loginForm: LoginFormProps) {
           </Button>
 
           <Box>
-            <Link href="/login" underline="hover">
+            <Link href="/forgot-password" underline="hover">
               {t('loginFormPwdForgot')}
             </Link>
           </Box>
