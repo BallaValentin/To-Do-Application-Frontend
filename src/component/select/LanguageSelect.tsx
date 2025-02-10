@@ -37,7 +37,7 @@ function LanguageSelect() {
         <MenuItem value="hu">
           <ListItemIcon sx={{ mr: 1 }}>
             <Avatar sx={{ width: 30, height: 30 }}>
-              <Flag code="Hu" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+              <Flag code="HU" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
             </Avatar>
           </ListItemIcon>
           Magyar

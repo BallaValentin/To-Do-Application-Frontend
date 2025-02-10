@@ -80,7 +80,9 @@
       "forgotPasswordFormTitle": "Change Password",
       "forgotPasswordFormEmail": "Email Address",
       "forgotPasswordFormBtn": "Send Email",
-      "forgotPasswordBtnPending": "Sending Email..."
+      "forgotPasswordBtnPending": "Sending Email...",
+      "emailSentSuccess": "Password change email has been sent.",
+      "tooManyEmailSent": "You can only request a password change once per day."
     }
   },
     "ro": {
@@ -162,11 +164,15 @@
         "searchFormAfterDate": "După data",
         "searchFormBeforeDate": "Înainte de data",
         "searchFormSubmitBtn": "Caută Sarcinele",
-        "forgotPasswordFormTitle": "Schimbare Parolță",
+        "forgotPasswordFormTitle": "Schimbare Parolă",
         "forgotPasswordFormEmail": "Adresă Email",
         "forgotPasswordFormBtn": "Trimitire Email",
-        "forgotPasswordBtnPending": "Trimitire Email..."
-    },
+        "forgotPasswordBtnPending": "Trimitire Email...",
+        "emailSentSuccess": "Emailul pentru schimbarea parolei a fost trimis.",
+        "tooManyEmailSent": "Puteți solicita schimbarea parolei doar o dată pe zi."
+
+    }
+  },
     "hu": {
       "translation": {
         "mainPageTitle": "Tennivalók Listája",
@@ -249,8 +255,9 @@
         "forgotPasswordFormTitle": "Jelszó Cserélése",
         "forgotPasswordFormEmail": "Email Cim",
         "forgotPasswordFormBtn": "Email Küldése",
-        "forgotPasswordBtnPending": "Email Küldése..."
-      }
+        "forgotPasswordBtnPending": "Email Küldése...",
+        "emailSentSuccess": "A jelszóváltoztatási e-mail elküldve.",
+        "tooManyEmailSent": "Naponta csak egyszer kérhet jelszóváltoztatást."
     }
   }
 }
