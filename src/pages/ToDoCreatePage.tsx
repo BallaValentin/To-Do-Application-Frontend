@@ -1,26 +1,37 @@
-import { Alert, Box, Typography } from '@mui/material';
+import { Alert, Box } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { AxiosError } from 'axios';
+import { useTranslation } from 'react-i18next';
 import ToDoForm from '../component/form/ToDoForm';
-import { CreateToDo } from '../service/ToDoService';
+import { createToDo } from '../service/ToDoService';
 import { ToDo } from '../interface/ToDo';
+import { ToDoResponse } from '../interface/ToDoResponse';
+import TokenExpiredModal from '../component/modal/TokenExpiredModal';
+import NavigationBar from '../component/navigation/NavigationBar';
+import useTokenChecker from '../hooks/UseTokenChecker';
 
 export function ToDoCreatePage() {
+  const { t } = useTranslation();
   const navigate = useNavigate();
+
   const queryClient = useQueryClient();
+  const isTokenExpired = useTokenChecker();
 
   const { mutate, isPending, isError, error } = useMutation({
-    mutationFn: CreateToDo,
-    onSuccess: (createdTodo: ToDo) => {
+    mutationFn: createToDo,
+    onSuccess: (createdTodo: ToDoResponse) => {
       queryClient.invalidateQueries({ queryKey: ['todos'] });
       navigate(`/todos/${createdTodo.id}`, {
         state: {
-          success: `To do with id ${createdTodo.id} created successfully`,
+          success: t('todoCreatedAlert'),
         },
       });
     },
-    onError: (err: unknown) => {
-      console.error(err);
+    onError: (err: AxiosError) => {
+      if (err.response?.status === 401) {
+        navigate('/unauthorized');
+      }
     },
   });
 
@@ -29,10 +40,11 @@ export function ToDoCreatePage() {
   };
 
   return (
-    <Box>
+    <Box sx={{ mt: 10 }}>
       {isError && <Alert severity="error">{(error as Error).message}</Alert>}
-      <ToDoForm onSubmit={handleCreateToDo} />
-      {isPending && <Typography variant="body1">Creating todo...</Typography>}
+      <ToDoForm isPending={isPending} onSubmit={handleCreateToDo} />
+      <TokenExpiredModal isInvalidToken={isTokenExpired} />
+      <NavigationBar />
     </Box>
   );
 }

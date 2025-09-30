@@ -1,5 +1,6 @@
 import { Box, Button, FormControl, FormHelperText, Grid2, TextField, Typography } from '@mui/material';
 import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { ToDo } from '../../interface/ToDo';
 
 interface FormError {
@@ -11,10 +12,12 @@ interface FormError {
 
 interface ToDoFormProps {
   initialValues?: ToDo;
+  isPending: boolean;
   onSubmit: (formData: ToDo) => void;
 }
 
 function ToDoForm(toDoForm: ToDoFormProps) {
+  const { t } = useTranslation();
   const [formData, setFormData] = useState<ToDo>({
     title: toDoForm.initialValues?.title || '',
     description: toDoForm.initialValues?.description || '',
@@ -42,22 +45,22 @@ function ToDoForm(toDoForm: ToDoFormProps) {
     };
 
     if (!formData.title || formData.title.trim() === '') {
-      newErrors.title = 'Title is required';
+      newErrors.title = t('todoFormTitleErr');
       isValid = false;
     }
 
     if (!formData.description || formData.description.trim() === '') {
-      newErrors.description = 'Description is required';
+      newErrors.description = t('todoFormDescErr');
       isValid = false;
     }
 
     if (!formData.dueDate) {
-      newErrors.dueDate = 'Due date is required';
+      newErrors.dueDate = 't(todoFormDateErr)';
       isValid = false;
     }
 
     if (!Number.isInteger(Number(formData.levelOfImportance)) || formData.levelOfImportance <= 0) {
-      newErrors.levelOfImportance = 'Level of Importance must be a positive integer';
+      newErrors.levelOfImportance = t('todoFormPriorityErr');
       isValid = false;
     }
 
@@ -72,14 +75,14 @@ function ToDoForm(toDoForm: ToDoFormProps) {
   return (
     <Box sx={{ maxWidth: 600, margin: 'auto', padding: 2 }}>
       <Typography variant="h4" gutterBottom>
-        ToDo Form
+        {t('todoFormMainTitle')}
       </Typography>
       <form onSubmit={handleSubmit}>
         <Grid2 container spacing={2}>
           <FormControl fullWidth error={Boolean(error?.title)}>
             <TextField
               name="title"
-              label="Title: "
+              label={t('todoFormTitle')}
               value={formData?.title}
               onChange={handleChange}
               required
@@ -92,7 +95,7 @@ function ToDoForm(toDoForm: ToDoFormProps) {
           <FormControl fullWidth error={Boolean(error?.description)}>
             <TextField
               name="description"
-              label="Description: "
+              label={t('todoFormDesc')}
               value={formData?.description}
               onChange={handleChange}
               required
@@ -105,7 +108,7 @@ function ToDoForm(toDoForm: ToDoFormProps) {
           <FormControl fullWidth error={Boolean(error?.dueDate)}>
             <TextField
               name="dueDate"
-              label="Due date: "
+              label={t('todoFormDate')}
               type="date"
               value={formData?.dueDate}
               onChange={handleChange}
@@ -119,7 +122,7 @@ function ToDoForm(toDoForm: ToDoFormProps) {
           <FormControl fullWidth error={Boolean(error?.levelOfImportance)}>
             <TextField
               name="levelOfImportance"
-              label="Level of importance: "
+              label={t('todoFormPriority')}
               type="number"
               value={formData?.levelOfImportance}
               onChange={handleChange}
@@ -129,9 +132,8 @@ function ToDoForm(toDoForm: ToDoFormProps) {
             />
             {error?.levelOfImportance && <FormHelperText>{error?.levelOfImportance}</FormHelperText>}
           </FormControl>
-
-          <Button type="submit" variant="contained" color="primary" fullWidth>
-            Submit ToDo
+          <Button type="submit" variant="contained" color="primary" disabled={toDoForm.isPending} fullWidth>
+            {toDoForm.isPending ? t('todoFormPendingSubmitBtn') : t('todoFormSubmitBtn')}
           </Button>
         </Grid2>
       </form>

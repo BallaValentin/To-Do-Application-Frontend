@@ -1,22 +1,44 @@
 import { useEffect, useState } from 'react';
-import { useLocation, useParams } from 'react-router-dom';
-import { Alert, Box, Typography } from '@mui/material';
-import { useQuery } from '@tanstack/react-query';
-import { GetToDoById } from '../service/ToDoService';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
+import { Alert, Box, CircularProgress, Typography } from '@mui/material';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { AxiosError } from 'axios';
+import { jwtDecode } from 'jwt-decode';
+import { useTranslation } from 'react-i18next';
+import { deleteToDoById, getToDoById } from '../service/ToDoService';
 import ToDoCardDetailed from '../component/card/ToDoCardDetailed';
 import ProgressCircle from '../component/progress/ProgressCircle';
+import CreateFab from '../component/fab/CreateFab';
+import ToDoDetailModal from '../component/modal/ToDoDetailModal';
+import { createToDoDetail, deleteToDoDetail, getToDoDetails } from '../service/ToDoDetailService';
+import ToDoDetailCard from '../component/card/ToDoDetailCard';
+import { ToDoDetail } from '../interface/ToDoDetail';
+import NavigationBar from '../component/navigation/NavigationBar';
+import CustomSnackbar from '../component/snackbar/CustomSnackbar';
+import useTokenChecker from '../hooks/UseTokenChecker';
+import TokenExpiredModal from '../component/modal/TokenExpiredModal';
 
 export function ToDoDetailsPage() {
-  console.log('Loading details page');
+  const { t } = useTranslation();
   const location = useLocation();
+  const navigate = useNavigate();
+  const queryClient = useQueryClient();
   const { id } = useParams<{ id: string }>();
   const [success, setSuccess] = useState<string | null>(null);
+  const [isOwner, setIsOwner] = useState<boolean>(false);
+  const [openModal, setOpenModal] = useState<boolean>(false);
+  const isTokenExpired = useTokenChecker();
 
   useEffect(() => {
     if (location.state?.success) {
       setSuccess(location.state.success);
     }
   }, [location.state]);
+
+  useEffect(() => {
+    queryClient.removeQueries({ queryKey: ['details'] });
+    queryClient.invalidateQueries({ queryKey: ['details'] });
+  }, [id]);
 
   const {
     data: todo,
@@ -25,8 +47,71 @@ export function ToDoDetailsPage() {
     error,
   } = useQuery({
     queryKey: ['todo', id],
-    queryFn: () => GetToDoById(Number(id)),
+    queryFn: () => getToDoById(Number(id)),
   });
+
+  const {
+    mutate,
+    isError: isDeleteError,
+    error: deleteError,
+    isPending,
+  } = useMutation({
+    mutationFn: () => deleteToDoById(Number(id)),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['todos'] });
+      navigate('/', {
+        state: { deleteAlert: true },
+      });
+    },
+    onError: (err: AxiosError) => {
+      if (err.response?.status === 401) {
+        navigate('/unauthorized');
+      }
+    },
+  });
+
+  const handleDelete = () => {
+    mutate();
+  };
+
+  useEffect(() => {
+    const token = sessionStorage.getItem('accessToken');
+    if (token) {
+      const decodedToken = jwtDecode(token);
+      const username = decodedToken.sub?.split('|')[0];
+      setIsOwner(username === todo?.createdBy);
+    }
+  });
+
+  const { isLoading: isLoadingDetails, data: details } = useQuery({
+    queryKey: ['details'],
+    queryFn: () => getToDoDetails(Number(id)),
+  });
+
+  const { mutate: addDetail } = useMutation({
+    mutationFn: (toDoDetail: ToDoDetail) => createToDoDetail(toDoDetail, Number(id)),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['details'] });
+      setSuccess(t('detailAddedAlert'));
+    },
+  });
+
+  const handleDetailSubmit = (toDoDetail: ToDoDetail) => {
+    setOpenModal(false);
+    addDetail(toDoDetail);
+  };
+
+  const { mutate: deleteDetail } = useMutation({
+    mutationFn: (toDoDetailId: number) => deleteToDoDetail(Number(id), toDoDetailId),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['details'] });
+      setSuccess(t('detailDeletedAlert'));
+    },
+  });
+
+  const handleDeleteDetail = (toDoDetailId: number) => {
+    deleteDetail(toDoDetailId);
+  };
 
   if (isLoading) {
     return <ProgressCircle loadingMessage={`Fetching todo with id ${id}`} />;
@@ -40,14 +125,59 @@ export function ToDoDetailsPage() {
     );
   }
 
+  if (isDeleteError) {
+    return (
+      <Box>
+        <Alert severity="error">{deleteError.message}</Alert>
+      </Box>
+    );
+  }
+
   return (
-    <Box>
-      {success && <Alert severity="success">{success}</Alert>}
-      <Typography variant="h4" gutterBottom>
-        ToDo details
+    <Box sx={{ mt: 10 }}>
+      {success && <CustomSnackbar message={success} open={Boolean(success)} onClose={() => setSuccess(null)} />}
+      <Typography variant="h4" gutterBottom sx={{ textAlign: 'center' }}>
+        {t('detailPageTitle')}
       </Typography>
 
-      {todo ? <ToDoCardDetailed toDo={todo} /> : <Typography variant="body1">Todo not found </Typography>}
+      {todo ? (
+        <ToDoCardDetailed toDo={todo} handleDelete={handleDelete} isOwner={isOwner} />
+      ) : (
+        <Typography variant="body1">Todo not found</Typography>
+      )}
+
+      {isPending && (
+        <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+          <CircularProgress />
+          Deleting ToDo...
+        </Box>
+      )}
+
+      {isLoadingDetails && (
+        <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+          <CircularProgress />
+          Loading details...
+        </Box>
+      )}
+
+      <Box sx={{ m: 10, display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))', gap: 2 }}>
+        {details?.map((detail) => (
+          <ToDoDetailCard
+            key={detail.id}
+            toDoDetail={detail}
+            isOwner={isOwner}
+            onClick={() => handleDeleteDetail(detail.id)}
+          />
+        ))}
+      </Box>
+
+      <ToDoDetailModal open={openModal} onClose={() => setOpenModal(false)} onSubmit={handleDetailSubmit} />
+
+      {isOwner && <CreateFab onClick={() => setOpenModal(true)} />}
+
+      {isTokenExpired && <TokenExpiredModal isInvalidToken={isTokenExpired} />}
+
+      <NavigationBar />
     </Box>
   );
 }

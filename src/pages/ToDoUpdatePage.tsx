@@ -1,14 +1,22 @@
-import { Alert, Box, Typography } from '@mui/material';
+import { Alert, Box } from '@mui/material';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { AxiosError } from 'axios';
+import { useTranslation } from 'react-i18next';
 import ToDoForm from '../component/form/ToDoForm';
 import { ToDo } from '../interface/ToDo';
-import { GetToDoById, UpdateToDoById } from '../service/ToDoService';
+import { getToDoById, updateToDoById } from '../service/ToDoService';
+import { ToDoResponse } from '../interface/ToDoResponse';
+import TokenExpiredModal from '../component/modal/TokenExpiredModal';
+import NavigationBar from '../component/navigation/NavigationBar';
+import useTokenChecker from '../hooks/UseTokenChecker';
 
 export function ToDoUpdatePage() {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const { id } = useParams<{ id: string }>();
   const queryClient = useQueryClient();
+  const isTokenExpired = useTokenChecker();
 
   const {
     data: toDo,
@@ -17,7 +25,7 @@ export function ToDoUpdatePage() {
     error,
   } = useQuery({
     queryKey: ['todo', id],
-    queryFn: () => GetToDoById(Number(id)),
+    queryFn: () => getToDoById(Number(id)),
   });
 
   const {
@@ -26,17 +34,19 @@ export function ToDoUpdatePage() {
     isError: isUpdateError,
     error: updateError,
   } = useMutation({
-    mutationFn: (formData: ToDo) => UpdateToDoById(Number(id), formData),
-    onSuccess: (updatedTodo: ToDo) => {
+    mutationFn: (formData: ToDo) => updateToDoById(Number(id), formData),
+    onSuccess: (updatedTodo: ToDoResponse) => {
       queryClient.invalidateQueries({ queryKey: ['todo'], id });
       navigate(`/todos/${updatedTodo.id}`, {
         state: {
-          success: `To do with id ${updatedTodo.id} updated successfully`,
+          success: t('todoUpdatedAlert'),
         },
       });
     },
-    onError: (err: unknown) => {
-      console.error(err);
+    onError: (err: AxiosError) => {
+      if (err.response?.status === 401) {
+        navigate('/unauthorized');
+      }
     },
   });
 
@@ -53,10 +63,11 @@ export function ToDoUpdatePage() {
   };
 
   return (
-    <Box>
+    <Box sx={{ mt: 10 }}>
       {isUpdateError && <Alert severity="error">{(updateError as Error).message}</Alert>}
-      <ToDoForm onSubmit={handleUpdateToDo} initialValues={toDo} />
-      {isPending && <Typography variant="body1">Updating todo...</Typography>}
+      <ToDoForm onSubmit={handleUpdateToDo} isPending={isPending} initialValues={toDo} />
+      <TokenExpiredModal isInvalidToken={isTokenExpired} />
+      <NavigationBar />
     </Box>
   );
 }
