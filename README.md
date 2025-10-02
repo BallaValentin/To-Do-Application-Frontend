@@ -35,3 +35,28 @@ Make sure to start the backend before running the frontend to ensure all API cal
 
 ```bash
 git clone https://github.com/BallaValentin/To-Do-Application-Frontend.git
+```
+
+2. Navigate into the project directory:
+
+```bash
+cd To-Do-Application-Frontend
+```
+
+3. Install dependencies
+
+```bash
+npm install
+```
+
+4. Build the application
+
+```bash
+npm run build
+```
+
+5. Run the application
+
+```bash
+npm run dev
+```
