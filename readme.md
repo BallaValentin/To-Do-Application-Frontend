@@ -20,6 +20,7 @@ Make sure to start the backend before running the frontend to ensure all API cal
 - **React** for building interactive user interfaces.
 - **TypeScript** for type safety and better code maintainability.
 - **Axios** for handling API requests.
+- **Material-UI (MUI)** for responsive and consistent UI components.
 - **i18n** for multi-language support.
 
 ## Getting Started
